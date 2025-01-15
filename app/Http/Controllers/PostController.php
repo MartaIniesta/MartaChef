@@ -34,7 +34,7 @@ class PostController extends Controller
     {
         auth()->user()->posts()->create($request->validated());
 
-        return to_route('posts.index')->with('status', 'Post created successfully');
+        return to_route('posts.index')->with('status', 'Receta creada correctamente');
     }
 
     public function edit(Post $post)
@@ -44,15 +44,22 @@ class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $post->update($request->validated());
+        $data = $request->validated();
 
-        return to_route('posts.show', $post)->with('status', 'Post updated successfully');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        $post->update($data);
+
+        return to_route('posts.index')->with('status', 'Receta actualizada');
     }
+
 
     public function destroy(Post $post)
     {
         $post->delete();
 
-        return to_route('posts.index')->with('status', 'Post deleted successfully');
+        return to_route('posts.index')->with('status', 'Receta eliminada correctamente');
     }
 }
