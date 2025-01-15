@@ -2,5 +2,9 @@
 <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="max-width: 300px;">
 <p>{{ $post->description }}</p>
 <p>Ingredientes: {{ $post->ingredients }}</p>
-<a href="{{ route('posts.edit', $post) }}">Editar receta</a><br>
+
+@auth
+    <a href="{{ route('posts.edit', $post) }}">Editar receta</a><br>
+@endauth
+
 <a href="{{ route('posts.index') }}">< Volver</a>
