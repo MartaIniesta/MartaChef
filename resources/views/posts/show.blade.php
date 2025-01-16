@@ -4,6 +4,20 @@
 <p>{{ $post->description }}</p>
 <p>Ingredientes: {{ $post->ingredients }}</p>
 
+<h3>Categorías:</h3>
+<ul>
+    @foreach ($post->categories as $category)
+        <li>{{ $category->name }}</li>
+    @endforeach
+</ul>
+
+<h3>Etiquetas:</h3>
+<ul>
+    @foreach ($post->tags as $tag)
+        <li>{{ $tag->name }}</li>
+    @endforeach
+</ul>
+
 @auth
     <a href="{{ route('posts.edit', $post) }}">Editar receta</a><br>
 @endauth

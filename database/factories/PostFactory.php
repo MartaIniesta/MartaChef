@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -16,7 +17,8 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph(),
             'ingredients' => $this->faker->paragraph(),
-            'image' => $this->faker->imageUrl(640, 480, 'food', true, 'dessert'),
+            'image' => $this->faker->imageUrl(),
+            'user_id' => User::factory(),
         ];
     }
 }
