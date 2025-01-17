@@ -22,4 +22,11 @@
     <a href="{{ route('posts.edit', $post) }}">Editar receta</a><br>
 @endauth
 
+<!-- Botón de eliminar -->
+<form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+</form>
+
 <a href="{{ route('posts.index') }}">< Volver</a>
