@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(CategorySeeder::class);
-        // User::factory(10)->create();
+        Tag::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Paqui',
@@ -31,38 +32,18 @@ class DatabaseSeeder extends Seeder
             $user = User::factory()->create(['name' => 'Usuario Admin']);
         }
 
-        $tags = Tag::factory(10)->create();
-        // Crear los posts
-        $post1 = Post::create([
-            'title' => 'Tarta de Chocolate',
-            'description' => 'Receta perfecta para una tarta de chocolate cremosa y húmeda.',
-            'ingredients' => 'Harina, cacao en polvo, huevos, azúcar, leche, mantequilla',
-            'image' => 'pastel-chocolate.jpg',
-            'user_id' => $user->id,
-        ]);
+        Post::factory(5)->create()->each(function ($post) {
+            $categories = Category::all()->random(rand(1, 4))->pluck('id');
+            $post->categories()->attach($categories);
 
-        $post2 = Post::create([
-            'title' => 'Cupcakes de Vainilla',
-            'description' => 'Estos cupcakes son ideales para cualquier celebración.',
-            'ingredients' => 'Harina, azúcar, mantequilla, esencia de vainilla, huevos, leche',
-            'image' => 'cupcakes-vainilla.jpg',
-            'user_id' => $user->id,
-        ]);
+            $tags = Tag::all()->random(rand(2, 5))->pluck('id');
+            $post->tags()->attach($tags);
 
-        $chocolateCategory = Category::where('name', 'Chocolates')->first();
-        $postreCategory = Category::where('name', 'Postres')->first();
+            $comments = Comment::factory(rand(1, 3))->create(['post_id' => $post->id]);
 
-        if ($chocolateCategory && $postreCategory) {
-            $post1->categories()->attach([$chocolateCategory->id, $postreCategory->id]);
-            $post2->categories()->attach($postreCategory->id);
-        }
-
-        $post1->tags()->attach(
-            $tags->random(rand(2, 5))->pluck('id')->toArray()
-        );
-
-        $post2->tags()->attach(
-            $tags->random(rand(2, 5))->pluck('id')->toArray()
-        );
+            $comments->each(function ($comment) {
+                Comment::factory(rand(1, 2))->asReply($comment->id)->create(['post_id' => $comment->post_id]);
+            });
+        });
     }
 }
