@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::resource('blog', PostController::class)->names('posts')->parameters(['blog' => 'post']);
 Route::middleware('auth')->get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
