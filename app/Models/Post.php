@@ -33,4 +33,27 @@ class Post extends Model
             ->whereNull('parent_id')
             ->orderBy('created_at', 'desc');
     }
+
+    public function visibilityPublic($query)
+    {
+        return $query->where('visibility', 'public');
+    }
+
+    public function visibilityPrivate($query, $userId)
+    {
+        return $query->where('visibility', 'private')->where('user_id', $userId);
+    }
+
+    public function visibilityShared($query, $userId)
+    {
+        return $query->where('visibility', 'shared')
+            ->whereHas('sharedWith', function ($q) use ($userId) {
+                $q->where('friend_id', $userId);
+            });
+    }
+
+    public function sharedWith(): belongsToMany
+    {
+        return $this->belongsToMany(User::class, 'post_user', 'post_id', 'friend_id');
+    }
 }

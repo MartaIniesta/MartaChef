@@ -15,9 +15,21 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        $publicPosts = Post::all();
 
-        return view('posts.index', compact('posts'));
+        return view('posts.index', compact('publicPosts'));
+    }
+
+    public function myPosts()
+    {
+        $userPosts  = Post::where('user_id', auth()->id())->latest()->paginate(10);
+        return view('posts.myPosts', compact('userPosts'));
+    }
+
+    public function shared()
+    {
+        $posts = Post::shared(auth()->id())->latest()->paginate(10);
+        return view('posts.shared', compact('posts'));
     }
 
     public function show(Post $post)

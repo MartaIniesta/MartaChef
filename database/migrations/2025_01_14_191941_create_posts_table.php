@@ -13,6 +13,8 @@ return new class extends Migration {
             $table->text('description');
             $table->text('ingredients');
             $table->string('image')->nullable();
+            $table->enum('visibility', ['public', 'private', 'shared'])->default('public');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
