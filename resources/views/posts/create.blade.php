@@ -18,6 +18,15 @@
     </div>
 
     <div>
+        <label for="visibility">Visibilidad:</label>
+        <select name="visibility" id="visibility">
+            <option value="public">Público</option>
+            <option value="private">Privado</option>
+            <option value="shared">Compartido</option>
+        </select>
+    </div>
+
+    <div>
         <label for="image">Imagen:</label>
         <input type="file" name="image" id="image" accept="image/*">
     </div>
