@@ -34,8 +34,21 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        $post->load('user.followers');
+
+        if ($post->visibility === 'private' && auth()->id() !== $post->user_id) {
+            abort(404);
+        }
+
+        if ($post->visibility === 'shared') {
+            if (!auth()->check() || !$post->user->followers->contains(auth()->id())) {
+                return redirect()->route('login');
+            }
+        }
+
         return view('posts.show', compact('post'));
     }
+
 
     public function create()
     {
@@ -51,20 +64,35 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        if ($post->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('posts.edit', compact('post'));
     }
 
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $data = $request->validated();
+
+        $data = $request->validated([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'ingredients' => 'required|string',
+            'visibility' => 'required|in:public,private,shared,saved',
+            'image' => 'nullable|image',
+        ]);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
+        if ($post->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         $post->update($data);
 
-        return to_route('posts.index')->with('status', 'Receta actualizada');
+        return redirect()->route('posts.show', ['post' => $post])->with('status', 'Post actualizado correctamente.');
     }
 
 

@@ -18,6 +18,7 @@ class UpdatePostRequest extends FormRequest
             'description' => 'required',
             'ingredients' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'visibility' => 'required|string|in:public,private,shared',
         ];
     }
 }

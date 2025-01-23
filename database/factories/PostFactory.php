@@ -19,6 +19,7 @@ class PostFactory extends Factory
             'ingredients' => $this->faker->paragraph(),
             'image' => $this->faker->imageUrl(),
             'user_id' => User::factory(),
+            'visibility' => $this->faker->randomElement(['public', 'private', 'shared']),
         ];
     }
 }
