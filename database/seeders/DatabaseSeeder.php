@@ -20,17 +20,19 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         Tag::factory(10)->create();
 
-        User::factory()->create([
+        $paqui = User::factory()->create([
             'name' => 'Paqui',
             'email' => 'paqui@gmail.com',
             'password' => bcrypt('12345678')
         ]);
 
-        $user = User::first();
+        $antonio = User::factory()->create([
+            'name' => 'Antonio',
+            'email' => 'antonio@gmail.com',
+            'password' => bcrypt('12345678')
+        ]);
 
-        if (!$user) {
-            $user = User::factory()->create(['name' => 'Usuario Admin']);
-        }
+        $antonio->followers()->attach($paqui);
 
         Post::factory(5)->create()->each(function ($post) {
             $categories = Category::all()->random(rand(1, 4))->pluck('id');
