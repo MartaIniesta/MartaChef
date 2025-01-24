@@ -6,6 +6,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+/*Route::get('/', function () {
+    return view('welcome');
+})->name('home');*/
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
