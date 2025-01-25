@@ -15,7 +15,7 @@
                     @guest
                         <!-- Login & Register Links for Guests -->
                         <a href="{{ route('login') }}" class="text-gray-800 hover:text-gray-600 transition duration-200">
-                            Login
+                            Login/
                         </a>
                         <a href="{{ route('register') }}" class="text-gray-800 hover:text-gray-600 transition duration-200">
                             Register
@@ -23,20 +23,20 @@
                     @endguest
 
                     @auth
-                        <div x-data="{ open: false }" class="relative">
-                            <!-- Botón de imagen de perfil -->
-                            <button @click="open = !open" class="focus:outline-none">
-                                <img
-                                    src="{{ Auth::user()->profile_image ? asset('storage/public' . Auth::user()->profile_image) : asset('default-images/default-profile.png') }}"
-                                    alt="{{ Auth::user()->name }}"
-                                    class="h-12 w-12 rounded-full object-cover hover:scale-105 transition duration-200"
-                                >
-                            </button>
+                        <x-dropdown align="right" width="48" closeOnItemClick="true">
+                            <!-- Trigger -->
+                            <x-slot name="trigger">
+                                <button class="focus:outline-none">
+                                    <img
+                                        src="{{ Auth::user()->profile_image ? asset('storage/public' . Auth::user()->profile_image) : asset('default-images/default-profile.png') }}"
+                                        alt="{{ Auth::user()->name }}"
+                                        class="h-12 w-12 rounded-full object-cover hover:scale-105 transition duration-200"
+                                    >
+                                </button>
+                            </x-slot>
 
-                            <!-- Menú desplegable -->
-                            <div x-show="open" x-transition
-                                 class="absolute z-50 mt-2 right-0 w-48 bg-white rounded-md shadow-lg py-1"
-                                 style="display: none;">
+                            <!-- Contenido -->
+                            <x-slot name="content">
                                 <x-dropdown-link :href="route('profile.edit')">
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
@@ -44,12 +44,12 @@
                                     @csrf
                                     <x-dropdown-link :href="route('logout')"
                                                      onclick="event.preventDefault();
-                                this.closest('form').submit();">
+                                                     this.closest('form').submit();">
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </form>
-                            </div>
-                        </div>
+                            </x-slot>
+                        </x-dropdown>
                     @endauth
                 </div>
             </div>
