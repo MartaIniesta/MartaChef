@@ -34,26 +34,26 @@ class Post extends Model
             ->orderBy('created_at', 'desc');
     }
 
-    public function visibilityPublic($query)
+    public function sharedWith(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'followed_id', 'follower_id');
+    }
+
+    public function scopeVisibilityPublic($query)
     {
         return $query->where('visibility', 'public');
     }
 
-    public function visibilityPrivate($query, $userId)
+    public function scopeVisibilityPrivate($query, $userId)
     {
         return $query->where('visibility', 'private')->where('user_id', $userId);
     }
 
-    public function visibilityShared($query, $userId)
+    public function scopeVisibilityShared($query, $userId)
     {
         return $query->where('visibility', 'shared')
             ->whereHas('sharedWith', function ($q) use ($userId) {
-                $q->where('friend_id', $userId);
+                $q->where('followed_id', $userId);
             });
-    }
-
-    public function sharedWith(): belongsToMany
-    {
-        return $this->belongsToMany(User::class, 'post_user', 'post_id', 'friend_id');
     }
 }

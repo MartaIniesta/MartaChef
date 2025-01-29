@@ -2,6 +2,16 @@
 
 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
+
+    <!-- Mostrar errores -->
+    @if ($errors->any())
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+
     <div>
         <label for="title">Título:</label>
         <input type="text" name="title" id="title" value="{{ old('title') }}" required>

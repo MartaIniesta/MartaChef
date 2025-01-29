@@ -19,11 +19,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('posts/shared', [PostController::class, 'shared'])->name('posts.shared');
+    Route::get('/sharedPosts', [PostController::class, 'sharedPosts'])->name('posts.shared');
     Route::get('/myPosts', [PostController::class, 'myPosts'])->name('posts.myPosts');
 
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
-    Route::post('posts', [PostController::class, 'store'])->name('posts.store');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');

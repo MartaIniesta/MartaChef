@@ -2,6 +2,7 @@
 <a href="{{ route('home') }}">Home</a><br>
 @auth
     <a href="{{ route('posts.myPosts') }}">Mis recetas</a>
+    <a href="{{ route('posts.shared') }}">Recetas compartidas</a><br>
     <a href="{{ route('posts.create') }}">Crear receta</a>
 @endauth
 

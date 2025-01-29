@@ -15,21 +15,33 @@ class PostController extends Controller
 
     public function index()
     {
-        $publicPosts = Post::all();
+        $publicPosts = Post::visibilityPublic()->get();
 
         return view('posts.index', compact('publicPosts'));
     }
 
     public function myPosts()
     {
-        $userPosts  = Post::where('user_id', auth()->id())->latest()->paginate(10);
+        $userId = auth()->id();
+
+        $userPosts = Post::where('user_id', $userId)
+            ->where(function ($query) {
+                $query->where('visibility', 'public')
+                    ->orWhere('visibility', 'private');
+            })
+            ->latest()
+            ->paginate(10);
+
         return view('posts.myPosts', compact('userPosts'));
     }
 
-    public function shared()
+    public function sharedPosts()
     {
-        $posts = Post::shared(auth()->id())->latest()->paginate(10);
-        return view('posts.shared', compact('posts'));
+        $userId = auth()->id();
+
+        $sharedPosts = Post::visibilityShared($userId)->latest()->paginate(10);
+
+        return view('posts.sharedPosts', compact('sharedPosts'));
     }
 
     public function show(Post $post)
@@ -48,7 +60,6 @@ class PostController extends Controller
 
         return view('posts.show', compact('post'));
     }
-
 
     public function create()
     {
