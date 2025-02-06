@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -20,26 +21,35 @@ class PostController extends Controller
         return view('posts.index', compact('publicPosts'));
     }
 
-    public function myPosts()
+    public function myPosts(Request $request)
     {
         $userId = auth()->id();
+        $visibility = $request->query('visibility', 'all'); // 'all' por defecto
 
         $userPosts = Post::where('user_id', $userId)
-            ->where(function ($query) {
-                $query->where('visibility', 'public')
-                    ->orWhere('visibility', 'private');
+            ->when($visibility !== 'all', function ($query) use ($visibility, $userId) {
+                if ($visibility === 'public' || $visibility === 'private') {
+                    $query->where('visibility', $visibility);
+                } elseif ($visibility === 'shared') {
+                    $query->where('visibility', 'shared');
+                }
             })
             ->latest()
             ->paginate(10);
 
-        return view('posts.myPosts', compact('userPosts'));
+        return view('posts.myPosts', compact('userPosts', 'visibility'));
     }
 
     public function sharedPosts()
     {
         $userId = auth()->id();
 
-        $sharedPosts = Post::visibilityShared($userId)->latest()->paginate(10);
+        $sharedPosts = Post::where('visibility', 'shared')
+            ->whereHas('user.followers', function ($query) use ($userId) {
+                $query->where('follower_id', $userId); // Solo de usuarios a los que sigue
+            })
+            ->latest()
+            ->paginate(10);
 
         return view('posts.sharedPosts', compact('sharedPosts'));
     }
@@ -89,7 +99,7 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'ingredients' => 'required|string',
-            'visibility' => 'required|in:public,private,shared,saved',
+            'visibility' => 'required|in:public,private,shared',
             'image' => 'nullable|image',
         ]);
 

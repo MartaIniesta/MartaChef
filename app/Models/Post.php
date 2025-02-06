@@ -53,7 +53,7 @@ class Post extends Model
     {
         return $query->where('visibility', 'shared')
             ->whereHas('sharedWith', function ($q) use ($userId) {
-                $q->where('followed_id', $userId);
+                $q->where('follower_id', $userId);
             });
     }
 }
