@@ -14,11 +14,13 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:5',
-            'description' => 'required',
-            'ingredients' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'visibility' => 'required|string|in:public,private,shared',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'ingredients' => 'required|string',
+            'visibility' => 'required|in:public,private,shared',
+            'image' => 'nullable|image',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
         ];
     }
 }

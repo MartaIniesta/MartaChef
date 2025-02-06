@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -70,22 +71,28 @@ class PostController extends Controller
         }
 
         $comments = Comment::where('post_id', $post->id)
-            ->whereNull('parent_id') // Solo obtener los comentarios principales
-            ->with('replies.user') // Cargar las respuestas con el usuario
+            ->whereNull('parent_id')
+            ->with('replies.user')
             ->get();
-
 
         return view('posts.show', compact('post', 'comments'));
     }
 
     public function create()
     {
-        return view('posts.create', ['post' => new Post()]);
+        $categories = Category::all();
+
+        return view('posts.create', [
+            'post' => new Post(),
+            'categories' => $categories,
+        ]);
     }
 
     public function store(StorePostRequest $request)
     {
-        auth()->user()->posts()->create($request->validated());
+        $post = auth()->user()->posts()->create($request->validated());
+
+        $post->categories()->sync($request->categories);
 
         return to_route('posts.index')->with('status', 'Receta creada correctamente');
     }
@@ -99,30 +106,30 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
+        if ($post->user_id !== auth()->id()) {
+            abort(403);
+        }
 
-        $data = $request->validated([
+        $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'ingredients' => 'required|string',
             'visibility' => 'required|in:public,private,shared',
             'image' => 'nullable|image',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
-        if ($post->user_id !== auth()->id()) {
-            abort(403);
-        }
-
         $post->update($data);
 
         return redirect()->route('posts.show', ['post' => $post])->with('status', 'Post actualizado correctamente.');
     }
-
 
     public function destroy(Post $post)
     {
