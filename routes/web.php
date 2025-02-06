@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 })->name('home');*/
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('blog', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/dashboard', function () {
@@ -28,6 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+    Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

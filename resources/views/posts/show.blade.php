@@ -6,44 +6,25 @@
 
 {{-- Mostrar los comentarios --}}
 <h3>Comentarios:</h3>
-@foreach ($post->comments as $comment)
-    <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
-        <p><strong>Autor: {{ $comment->user->name }}</strong></p>
-        <p>{{ $comment->content }}</p>
-
-        <!-- Respuestas -->
-        @if ($comment->replies->isNotEmpty())
-            <div style="margin-left: 20px; border-left: 2px solid #ddd; padding-left: 10px;">
-                <p><strong>Respuestas:</strong></p>
-                @foreach ($comment->replies as $reply)
-                    <p><strong>Autor: {{ $comment->user->name }}</strong></p>
-                    <p>{{ $reply->content }}</p>
-                @endforeach
-            </div>
-        @endif
-        <form action="{{ route('comments.store') }}" method="POST" style="margin-top: 10px;">
-            @csrf
-            <input type="hidden" name="post_id" value="{{ $post->id }}">
-            <input type="hidden" name="parent_id" value="{{ $comment->id }}">
-            <textarea name="content" rows="2" placeholder="Escribe tu respuesta..." required></textarea>
-            <br>
-            <button type="submit">Responder</button>
-        </form>
-    </div>
-@endforeach
-<!-- Formulario para comentar directamente al post -->
-<h3>Deja un comentario:</h3>
-@if(Auth::check())
-    <form action="{{ route('comments.store', $post->id) }}" method="POST">
-        @csrf
-        <input type="hidden" name="post_id" value="{{ $post->id }}">
-        <textarea name="content" rows="3" placeholder="Escribe un comentario..." required></textarea>
-        <br>
-        <button type="submit">Añadir comentario</button>
-    </form>
+@if ($comments->count())
+    <ul>
+        @foreach ($comments as $comment)
+            <x-comment :comment="$comment" />
+        @endforeach
+    </ul>
+@else
+    <p>No hay comentarios aún.</p>
 @endif
 
+<!-- Formulario para agregar un nuevo comentario -->
+<form action="{{ route('comments.store') }}" method="POST">
+    @csrf
+    <input type="hidden" name="post_id" value="{{ $post->id }}">
+    <textarea name="content" required placeholder="Escribe un comentario..."></textarea>
+    <button type="submit">Comentar</button>
+</form>
 
+{{-- Categorias --}}
 <h3>Categorías:</h3>
 <ul>
     @foreach ($post->categories as $category)
@@ -51,6 +32,7 @@
     @endforeach
 </ul>
 
+{{-- Etiquetas --}}
 <h3>Etiquetas:</h3>
 <ul>
     @foreach ($post->tags as $tag)

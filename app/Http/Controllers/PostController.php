@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -68,7 +69,13 @@ class PostController extends Controller
             }
         }
 
-        return view('posts.show', compact('post'));
+        $comments = Comment::where('post_id', $post->id)
+            ->whereNull('parent_id') // Solo obtener los comentarios principales
+            ->with('replies.user') // Cargar las respuestas con el usuario
+            ->get();
+
+
+        return view('posts.show', compact('post', 'comments'));
     }
 
     public function create()

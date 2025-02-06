@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -25,5 +23,33 @@ class CommentController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Comentario publicado correctamente.');
+    }
+
+    public function update(Request $request, Comment $comment)
+    {
+        if (auth()->id() !== $comment->user_id) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $comment->update([
+            'content' => $validated['content'],
+        ]);
+
+        return redirect()->back()->with('success', 'Comentario actualizado correctamente.');
+    }
+
+    public function destroy(Comment $comment)
+    {
+        if (auth()->id() !== $comment->user_id) {
+            abort(403);
+        }
+
+        $comment->delete();
+
+        return redirect()->back()->with('success', 'Comentario eliminado correctamente.');
     }
 }
