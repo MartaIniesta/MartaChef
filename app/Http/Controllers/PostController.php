@@ -60,16 +60,6 @@ class PostController extends Controller
     {
         $post->load('user.followers');
 
-        if ($post->visibility === 'private' && auth()->id() !== $post->user_id) {
-            abort(404);
-        }
-
-        if ($post->visibility === 'shared') {
-            if (!auth()->check() || !$post->user->followers->contains(auth()->id())) {
-                return redirect()->route('login');
-            }
-        }
-
         $comments = Comment::where('post_id', $post->id)
             ->whereNull('parent_id')
             ->with('replies.user')

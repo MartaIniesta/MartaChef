@@ -2,7 +2,13 @@
 <p><strong>Autor:</strong> {{ $post->user->name ?? 'Autor desconocido' }}</p>
 <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="max-width: 300px;">
 <p>{{ $post->description }}</p>
-<p>Ingredientes: {{ $post->ingredients }}</p>
+{{-- Ingredientes --}}
+<h3>Ingredientes:</h3>
+<ul>
+    @foreach(explode(',', $post->ingredients) as $ingredient)
+        <li>{{ trim($ingredient) }}</li>
+    @endforeach
+</ul>
 
 {{-- Categorias --}}
 <h3>Categorías:</h3>

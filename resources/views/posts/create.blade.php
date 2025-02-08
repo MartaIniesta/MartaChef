@@ -53,10 +53,8 @@
         </div>
 
         {{-- Ingredientes --}}
-        <div class="mb-4">
-            <label for="ingredients" class="block text-gray-700 font-medium">Ingredientes:</label>
-            <textarea name="ingredients" id="ingredients" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">{{ old('ingredients') }}</textarea>
-        </div>
+        <label for="ingredients" class="block text-gray-700 font-medium">Ingredientes:</label>
+        <input type="text" name="ingredients" placeholder="Indica los ingredientes separados por comas" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
         {{-- Visibilidad --}}
         <div class="mb-4">
