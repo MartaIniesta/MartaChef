@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -103,7 +103,10 @@ class PostController extends Controller
             abort(403);
         }
 
-        return view('posts.edit', compact('post'));
+        $categories = Category::all();
+        $selectedCategories = $post->categories->pluck('id')->toArray();
+
+        return view('posts.edit', compact('post', 'categories', 'selectedCategories'));
     }
 
     public function update(Request $request, Post $post)
@@ -117,16 +120,22 @@ class PostController extends Controller
             'description' => 'required|string',
             'ingredients' => 'required|string',
             'visibility' => 'required|in:public,private,shared',
-            'image' => 'nullable|image',
-            'categories' => 'required|array',
+            'categories' => 'required|array|min:1|max:4',
             'categories.*' => 'exists:categories,id',
+            'image' => $post->image ? 'nullable|image' : 'required|image',
         ]);
 
         if ($request->hasFile('image')) {
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
+            }
+
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
         $post->update($data);
+
+        $post->categories()->sync($data['categories']);
 
         return redirect()->route('posts.show', ['post' => $post])->with('status', 'Post actualizado correctamente.');
     }

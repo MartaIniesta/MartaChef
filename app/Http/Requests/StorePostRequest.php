@@ -19,7 +19,7 @@ class StorePostRequest extends FormRequest
             'ingredients' => 'required|string',
             'visibility' => 'required|in:public,private,shared',
             'image' => 'nullable|image',
-            'categories' => 'required|array',
+            'categories' => 'required|array|min:1|max:4',
             'categories.*' => 'exists:categories,id',
         ];
     }

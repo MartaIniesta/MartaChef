@@ -93,7 +93,7 @@
     </div>
 
     {{-- JS --}}
-    <script src="{{ asset('js/category-select.js') }}"></script>
+    <script src="{{ asset('js/category-select-create.js') }}"></script>
     <script src="{{ asset('js/category-search.js') }}"></script>
 </x-app-layout>
 </body>

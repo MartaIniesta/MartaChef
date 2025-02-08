@@ -1,7 +1,11 @@
 document.getElementById('add-category-btn').addEventListener('click', function() {
     let selectedCategories = Array.from(document.getElementById('categories').selectedOptions);
-
     let selectedCategoriesContainer = document.getElementById('selected-categories');
+
+    if (selectedCategoriesContainer.children.length >= 4) {
+        alert("No puedes seleccionar más de 4 categorías.");
+        return;
+    }
 
     selectedCategories.forEach(option => {
         let categoryDiv = document.createElement('div');
@@ -27,7 +31,6 @@ document.getElementById('add-category-btn').addEventListener('click', function()
 
         categoryDiv.appendChild(categoryName);
         categoryDiv.appendChild(removeButton);
-
         categoryDiv.appendChild(input);
 
         selectedCategoriesContainer.appendChild(categoryDiv);

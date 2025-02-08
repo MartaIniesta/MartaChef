@@ -1,6 +1,6 @@
 <x-app-layout>
     <nav class="bg-[#F8F8F8]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-12">
 
                 <!-- Logo -->
@@ -10,8 +10,8 @@
                     <x-application-logo/>
                 </div>
 
-                <div class="flex justify-center items-center ml-[150px]">
-                    <img src="{{ asset('storage/iconos/prueba2.png') }}" class="h-20 mt-16">
+                <div class="flex justify-center items-center ml-[195px]">
+                    <img src="{{ asset('storage/icons/prueba2.png') }}" class="h-[75px] mt-16">
                 </div>
 
                 <!-- Autenticación (Menú desplegable) -->
@@ -21,7 +21,7 @@
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button class="text-gray-800 hover:text-gray-600 focus:outline-none text-sm flex items-center space-x-1">
-                                    <img src="{{ asset('storage/iconos/agregar-usuario.png') }}" class="h-5 w-5">
+                                    <img src="{{ asset('storage/icons/agregar-usuario.png') }}" class="h-5 w-5">
                                     <span class="mt-1">CUENTA</span>
                                 </button>
                             </x-slot>
@@ -70,7 +70,7 @@
     </nav>
 
     <nav class="bg-[#F0F0F0]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
 
                 <!-- Segunda Parte del Menú -->
@@ -78,7 +78,7 @@
                     <a href="{{ route('posts.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
                         <!-- Cuadrado blanco con imagen -->
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/iconos/blog.png') }}" class="h-12 w-12">
+                            <img src="{{ asset('storage/icons/blog.png') }}" class="h-12 w-12">
                         </div>
                         BLOG
                     </a>
@@ -86,7 +86,7 @@
                     <a href="#" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
                         <!-- Cuadrado blanco con imagen -->
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/iconos/recetas.png') }}" class="h-12 w-12">
+                            <img src="{{ asset('storage/icons/recetas.png') }}" class="h-12 w-12">
                         </div>
                         RECETAS
                     </a>
