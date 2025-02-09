@@ -5,8 +5,8 @@
 {{-- Ingredientes --}}
 <h3>Ingredientes:</h3>
 <ul>
-    @foreach(explode(',', $post->ingredients) as $ingredient)
-        <li>{{ trim($ingredient) }}</li>
+    @foreach(array_filter(array_map('trim', explode(',', $post->ingredients))) as $ingredient)
+        <li>{{ $ingredient }}</li>
     @endforeach
 </ul>
 
