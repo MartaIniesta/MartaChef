@@ -26,7 +26,7 @@ class PostController extends Controller
     public function myPosts(Request $request)
     {
         $userId = auth()->id();
-        $visibility = $request->query('visibility', 'all'); // 'all' por defecto
+        $visibility = $request->query('visibility', 'all');
 
         $userPosts = Post::where('user_id', $userId)
             ->when($visibility !== 'all', function ($query) use ($visibility, $userId) {
@@ -48,7 +48,7 @@ class PostController extends Controller
 
         $sharedPosts = Post::where('visibility', 'shared')
             ->whereHas('user.followers', function ($query) use ($userId) {
-                $query->where('follower_id', $userId); // Solo de usuarios a los que sigue
+                $query->where('follower_id', $userId);
             })
             ->latest()
             ->paginate(10);
@@ -80,7 +80,13 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        $post = auth()->user()->posts()->create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        $post = auth()->user()->posts()->create($data);
 
         $post->categories()->sync($request->categories);
 
