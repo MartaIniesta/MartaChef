@@ -18,9 +18,10 @@ class StorePostRequest extends FormRequest
             'description' => 'required|string',
             'ingredients' => 'required|string',
             'visibility' => 'required|in:public,private,shared',
-            'image' => 'nullable|image',
             'categories' => 'required|array|min:1|max:4',
             'categories.*' => 'exists:categories,id',
+            'tags' => 'nullable|string',
+            'image' => 'required|image',
         ];
     }
 }

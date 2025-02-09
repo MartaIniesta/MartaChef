@@ -60,6 +60,14 @@
                     >
                 </div>
 
+                {{-- Etiquetas --}}
+                <div class="mb-4">
+                    <label for="tags" class="block text-gray-700 font-medium">Etiquetas:</label>
+                    <input type="text" name="tags" id="tags" placeholder="#rico #facil"
+                           value="{{ old('tags', $post->tags->pluck('name')->implode(' ')) }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+
                 {{-- Visibilidad --}}
                 <div class="mb-4">
                     <label for="visibility" class="block text-gray-700 font-medium">Visibilidad:</label>
@@ -75,7 +83,7 @@
                     <label for="image" class="block text-gray-700 font-medium">Imagen:</label>
 
                     <!-- Contenedor de la vista previa -->
-                    <div id="imagePreview">
+                    <div id="imagePreview" class="flex justify-center">
                         @if(isset($post) && $post->image)
                             <div class="mb-2 flex justify-center">
                                 <img id="currentImage" src="{{ asset('storage/' . $post->image) }}"

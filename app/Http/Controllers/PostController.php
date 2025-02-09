@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -58,7 +59,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $post->load('user.followers');
+        $post->load('tags');
 
         $comments = Comment::where('post_id', $post->id)
             ->whereNull('parent_id')
@@ -83,12 +84,20 @@ class PostController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('images', 'public');
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+            $image->storeAs('images', $imageName, 'public');
+            $data['image'] = 'images/' . $imageName;
         }
 
         $post = auth()->user()->posts()->create($data);
 
         $post->categories()->sync($request->categories);
+
+        if ($request->tags) {
+            $tags = $this->saveTags($request->tags);
+            $post->tags()->attach($tags);
+        }
 
         return to_route('posts.index')->with('status', 'Receta creada correctamente');
     }
@@ -118,6 +127,7 @@ class PostController extends Controller
             'visibility' => 'required|in:public,private,shared',
             'categories' => 'required|array|min:1|max:4',
             'categories.*' => 'exists:categories,id',
+            'tags' => 'nullable|string',
             'image' => $post->image ? 'nullable|image' : 'required|image',
         ]);
 
@@ -126,20 +136,46 @@ class PostController extends Controller
                 Storage::disk('public')->delete($post->image);
             }
 
-            $data['image'] = $request->file('image')->store('images', 'public');
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+            $image->storeAs('images', $imageName, 'public');
+
+            $data['image'] = 'images/' . $imageName;
         }
 
         $post->update($data);
 
         $post->categories()->sync($data['categories']);
 
+        if ($request->tags) {
+            $tags = $this->saveTags($request->tags);
+            $post->tags()->sync($tags);
+        }
+
         return redirect()->route('posts.show', ['post' => $post])->with('status', 'Post actualizado correctamente.');
     }
 
     public function destroy(Post $post)
     {
+        if ($post->image) {
+            Storage::disk('public')->delete($post->image);
+        }
+
         $post->delete();
 
         return to_route('posts.index')->with('status', 'Receta eliminada correctamente');
+    }
+
+    private function saveTags($tagsString)
+    {
+        $tagsArray = array_map('trim', explode(' ', $tagsString));
+
+        $tags = [];
+        foreach ($tagsArray as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $tags[] = $tag->id;
+        }
+
+        return $tags;
     }
 }

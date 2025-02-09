@@ -18,13 +18,16 @@
     @endforeach
 </ul>
 
-{{-- Etiquetas --}}
+{{-- Mostrar etiquetas, si existen --}}
 <h3>Etiquetas:</h3>
-<ul>
-    @foreach ($post->tags as $tag)
-        <li>{{ $tag->name }}</li>
-    @endforeach
-</ul>
+@if($post->tags->isNotEmpty())
+    <div class="tags">
+        @foreach($post->tags as $tag)
+            <span class="tag">{{ $tag->name }}</span>
+        @endforeach
+    </div>
+@endif
+
 
 @auth
     @if(auth()->id() === $post->user_id)

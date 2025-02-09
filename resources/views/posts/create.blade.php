@@ -51,6 +51,12 @@
                     <input type="text" name="ingredients" placeholder="Indica los ingredientes separados por comas" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 
+                {{-- Etiquetas --}}
+                <div class="mb-4">
+                    <label for="tags" class="block text-gray-700 font-medium">Etiquetas:</label>
+                    <input type="text" name="tags" id="tags" value="{{ old('tags') }}" placeholder="#ricoyfacil #delicioso" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+
                 {{-- Visibilidad --}}
                 <div class="mb-4">
                     <label for="visibility" class="block text-gray-700 font-medium">Visibilidad:</label>
