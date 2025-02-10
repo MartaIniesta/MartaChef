@@ -19,7 +19,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $publicPosts = Post::visibilityPublic()->get();
+        $publicPosts = Post::visibilityPublic()->paginate(12);
 
         return view('posts.index', compact('publicPosts'));
     }
@@ -38,7 +38,7 @@ class PostController extends Controller
                 }
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(12);
 
         return view('posts.myPosts', compact('userPosts', 'visibility'));
     }
@@ -52,7 +52,7 @@ class PostController extends Controller
                 $query->where('follower_id', $userId);
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(12);
 
         return view('posts.sharedPosts', compact('sharedPosts'));
     }
