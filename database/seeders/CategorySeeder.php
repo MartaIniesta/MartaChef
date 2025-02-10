@@ -10,10 +10,9 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Postres', 'Pasteles', 'Galletas', 'Cupcakes', 'Tartas',
-            'Muffins', 'Brownies', 'Helados', 'Bocadillos', 'Panes',
-            'Bizcochos', 'Magdalenas', 'Croissants', 'Dulces', 'Chocolates',
-            'Galletas de arroz', 'Tartaletas', 'Mermeladas', 'Salsas', 'Barras de cereal'
+            'Pasteles', 'Tartas', 'Brownie', 'Cupcakes', 'Galletas',
+            'Bizcochos', 'Desayunos', 'Panes Dulces', 'Postres Fritos', 'Postres Saludables',
+            'Reposteria Internacional', 'Postres Sin Horno', 'Postres Fríos', 'Helado'
         ];
 
         foreach ($categories as $category) {

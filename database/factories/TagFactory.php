@@ -12,15 +12,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->randomElement([
-                'Fácil',
-                'Rápido',
-                'Chocolate',
-                'Frutas',
-                'Sin Gluten',
-                'Vegano',
-                'Clásico'
-            ]),
+            'name' => $this->faker->paragraph(),
         ];
     }
 }

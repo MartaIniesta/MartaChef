@@ -17,35 +17,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(CategorySeeder::class);
-        Tag::factory(10)->create();
-
-        $paqui = User::factory()->create([
+        $paqui = User::create([
             'name' => 'Paqui',
             'email' => 'paqui@gmail.com',
             'password' => bcrypt('12345678')
         ]);
 
-        $antonio = User::factory()->create([
+        $antonio = User::create([
             'name' => 'Antonio',
             'email' => 'antonio@gmail.com',
             'password' => bcrypt('12345678')
         ]);
 
+        $maria = User::create([
+            'name' => 'Maria',
+            'email' => 'maria@gmail.com',
+            'password' => bcrypt('12345678')
+        ]);
+
+        $david = User::create([
+            'name' => 'David',
+            'email' => 'david@gmail.com',
+            'password' => bcrypt('12345678')
+        ]);
+
         $antonio->followers()->attach($paqui);
 
-        Post::factory(5)->create()->each(function ($post) {
-            $categories = Category::all()->random(rand(1, 4))->pluck('id');
-            $post->categories()->attach($categories);
-
-            $tags = Tag::all()->random(rand(2, 5))->pluck('id');
-            $post->tags()->attach($tags);
-
-            $comments = Comment::factory(rand(1, 3))->create(['post_id' => $post->id]);
-
-            $comments->each(function ($comment) {
-                Comment::factory(rand(1, 2))->asReply($comment->id)->create(['post_id' => $comment->post_id]);
-            });
-        });
+        $this->call(CategorySeeder::class);
+        $this->call(PostSeeder::class);
     }
 }
