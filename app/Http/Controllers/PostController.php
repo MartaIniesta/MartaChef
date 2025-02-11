@@ -91,7 +91,6 @@ class PostController extends Controller
         }
 
         $post = auth()->user()->posts()->create($data);
-
         $post->categories()->sync($request->categories);
 
         if ($request->tags) {

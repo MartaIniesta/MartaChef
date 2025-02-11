@@ -2,13 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Comment;
-use App\Models\Post;
-use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,11 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RolesSeeder::class);
+
         $paqui = User::create([
             'name' => 'Paqui',
             'email' => 'paqui@gmail.com',
             'password' => bcrypt('12345678')
         ]);
+
+        $paqui->assignRole('user');
 
         $antonio = User::create([
             'name' => 'Antonio',
@@ -29,17 +30,31 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678')
         ]);
 
+        $antonio->assignRole('user');
+
         $maria = User::create([
             'name' => 'Maria',
             'email' => 'maria@gmail.com',
             'password' => bcrypt('12345678')
         ]);
 
+        $maria->assignRole('user');
+
         $david = User::create([
             'name' => 'David',
             'email' => 'david@gmail.com',
             'password' => bcrypt('12345678')
         ]);
+
+        $david->assignRole('moderator');
+
+        $admin = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('12345678')
+        ]);
+
+        $admin->assignRole('admin');
 
         $antonio->followers()->attach($paqui);
 
