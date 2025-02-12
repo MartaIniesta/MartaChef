@@ -40,25 +40,27 @@
             @endif
         </div>
 
-        <!-- Boton EDITAR -->
-        @can('edit-posts', $post)
-            <div class="mb-6">
-                <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
-                    Editar receta
-                </button>
-            </div>
-        @endcan
+        @if(auth()->user()->id === $post->user_id)
+            <!-- Boton EDITAR -->
+            @can('edit-posts', $post)
+                <div class="mb-6">
+                    <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
+                        Editar receta
+                    </button>
+                </div>
+            @endcan
 
-        <!-- Boton ELIMINAR -->
-        @can('delete-posts', $post)
-            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
-                    Eliminar
-                </button>
-            </form>
-        @endcan
+            <!-- Boton ELIMINAR -->
+            @can('delete-posts', $post)
+                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+                        Eliminar
+                    </button>
+                </form>
+            @endcan
+        @endif
 
         <!-- Muestra las OPINIONES ⭐ -->
         <h3 class="text-xl font-semibold mb-2">Opiniones de clientes</h3>
