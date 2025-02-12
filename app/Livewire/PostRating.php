@@ -4,10 +4,13 @@ namespace App\Livewire;
 
 use App\Models\{Post, Rating};
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class PostRating extends Component
 {
+    use AuthorizesRequests;
+
     public Post $post;
     public ?int $userRating = null;
     public float $averageRating = 0;
@@ -29,11 +32,9 @@ class PostRating extends Component
 
     public function rate(int $rating)
     {
-        if ($rating < 1 || $rating > 5) {
-            return;
-        }
+        $this->authorize('rate', $this->post);
 
-        if (!Auth::check() || Auth::id() == $this->post->user_id) {
+        if ($rating < 1 || $rating > 5) {
             return;
         }
 

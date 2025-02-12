@@ -67,5 +67,10 @@ class PostPolicy
     {
         return $user->hasRole('admin') || $user->hasRole('moderator');
     }
+
+    public function rate(User $user, Post $post): bool
+    {
+        return $user->id !== $post->user_id;
+    }
 }
 

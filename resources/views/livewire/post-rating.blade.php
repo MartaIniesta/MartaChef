@@ -28,7 +28,5 @@
                 </div>
             </div>
         @endif
-    @else
-        <p>Debes estar autenticado para calificar.</p>
     @endauth
 </div>

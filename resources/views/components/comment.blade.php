@@ -2,7 +2,7 @@
     <li class="ml-{{ $comment->parent_id ? '10' : '0' }} border-l-2 border-gray-300 pl-2">
         <p><strong>{{ $comment->user->name }}</strong>: {{ $comment->content }}</p>
 
-        @if(auth()->user()->id === $comment->user_id)
+        @if(auth()->user()->id === $comment->user_id || auth()->user()->hasRole('moderator'))
             <!-- Botón de EDITAR -->
             @can('edit-comments')
                 <button onclick="document.getElementById('edit-comment-{{ $comment->id }}').classList.toggle('hidden')" class="text-blue-500 hover:text-blue-700">
