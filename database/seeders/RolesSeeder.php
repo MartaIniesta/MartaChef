@@ -15,6 +15,8 @@ class RolesSeeder extends Seeder
             'edit-posts',
             'delete-posts',
             'create-comments',
+            'edit-comments',
+            'reply-comments',
             'delete-comments',
             'rate-posts',
             'view-dashboard',
@@ -35,7 +37,11 @@ class RolesSeeder extends Seeder
             'edit-posts',
             'delete-posts',
             'create-comments',
+            'edit-comments',
+            'reply-comments',
+            'delete-comments',
             'rate-posts',
+            'delete-posts',
         ]);
 
         $moderator->syncPermissions([

@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CommentController extends Controller
 {
+    use AuthorizesRequests;
+
     public function store(Request $request)
     {
+        $this->authorize('create', Comment::class);
+
         $validated = $request->validate([
             'content' => 'required|string',
             'post_id' => 'required|exists:posts,id',
@@ -27,9 +32,7 @@ class CommentController extends Controller
 
     public function update(Request $request, Comment $comment)
     {
-        if (auth()->id() !== $comment->user_id) {
-            abort(403);
-        }
+        $this->authorize('update', $comment);
 
         $validated = $request->validate([
             'content' => 'required|string',
@@ -44,9 +47,7 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        if (auth()->id() !== $comment->user_id) {
-            abort(403);
-        }
+        $this->authorize('delete', $comment);
 
         $comment->delete();
 

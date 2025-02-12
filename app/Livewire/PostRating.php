@@ -2,8 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Post;
-use App\Models\Rating;
+use App\Models\{Post, Rating};
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 

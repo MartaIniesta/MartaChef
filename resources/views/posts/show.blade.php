@@ -1,10 +1,12 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Muestra: Titulo, autor, imagen y descripcion -->
         <h1 class="text-3xl font-bold mb-4">{{ $post->title }}</h1>
         <p class="text-gray-600 mb-4"><strong>Autor:</strong> {{ $post->user->name ?? 'Autor desconocido' }}</p>
         <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="mb-4 max-w-md mx-auto">
         <p class="mb-6">{{ $post->description }}</p>
 
+        <!-- Muestra INGREDIENTES -->
         @auth
             <div class="mb-6">
                 <h3 class="text-xl font-semibold mb-2">Ingredientes:</h3>
@@ -16,6 +18,7 @@
             </div>
         @endauth
 
+        <!-- Muestra CATEGORIAS -->
         <div class="mb-6">
             <h3 class="text-xl font-semibold mb-2">Categorías:</h3>
             <ul class="list-disc ml-6">
@@ -25,6 +28,7 @@
             </ul>
         </div>
 
+        <!-- Muestra ETIQUETAS -->
         <div class="mb-6">
             <h3 class="text-xl font-semibold mb-2">Etiquetas:</h3>
             @if($post->tags->isNotEmpty())
@@ -36,50 +40,49 @@
             @endif
         </div>
 
+        <!-- Boton EDITAR -->
+        @can('edit-posts', $post)
+            <div class="mb-6">
+                <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
+                    Editar receta
+                </button>
+            </div>
+        @endcan
+
+        <!-- Boton ELIMINAR -->
+        @can('delete-posts', $post)
+            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+                    Eliminar
+                </button>
+            </form>
+        @endcan
+
+        <!-- Muestra las OPINIONES ⭐ -->
+        <h3 class="text-xl font-semibold mb-2">Opiniones de clientes</h3>
+        <livewire:post-rating :post="$post"/>
+
+        <!-- Muestra COMENTARIOS -->
         @auth
-            @if(auth()->user()->id === $post->user_id || auth()->user()->hasRole('admin'))
-                <div class="mb-6">
-                    <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
-                        Editar receta
-                    </button>
-                </div>
-            @endif
-
-            @if(auth()->user()->id === $post->user_id || auth()->user()->hasRole('admin') || auth()->user()->hasRole('moderator'))
-                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
-                        Eliminar
-                    </button>
-                </form>
-            @endif
-
-            <h3 class="text-xl font-semibold mb-2">Opiniones de clientes</h3>
-            <livewire:post-rating :post="$post"/>
-
             <div class="mb-6">
                 <h3 class="text-xl font-semibold mb-2">Comentarios:</h3>
                 @if ($comments->count())
                     <ul class="space-y-4">
                         @foreach ($comments as $comment)
                             <x-comment :comment="$comment" />
-                            @can('delete-comments')
-                                <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="inline-block mt-2">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded">
-                                        Eliminar comentario
-                                    </button>
-                                </form>
-                            @endcan
                         @endforeach
                     </ul>
                 @else
                     <p class="text-gray-500">¡Sé el primero en comentar!</p>
                 @endif
             </div>
+        @endauth
 
+
+        <!-- Añadir COMENTARIO -->
+        @can('create-comments')
             <div class="mb-6">
                 <form action="{{ route('comments.store') }}" method="POST">
                     @csrf
@@ -94,10 +97,11 @@
             <p class="text-gray-500 text-center mt-6">
                 <a href="{{ route('login') }}"><strong>Inicia sesión para ver la receta completa.</strong></a>
             </p>
-        @endauth
+        @endcan
 
         <a href="{{ route('posts.index') }}" class="inline-block mt-4 text-blue-500 hover:underline">&lt; Volver</a>
     </div>
 
+    <!-- Pie de pagina -->
     <x-footer></x-footer>
 </x-app-layout>

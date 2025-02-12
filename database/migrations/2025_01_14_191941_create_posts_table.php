@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('image')->nullable();
             $table->enum('visibility', ['public', 'private', 'shared'])->default('public');
             $table->foreignId('user_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

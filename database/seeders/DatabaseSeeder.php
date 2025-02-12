@@ -56,7 +56,8 @@ class DatabaseSeeder extends Seeder
 
         $admin->assignRole('admin');
 
-        $antonio->followers()->attach($paqui);
+        $paqui->following()->attach($antonio);
+        $antonio->following()->attach($paqui);
 
         $this->call(CategorySeeder::class);
         $this->call(PostSeeder::class);

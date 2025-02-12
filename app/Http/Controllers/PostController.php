@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
-use App\Models\Category;
-use App\Models\Comment;
-use App\Models\Post;
-use App\Models\Tag;
+use App\Http\Requests\{StorePostRequest, UpdatePostRequest};
+use App\Models\{Category, Comment, Post, Tag, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct()
     {
         $this->middleware('auth')->except('index', 'show');
@@ -47,10 +47,12 @@ class PostController extends Controller
     {
         $userId = auth()->id();
 
-        $sharedPosts = Post::where('visibility', 'shared')
-            ->whereHas('user.followers', function ($query) use ($userId) {
-                $query->where('follower_id', $userId);
-            })
+        $followedUserIds = User::whereHas('followers', function ($query) use ($userId) {
+            $query->where('follower_id', $userId);
+        })->pluck('id');
+
+        $sharedPosts = Post::whereIn('user_id', $followedUserIds)
+            ->where('visibility', 'shared')
             ->latest()
             ->paginate(12);
 
@@ -60,7 +62,6 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->load('tags');
-
         $comments = Comment::where('post_id', $post->id)
             ->whereNull('parent_id')
             ->with('replies.user')
@@ -71,16 +72,16 @@ class PostController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Post::class);
         $categories = Category::all();
 
-        return view('posts.create', [
-            'post' => new Post(),
-            'categories' => $categories,
-        ]);
+        return view('posts.create', ['post' => new Post(), 'categories' => $categories]);
     }
 
     public function store(StorePostRequest $request)
     {
+        $this->authorize('create', Post::class);
+
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
@@ -103,32 +104,16 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        if ($post->user_id !== auth()->id()) {
-            abort(403);
-        }
-
+        $this->authorize('update', $post);
         $categories = Category::all();
         $selectedCategories = $post->categories->pluck('id')->toArray();
 
         return view('posts.edit', compact('post', 'categories', 'selectedCategories'));
     }
 
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        if ($post->user_id !== auth()->id()) {
-            abort(403);
-        }
-
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'ingredients' => 'required|string',
-            'visibility' => 'required|in:public,private,shared',
-            'categories' => 'required|array|min:1|max:4',
-            'categories.*' => 'exists:categories,id',
-            'tags' => 'nullable|string',
-            'image' => $post->image ? 'nullable|image' : 'required|image',
-        ]);
+        $data = $request->validated();
 
         if ($request->hasFile('image')) {
             if ($post->image) {
@@ -138,12 +123,10 @@ class PostController extends Controller
             $image = $request->file('image');
             $imageName = $image->getClientOriginalName();
             $image->storeAs('images', $imageName, 'public');
-
             $data['image'] = 'images/' . $imageName;
         }
 
         $post->update($data);
-
         $post->categories()->sync($data['categories']);
 
         if ($request->tags) {
@@ -151,11 +134,13 @@ class PostController extends Controller
             $post->tags()->sync($tags);
         }
 
-        return redirect()->route('posts.show', ['post' => $post])->with('status', 'Post actualizado correctamente.');
+        return redirect()->route('posts.show', $post)->with('status', 'Post actualizado correctamente.');
     }
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         if ($post->image) {
             Storage::disk('public')->delete($post->image);
         }
@@ -163,6 +148,28 @@ class PostController extends Controller
         $post->delete();
 
         return to_route('posts.index')->with('status', 'Receta eliminada correctamente');
+    }
+
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $this->authorize('restore', $post);
+        $post->restore();
+
+        return redirect()->route('posts.index')->with('status', 'Receta restaurada correctamente');
+    }
+
+    public function forceDelete($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $this->authorize('forceDelete', $post);
+
+        if ($post->image) {
+            Storage::disk('public')->delete($post->image);
+        }
+
+        $post->forceDelete();
+        return redirect()->route('posts.index')->with('status', 'Receta eliminada permanentemente');
     }
 
     private function saveTags($tagsString)
