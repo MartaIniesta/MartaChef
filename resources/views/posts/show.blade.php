@@ -70,38 +70,12 @@
             @endcan
 
             <!-- Muestra COMENTARIOS -->
-            <div class="mb-6">
-                <h3 class="text-xl font-semibold mb-2">Comentarios:</h3>
-                @if ($comments->count())
-                    <ul class="space-y-4">
-                        @foreach ($comments as $comment)
-                            <x-comment :comment="$comment" />
-                        @endforeach
-                    </ul>
-                @else
-                    <p class="text-gray-500">¡Sé el primero en comentar!</p>
-                @endif
-            </div>
-        @endauth
-
-
-        <!-- Añadir COMENTARIO -->
-        @can('create-comments')
-            <div class="mb-6">
-                <form action="{{ route('comments.store') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="post_id" value="{{ $post->id }}">
-                    <textarea name="content" required placeholder="Escribe un comentario..." class="w-full border border-gray-300 rounded p-2 mb-2"></textarea>
-                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
-                        Comentar
-                    </button>
-                </form>
-            </div>
+            <livewire:comments :postId="$post->id" />
         @else
             <p class="text-gray-500 text-center mt-6">
                 <a href="{{ route('login') }}"><strong>Inicia sesión para ver la receta completa.</strong></a>
             </p>
-        @endcan
+        @endauth
 
         <a href="{{ route('posts.index') }}" class="inline-block mt-4 text-blue-500 hover:underline">&lt; Volver</a>
     </div>

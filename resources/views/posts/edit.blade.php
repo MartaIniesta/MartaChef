@@ -111,7 +111,7 @@
             </form>
 
             <div class="text-center mt-6">
-                <a href="{{ route('posts.index') }}" class="text-blue-500 hover:underline">&lt; Volver</a>
+                <a href="{{ route('posts.show', $post) }}" class="text-blue-500 hover:underline">&lt; Volver</a>
             </div>
         </div>
     </div>

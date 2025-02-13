@@ -28,7 +28,7 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('create-comments') && !$user->hasRole('moderator');
     }
 
     /**

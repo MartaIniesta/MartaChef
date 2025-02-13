@@ -115,21 +115,13 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        if ($request->hasFile('image')) {
-            if ($post->image) {
-                Storage::disk('public')->delete($post->image);
-            }
-
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $image->storeAs('images', $imageName, 'public');
-            $data['image'] = 'images/' . $imageName;
-        }
+        $data['image'] = $this->handleImageUpload($request, $post);
 
         $post->update($data);
-        $post->categories()->sync($data['categories']);
 
-        if ($request->tags) {
+        $post->categories()->sync($data['categories'] ?? []);
+
+        if ($request->filled('tags')) {
             $tags = $this->saveTags($request->tags);
             $post->tags()->sync($tags);
         }
@@ -148,6 +140,23 @@ class PostController extends Controller
         $post->delete();
 
         return to_route('posts.index')->with('status', 'Receta eliminada correctamente');
+    }
+
+    protected function handleImageUpload($request, Post $post)
+    {
+        if (!$request->hasFile('image')) {
+            return $post->image;
+        }
+
+        if ($post->image) {
+            Storage::disk('public')->delete($post->image);
+        }
+
+        $image = $request->file('image');
+        $imageName = $image->getClientOriginalName();
+        $image->storeAs('images', $imageName, 'public');
+
+        return 'images/' . $imageName;
     }
 
     public function restore($id)
