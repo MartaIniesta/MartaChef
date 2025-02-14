@@ -26,9 +26,23 @@
     @auth
         @can('create', App\Models\Comment::class)
             <div class="mt-4">
-                <!-- Campo para escribir comentario -->
-                <textarea wire:model="content" wire:key="textarea-{{ $resetKey }}" class="w-full border rounded p-2" placeholder="Escribe un comentario..."></textarea>
-                <button wire:click="addComment" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Comentar</button>
+                <textarea
+                    wire:model="content"
+                    wire:key="textarea-{{ $resetKey }}"
+                    maxlength="300"
+                    class="w-full border rounded p-2"
+                    placeholder="Escribe un comentario...">
+                </textarea>
+                <button wire:click="addComment" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+                    Comentar
+                </button>
+            </div>
+
+            <!-- Muestra un ERROR -->
+            <div class="mt-3">
+                @error('content')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
             </div>
         @endcan
     @endauth

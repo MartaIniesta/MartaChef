@@ -22,8 +22,14 @@ class Comments extends Component
     public $repliesToShow = [];
 
     protected $rules = [
-        'content' => 'nullable|max:255',
-        'replyContent' => 'nullable|max:255'
+        'content' => 'required|max:300',
+        'replyContent' => 'required|max:300'
+    ];
+
+    protected $messages = [
+        'content.required' => 'Debes escribir algo para comentar.',
+        'replyContent.required' => 'Debes escribir algo para responder.',
+        'editingContent.required' => 'El contenido es obligatorio al actualizar.',
     ];
 
     public function mount($postId)
@@ -33,7 +39,9 @@ class Comments extends Component
 
     public function addComment()
     {
-        $this->validate();
+        $this->validate([
+            'content' => 'required|max:300'
+        ]);
 
         $this->authorize('create', Comment::class);
 
@@ -46,7 +54,7 @@ class Comments extends Component
             $this->resetForm();
             $this->dispatch('comment-updated');
         } catch (\Exception $e) {
-            session()->flash('error', 'Hubo un problema al agregar el comentario.');
+            session()->flash('error');
         }
     }
 
@@ -57,7 +65,9 @@ class Comments extends Component
 
     public function addReply()
     {
-        $this->validate();
+        $this->validate([
+            'replyContent' => 'required|max:300'
+        ]);
 
         $this->authorize('create', Comment::class);
 
@@ -71,7 +81,7 @@ class Comments extends Component
             $this->resetForm();
             $this->dispatch('comment-updated');
         } catch (\Exception $e) {
-            session()->flash('error', 'Hubo un problema al agregar la respuesta.');
+            session()->flash('error');
         }
     }
 
@@ -84,7 +94,9 @@ class Comments extends Component
 
     public function updateComment()
     {
-        $this->validate();
+        $this->validate([
+            'editingContent' => 'required|max:300'
+        ]);
 
         $comment = Comment::findOrFail($this->editingCommentId);
 
@@ -95,7 +107,7 @@ class Comments extends Component
             $this->resetForm();
             $this->dispatch('comment-updated');
         } catch (\Exception $e) {
-            session()->flash('error', 'Hubo un problema al actualizar el comentario.');
+            session()->flash('error');
         }
     }
 
@@ -109,7 +121,7 @@ class Comments extends Component
             $comment->delete();
             $this->dispatch('comment-updated');
         } catch (\Exception $e) {
-            session()->flash('error', 'Hubo un problema al eliminar el comentario.');
+            session()->flash('error');
         }
     }
 
