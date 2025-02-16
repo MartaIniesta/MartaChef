@@ -37,11 +37,6 @@ class Post extends Model
             ->orderBy('created_at', 'desc');
     }
 
-    public function sharedWith(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'followers', 'followed_id', 'follower_id');
-    }
-
     public function scopeVisibilityPublic($query)
     {
         return $query->where('visibility', 'public');
@@ -55,7 +50,7 @@ class Post extends Model
     public function scopeVisibilityShared($query, $userId)
     {
         return $query->where('visibility', 'shared')
-            ->whereHas('sharedWith', function ($q) use ($userId) {
+            ->whereHas('user.followers', function ($q) use ($userId) {
                 $q->where('follower_id', $userId);
             });
     }

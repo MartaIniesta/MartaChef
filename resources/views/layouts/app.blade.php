@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @livewireStyles
 
-    <link rel="icon" type="image/png" href="{{ asset('storage/iconos/icono-MartaChef.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('storage/icons/MartaChef.png') }}">
     <title>{{ config('app.name', 'MartaChef') }}</title>
 
     <!-- Fonts -->
@@ -20,7 +20,6 @@
     @stack('head')
 </head>
 <body class="font-sans antialiased">
-    @livewireScripts
     <div>
         <!-- Page Heading -->
         @isset($header)
@@ -37,7 +36,7 @@
         </main>
     </div>
 
-    <!-- Scripts adicionales que se puedan inyectar desde las vistas -->
+    @livewireScripts
     @stack('scripts')
 </body>
 </html>

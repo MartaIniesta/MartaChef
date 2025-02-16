@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
-    use hasFactory;
+    use HasFactory;
     protected $fillable = ['name'];
 
-    public function posts(): belongsToMany
+    public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class);
     }

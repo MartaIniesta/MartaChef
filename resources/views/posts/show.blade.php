@@ -2,7 +2,9 @@
     <div class="max-w-4xl mx-auto px-4 py-8">
         <!-- Muestra: Titulo, autor, imagen y descripcion -->
         <h1 class="text-3xl font-bold mb-4">{{ $post->title }}</h1>
-        <p class="text-gray-600 mb-4"><strong>Autor:</strong> {{ $post->user->name ?? 'Autor desconocido' }}</p>
+        <a href="{{ route('users.show', $post->user) }}">
+           <p class="text-gray-600 mb-4"><strong>Autor:</strong> {{ $post->user->name ?? 'Autor desconocido' }}</p>
+       </a>
         <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="mb-4 max-w-md mx-auto">
         <p class="mb-6">{{ $post->description }}</p>
 

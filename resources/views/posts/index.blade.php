@@ -74,6 +74,9 @@
             <!-- Menú de navegación -->
             <div class="space-x-4">
                 @auth
+                    <a href="{{ route('users.index') }}">
+                        Usuarios
+                    </a>
                     <a href="{{ route('posts.myPosts') }}">
                         Mis Recetas
                     </a>

@@ -20,6 +20,9 @@ class RolesSeeder extends Seeder
             'delete-comments',
             'rate-posts',
             'view-dashboard',
+            'follow-users',
+            'unfollow-users',
+            'delete-users',
         ];
 
         foreach ($permissions as $permission) {
@@ -42,6 +45,8 @@ class RolesSeeder extends Seeder
             'delete-comments',
             'rate-posts',
             'delete-posts',
+            'follow-users',
+            'unfollow-users',
         ]);
 
         $moderator->syncPermissions([
