@@ -85,9 +85,8 @@ class Comments extends Component
         }
     }
 
-    public function editComment($commentId)
+    public function editComment(Comment $comment)
     {
-        $comment = Comment::findOrFail($commentId);
         $this->editingCommentId = $comment->id;
         $this->editingContent = $comment->content;
     }
@@ -111,10 +110,9 @@ class Comments extends Component
         }
     }
 
-    public function deleteComment($commentId)
+    public function deleteComment(Comment $comment)
     {
-        $comment = Comment::findOrFail($commentId);
-
+        $this->render();
         $this->authorize('delete', $comment);
 
         try {

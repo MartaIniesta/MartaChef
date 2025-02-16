@@ -90,7 +90,6 @@
                         </div>
                         RECETAS
                     </a>
-
                 </div>
             </div>
         </div>

@@ -30,7 +30,7 @@ class CommentFactory extends Factory
     public function asReply($parentId)
     {
         return $this->state(fn (array $attributes) => [
-            'parent_id' => $parentId, // Asigna el comentario padre
+            'parent_id' => $parentId,
         ]);
     }
 }
