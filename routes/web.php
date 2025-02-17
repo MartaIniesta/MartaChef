@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('blog', [PostController::class, 'index'])->name('posts.index');
+Route::get('recipes', [PostController::class, 'recipes'])->name('posts.recipes');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -16,7 +17,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/sharedPosts', [PostController::class, 'sharedPosts'])->name('posts.shared');
-    Route::get('/myPosts', [PostController::class, 'myPosts'])->name('posts.myPosts');
+    Route::get('/myRecipes', [PostController::class, 'myPosts'])->name('posts.myPosts');
 
     Route::middleware(['can:create-posts'])->group(function () {
         Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');

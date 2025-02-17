@@ -11,18 +11,9 @@ class RolesSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'create-posts',
-            'edit-posts',
-            'delete-posts',
-            'create-comments',
-            'edit-comments',
-            'reply-comments',
-            'delete-comments',
-            'rate-posts',
-            'view-dashboard',
-            'follow-users',
-            'unfollow-users',
-            'delete-users',
+            'create-posts', 'edit-posts', 'delete-posts', 'restore-posts', 'force-delete-posts', 'rate-posts',
+            'create-comments', 'edit-comments', 'reply-comments', 'delete-comments',
+            'view-dashboard', 'follow-users', 'unfollow-users', 'delete-users',
         ];
 
         foreach ($permissions as $permission) {
@@ -36,22 +27,13 @@ class RolesSeeder extends Seeder
         $admin->syncPermissions(Permission::all());
 
         $user->syncPermissions([
-            'create-posts',
-            'edit-posts',
-            'delete-posts',
-            'create-comments',
-            'edit-comments',
-            'reply-comments',
-            'delete-comments',
-            'rate-posts',
-            'delete-posts',
-            'follow-users',
-            'unfollow-users',
+            'create-posts', 'edit-posts', 'delete-posts', 'rate-posts',
+            'create-comments', 'edit-comments', 'reply-comments', 'delete-comments',
+            'follow-users', 'unfollow-users'
         ]);
 
         $moderator->syncPermissions([
-            'delete-posts',
-            'delete-comments',
+            'delete-posts', 'restore-posts', 'force-delete-posts', 'delete-comments'
         ]);
     }
 }

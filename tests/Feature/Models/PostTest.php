@@ -1,6 +1,11 @@
 <?php
 
-use App\Models\{Post, Category, Tag, User, Comment};
+use Database\Seeders\CategorySeeder;
+use App\Models\{Post, Category, Rating, Tag, User, Comment};
+
+beforeEach(function () {
+    $this->seed(CategorySeeder::class);
+});
 
 it('belongs to a user', function () {
     // Arrange
@@ -13,14 +18,16 @@ it('belongs to a user', function () {
 
 it('has categories', function () {
     // Arrange
-    $post = Post::factory()
-        ->has(Category::factory()->count(4), 'categories')
-        ->create();
+    $categories = Category::inRandomOrder()->take(4)->get();
+
+    $post = Post::factory()->create();
+    $post->categories()->attach($categories);
+    $post->refresh();
 
     // Act & Assert
     expect($post->categories)
-    ->toHaveCount(4)
-    ->each->toBeInstanceOf(Category::class);
+        ->toHaveCount(4)
+        ->each->toBeInstanceOf(Category::class);
 });
 
 it('has tags', function () {
@@ -38,12 +45,25 @@ it('has tags', function () {
 it('has comments', function () {
     // Arrange
     $post = Post::factory()->create();
-    $comments = Comment::factory()->count(3)->create(['post_id' => $post->id]);
+    $comments = Comment::factory()->count(3)
+        ->create(['post_id' => $post->id]);
 
     // Act & Assert
     expect($post->comments)
     ->toHaveCount(3)
     ->each->toBeInstanceOf(Comment::class);
+});
+
+it('has ratings', function () {
+    // Arrange
+    $post = Post::factory()
+        ->has(Rating::factory()->count(3), 'ratings')
+        ->create();
+
+    // Act & Assert
+    expect($post->ratings)
+        ->toHaveCount(3)
+        ->each->toBeInstanceOf(Rating::class);
 });
 
 /* Recupera solo publicaciones públicas */

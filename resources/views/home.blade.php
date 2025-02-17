@@ -76,15 +76,13 @@
                 <!-- Segunda Parte del Menú -->
                 <div class="flex justify-center items-center space-x-8 ml-auto mt-10 pb-3 bg-[#F0F0F0] w-[200px] rounded-full">
                     <a href="{{ route('posts.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <!-- Cuadrado blanco con imagen -->
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/blog.png') }}" class="h-12 w-12">
                         </div>
                         BLOG
                     </a>
 
-                    <a href="#" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <!-- Cuadrado blanco con imagen -->
+                    <a href="{{ route('posts.recipes') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/recetas.png') }}" class="h-12 w-12">
                         </div>

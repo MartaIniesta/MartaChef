@@ -19,9 +19,36 @@ class PostController extends Controller
 
     public function index()
     {
+        $latestPosts = Post::visibilityPublic()
+            ->reorder('created_at', 'desc')
+            ->take(3)
+            ->get();
+
+        $categoriesToShow = ['Tartas', 'Bizcochos', 'Galletas'];
+        $categories = Category::whereIn('name', $categoriesToShow)->get();
+        $categoryPosts = $categories->mapWithKeys(function($category) {
+            $post = $category->posts()
+                ->visibilityPublic()
+                ->withAvg('ratings', 'rating')
+                ->orderByDesc('ratings_avg_rating')
+                ->first();
+
+            return [$category->name => $post];
+        });
+
+        $topUsers = User::withCount('followers')
+            ->orderByDesc('followers_count')
+            ->take(3)
+            ->get();
+
+        return view('posts.index', compact('latestPosts', 'categoryPosts', 'topUsers'));
+    }
+
+    public function recipes()
+    {
         $publicPosts = Post::visibilityPublic()->paginate(12);
 
-        return view('posts.index', compact('publicPosts'));
+        return view('posts.recipes', compact('publicPosts'));
     }
 
     public function myPosts(Request $request)

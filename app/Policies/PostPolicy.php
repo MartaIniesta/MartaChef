@@ -39,8 +39,11 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return $user->hasPermissionTo('edit-posts') && ($user->id === $post->user_id ||
-            $user->hasRole('admin'));
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        return $user->hasPermissionTo('edit-posts') && $user->id === $post->user_id;
     }
 
     /**
@@ -48,8 +51,11 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return $user->hasPermissionTo('delete-posts') && ($user->id === $post->user_id ||
-                $user->hasRole('moderator') || $user->hasRole('admin'));
+        if ($user->hasRole('admin') || $user->hasRole('moderator')) {
+            return true;
+        }
+
+        return $user->hasPermissionTo('delete-posts') && $user->id === $post->user_id;
     }
 
     /**
@@ -57,7 +63,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post): bool
     {
-        return $user->hasRole('admin') || $user->hasRole('moderator');
+        return $user->hasPermissionTo('restore-posts');
     }
 
     /**
@@ -65,7 +71,7 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post): bool
     {
-        return $user->hasRole('admin') || $user->hasRole('moderator');
+        return $user->hasPermissionTo('force-delete-posts') || $user->hasRole('admin');
     }
 
     public function rate(User $user, Post $post): bool

@@ -37,6 +37,11 @@ class Post extends Model
             ->orderBy('created_at', 'desc');
     }
 
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public function scopeVisibilityPublic($query)
     {
         return $query->where('visibility', 'public');

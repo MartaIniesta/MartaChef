@@ -91,81 +91,28 @@
         </div>
     </nav>
 
-    <div class="w-36 mx-auto">
-        <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
-            BLOG
-        </h1>
+    <h1 class="text-2xl font-bold text-center mb-6 mt-5">Blog</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto">
+        @foreach ($publicPosts as $post)
+            <div class="border border-gray-300 p-4 text-center rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold">
+                    <a href="{{ route('posts.show', $post) }}" class="text-inherit no-underline">
+                        {{ $post->title }}
+                    </a>
+                </h2>
+                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="max-w-[80%] max-h-[200px] mx-auto rounded-md">
+                <p class="mt-2 text-gray-700">{{ $post->description }}</p>
+                <small class="text-gray-500">
+                    By {{ $post->user->name }} | {{ $post->created_at->format('d M Y') }}
+                </small>
+            </div>
+        @endforeach
     </div>
 
-    <div class="max-w-6xl mx-auto">
-        <div class="flex items-center my-8">
-            <div class="flex-grow border-t border-gray-300"></div>
-            <h2 class="mx-7 px-7 py-3 border border-gray-400 font-semibold uppercase tracking-wide">
-                LO + NUEVO
-            </h2>
-            <div class="flex-grow border-t border-gray-300"></div>
-        </div>
-
-        <!-- Posts -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($latestPosts as $post)
-                <div class="border border-gray-300 p-4 text-center rounded-lg shadow-md">
-                    <h2 class="text-lg font-semibold">
-                        <a href="{{ route('posts.show', $post) }}" class="text-inherit no-underline">
-                            {{ $post->title }}
-                        </a>
-                    </h2>
-                    <img src="{{ asset('storage/' . $post->image) }}"
-                         alt="{{ $post->title }}"
-                         class="max-w-[80%] max-h-[200px] mx-auto rounded-md">
-                    <p class="mt-2 text-gray-700">{{ $post->description }}</p>
-                    <small class="text-gray-500">
-                        By {{ $post->user->name }} | {{ $post->created_at->format('d M Y') }}
-                    </small>
-                </div>
-            @endforeach
-        </div>
-
-        <!-- Posts por categoría -->
-        <div class="flex items-center my-8">
-            <div class="flex-grow border-t border-gray-300"></div>
-            <h2 class="mx-7 px-7 py-3 border border-gray-400 font-semibold uppercase tracking-wide">
-                RECETAS x CATEGORIA
-            </h2>
-            <div class="flex-grow border-t border-gray-300"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto">
-            @foreach ($categoryPosts as $categoryName => $post)
-                <div class="border border-gray-300 p-4 text-center rounded-lg shadow-md">
-                    <h2 class="text-lg font-semibold">
-                        <a href="{{ route('posts.show', $post) }}" class="text-inherit no-underline">
-                            {{ $post->title }} ({{ $categoryName }})
-                        </a>
-                    </h2>
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="max-w-[80%] max-h-[200px] mx-auto rounded-md">
-                    <p class="mt-2 text-gray-700">{{ $post->description }}</p>
-                    <small class="text-gray-500">By {{ $post->user->name }} | {{ $post->created_at->format('d M Y') }}</small>
-                </div>
-            @endforeach
-        </div>
-
-        <!-- Top 3 Usuarios -->
-        <div class="flex items-center my-8">
-            <div class="flex-grow border-t border-gray-300"></div>
-            <h2 class="mx-7 px-7 py-3 border border-gray-400 font-semibold uppercase tracking-wide">
-                NUESTROS MEJORES USUARIOS
-            </h2>
-            <div class="flex-grow border-t border-gray-300"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto">
-            @foreach ($topUsers as $user)
-                <div class="border border-gray-300 p-4 text-center rounded-lg shadow-md">
-                    <img src="{{ $user->profile_image ? asset('storage/public' . $user->profile_image) : asset('default-images/default-profile.png') }}" alt="{{ $user->name }}" class="h-16 w-16 mx-auto rounded-full">
-                    <h2 class="text-lg font-semibold mt-2">{{ $user->name }}</h2>
-                    <p class="text-gray-700">Seguidores: {{ $user->followers_count }}</p>
-                </div>
-            @endforeach
-        </div>
+    <!-- Paginación -->
+    <div>
+        {{ $publicPosts->links('vendor.pagination.pagination') }}
     </div>
 
     <!-- Pie de Página -->
