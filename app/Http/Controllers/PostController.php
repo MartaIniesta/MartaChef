@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
 use App\Http\Requests\{StorePostRequest, UpdatePostRequest};
 use App\Models\{Category, Comment, Post, Tag, User};
 use Illuminate\Http\Request;
@@ -125,6 +126,9 @@ class PostController extends Controller
             $tags = $this->saveTags($request->tags);
             $post->tags()->attach($tags);
         }
+
+        $post->load('user');
+        event(new PostCreated($post));
 
         return to_route('posts.index')->with('status', 'Receta creada correctamente');
     }
