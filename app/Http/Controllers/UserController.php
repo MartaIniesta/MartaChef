@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserFollowedEvent;
+use App\Events\UserUnfollowedEvent;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class UserController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -13,9 +20,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();
-
-        return view('users.index', compact('users'));
+        return view('users.index', ['users' => User::paginate(15)]);
     }
 
     public function show(User $user)
@@ -23,33 +28,35 @@ class UserController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function follow(User $user)
+    public function follow(User $user): RedirectResponse
     {
         $authUser = auth()->user();
 
-        if ($authUser->cannot('follow-users')) {
-            return back()->with('error', 'You do not have permission to follow users.');
-        }
+        $this->authorize('follow-users');
 
         if ($authUser->id === $user->id) {
             return back()->with('error', 'You cannot follow yourself.');
         }
 
-        $authUser->following()->attach($user);
+        if (!$authUser->isFollowing($user)) {
+            $authUser->follow($user);
+            event(new UserFollowedEvent($authUser, $user));
+        }
 
-        return back()->with('success', 'You are now following ' . $user->name);
+        return back()->with('success', "You are now following {$user->name}.");
     }
 
-    public function unfollow(User $user)
+    public function unfollow(User $user): RedirectResponse
     {
         $authUser = auth()->user();
 
-        if ($authUser->cannot('unfollow-users')) {
-            return back()->with('error', 'You do not have permission to unfollow users.');
+        $this->authorize('unfollow-users');
+
+        if ($authUser->isFollowing($user)) {
+            $authUser->unfollow($user);
+            event(new UserUnfollowedEvent($authUser, $user));
         }
 
-        $authUser->following()->detach($user);
-
-        return back()->with('success', 'You have unfollowed ' . $user->name);
+        return back()->with('success', "You have unfollowed {$user->name}.");
     }
 }

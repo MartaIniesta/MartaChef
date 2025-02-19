@@ -27,5 +27,5 @@ test('new users can register', function () {
     loginAsUser($user);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('home', absolute: false));
+    $response->assertRedirect(route('verification.notice', absolute: false));
 });

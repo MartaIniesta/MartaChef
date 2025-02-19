@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,37 +10,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['name', 'email', 'password'];
+    protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -62,5 +38,39 @@ class User extends Authenticatable
     public function following(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followed_id');
+    }
+
+    public function scopeIsFollowing($query, User $user)
+    {
+        return $query->whereHas('following', function ($q) use ($user) {
+            $q->where('followed_id', $user->id);
+        });
+    }
+
+    public function follow(User $user): void
+    {
+        if ($this->id !== $user->id && !$this->isFollowing($user)) {
+            $this->following()->attach($user);
+        }
+    }
+
+    public function unfollow(User $user): void
+    {
+        if ($this->isFollowing($user)) {
+            $this->following()->detach($user);
+        }
+    }
+
+    public function toggleFollow(User $user): void
+    {
+        if ($this->id === $user->id) {
+            return;
+        }
+        $this->isFollowing($user) ? $this->unfollow($user) : $this->follow($user);
+    }
+
+    public function isFollowing(User $user): bool
+    {
+        return $this->following()->where('followed_id', $user->id)->exists();
     }
 }
