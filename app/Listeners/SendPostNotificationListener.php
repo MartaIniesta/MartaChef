@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\PostCreated;
+use App\Events\PostCreatedEvent;
 use Illuminate\Support\Facades\Log;
 
-class SendPostNotification
+class SendPostNotificationListener
 {
-    public function handle(PostCreated $event)
+    public function handle(PostCreatedEvent $event)
     {
         $post = $event->post;
         $author = $post->user;

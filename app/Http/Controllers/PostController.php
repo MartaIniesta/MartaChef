@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PostCreated;
+use App\Events\PostCreatedEvent;
+use App\Jobs\SendPostNotificationJob;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Requests\{StorePostRequest, UpdatePostRequest};
 use App\Models\{Category, Comment, Post, Tag, User};
 use Illuminate\Http\Request;
@@ -15,7 +17,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'show');
+        $this->middleware('auth')->except('index', 'recipes', 'show');
     }
 
     public function index()
@@ -98,6 +100,18 @@ class PostController extends Controller
         return view('posts.show', compact('post', 'comments'));
     }
 
+    public function generatePDF(Post $post)
+    {
+        $data = [
+            'post' => $post,
+            'isAuthenticated' => auth()->check(),
+        ];
+
+        $pdf = Pdf::loadView('posts.pdf', $data);
+
+        return $pdf->download('Receta_' . $post->title . '.pdf');
+    }
+
     public function create()
     {
         $this->authorize('create', Post::class);
@@ -128,7 +142,8 @@ class PostController extends Controller
         }
 
         $post->load('user');
-        event(new PostCreated($post));
+        event(new PostCreatedEvent($post));
+        SendPostNotificationJob::dispatch($post);
 
         return to_route('posts.index')->with('status', 'Receta creada correctamente');
     }
