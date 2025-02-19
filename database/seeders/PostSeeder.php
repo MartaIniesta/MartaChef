@@ -188,7 +188,7 @@ class PostSeeder extends Seeder
             'visibility' => 'private',
             'user_id' => 1,
         ]);
-        $categoryIds13 = Category::whereIn('name', ['Desayunos, Postres Sin Horno'])->pluck('id');
+        $categoryIds13 = Category::whereIn('name', ['Desayunos', 'Postres Sin Horno'])->pluck('id');
         $post13->categories()->attach($categoryIds13);
 
         $tagPost13 = Tag::firstOrCreate(['name' => '#Esponjoso #Fácil #Desayuno #Tradicional']);
@@ -216,7 +216,7 @@ class PostSeeder extends Seeder
             'visibility' => 'shared',
             'user_id' => 1,
         ]);
-        $categoryIds15 = Category::whereIn('name', ['Panes'])->pluck('id');
+        $categoryIds15 = Category::whereIn('name', ['Panes Dulces'])->pluck('id');
         $post15->categories()->attach($categoryIds15);
 
         $tagPost15 = Tag::firstOrCreate(['name' => '#Tradicional #Navidad #Festivo #Dulce']);
@@ -330,7 +330,7 @@ class PostSeeder extends Seeder
             'visibility' => 'shared',
             'user_id' => 2,
         ]);
-        $categoryIds23 = Category::whereIn('name', ['Desayunos, Postres fritos'])->pluck('id');
+        $categoryIds23 = Category::whereIn('name', ['Desayunos', 'Postres Fritos'])->pluck('id');
         $post23->categories()->attach($categoryIds23);
 
         $tagPost23 = Tag::firstOrCreate(['name' => '#Frito #Tradicional #Dulce #Caliente']);
@@ -374,7 +374,7 @@ class PostSeeder extends Seeder
             'visibility' => 'public',
             'user_id' => 3,
         ]);
-        $categoryIds26 = Category::whereIn('name', ['Postres, Reposteria Internacional'])->pluck('id');
+        $categoryIds26 = Category::whereIn('name', ['Postres', 'Reposteria Internacional'])->pluck('id');
         $post26->categories()->attach($categoryIds26);
 
         $tagPost26 = Tag::firstOrCreate(['name' => '#Italiano #Café #Cremoso #Dulce']);
@@ -430,7 +430,7 @@ class PostSeeder extends Seeder
             'visibility' => 'shared',
             'user_id' => 3,
         ]);
-        $categoryIds30 = Category::whereIn('name', ['Tartas, Reposteria Internacional'])->pluck('id');
+        $categoryIds30 = Category::whereIn('name', ['Tartas', 'Reposteria Internacional'])->pluck('id');
         $post30->categories()->attach($categoryIds30);
 
         $tagPost30 = Tag::firstOrCreate(['name' => '#Chocolate #Clásica #Aventura #Mermelada']);
@@ -516,7 +516,7 @@ class PostSeeder extends Seeder
             'visibility' => 'public',
             'user_id' => 4,
         ]);
-        $categoryIds36 = Category::whereIn('name', ['Postres Sin Horno, Repostería Internacional'])->pluck('id');
+        $categoryIds36 = Category::whereIn('name', ['Postres Sin Horno', 'Repostería Internacional'])->pluck('id');
         $post36->categories()->attach($categoryIds36);
 
         $tagPost36 = Tag::firstOrCreate(['name' => '#Chocotorta #Sinhorno #Argentino #Dulcedeleche #Fácil']);
@@ -558,7 +558,7 @@ class PostSeeder extends Seeder
             'visibility' => 'public',
             'user_id' => 4,
         ]);
-        $categoryIds39 = Category::whereIn('name', ['Helado, Postres Fríos'])->pluck('id');
+        $categoryIds39 = Category::whereIn('name', ['Helado', 'Postres Fríos'])->pluck('id');
         $post39->categories()->attach($categoryIds39);
 
         $tagPost39 = Tag::firstOrCreate(['name' => '#Helado #Vainilla #Casero #Fácil #Refrescante']);
@@ -572,7 +572,7 @@ class PostSeeder extends Seeder
             'visibility' => 'public',
             'user_id' => 4,
         ]);
-        $categoryIds40 = Category::whereIn('name', ['Panes Dulces, Reposteria Internacional'])->pluck('id');
+        $categoryIds40 = Category::whereIn('name', ['Panes Dulces', 'Reposteria Internacional'])->pluck('id');
         $post40->categories()->attach($categoryIds40);
 
         $tagPost40 = Tag::firstOrCreate(['name' => '#Panettone #Italiano #Navideño #Esponjoso #Dulce']);
