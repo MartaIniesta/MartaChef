@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{post}/pdf', [PostController::class, 'generatePDF'])->name('posts.pdf');
 
 // Rutas solo para administradores
 /*Route::middleware(['role:admin'])->group(function () {

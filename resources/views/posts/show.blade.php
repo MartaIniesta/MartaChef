@@ -1,5 +1,14 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Enlace DESCARGAR PDF -->
+        @auth
+            <div class="flex justify-end">
+                <a href="{{ route('posts.pdf', $post) }}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Descargar PDF
+                </a>
+            </div>
+        @endauth
+
         <!-- Muestra: Titulo, autor, imagen y descripcion -->
         <h1 class="text-3xl font-bold mb-4">{{ $post->title }}</h1>
         <a href="{{ route('users.show', $post->user) }}">
