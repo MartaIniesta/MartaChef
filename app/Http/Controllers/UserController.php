@@ -38,10 +38,7 @@ class UserController extends Controller
             return back()->with('error', 'You cannot follow yourself.');
         }
 
-        if (!$authUser->isFollowing($user)) {
-            $authUser->follow($user);
-            event(new UserFollowedEvent($authUser, $user));
-        }
+        event(new UserFollowedEvent($authUser, $user));
 
         return back()->with('success', "You are now following {$user->name}.");
     }
@@ -52,10 +49,7 @@ class UserController extends Controller
 
         $this->authorize('unfollow-users');
 
-        if ($authUser->isFollowing($user)) {
-            $authUser->unfollow($user);
-            event(new UserUnfollowedEvent($authUser, $user));
-        }
+        event(new UserUnfollowedEvent($authUser, $user));
 
         return back()->with('success', "You have unfollowed {$user->name}.");
     }

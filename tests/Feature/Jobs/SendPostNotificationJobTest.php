@@ -1,9 +1,10 @@
 <?php
 
 use App\Jobs\SendPostNotificationJob;
+use App\Mail\PostNotificationMail;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 beforeEach(function () {
     $this->author = User::factory()->create();
@@ -19,10 +20,11 @@ beforeEach(function () {
     ]);
 });
 
-test('SendPostNotificationJob logs messages for each follower when post is public or shared', function () {
+test('SendPostNotificationJob sends emails to each follower when post is public or shared', function () {
     // Arrange
-    Log::spy();
+    Mail::fake();
 
+    // Act
     $publicJob = new SendPostNotificationJob($this->post);
     $publicJob->handle();
 
@@ -35,20 +37,26 @@ test('SendPostNotificationJob logs messages for each follower when post is publi
     $sharedJob->handle();
 
     // Assert
-    foreach ([$this->post, $sharedPost] as $post) {
-        Log::shouldHaveReceived('info')
-            ->with("Notificación: El usuario {$this->author->name} ha publicado un nuevo post '{$post->title}'. Se notifica a: {$this->follower1->email}")
-            ->once();
+    Mail::assertSent(PostNotificationMail::class, function ($mail) use ($sharedPost) {
+        return $mail->hasTo($this->follower1->email) && $mail->post->title === $sharedPost->title;
+    });
 
-        Log::shouldHaveReceived('info')
-            ->with("Notificación: El usuario {$this->author->name} ha publicado un nuevo post '{$post->title}'. Se notifica a: {$this->follower2->email}")
-            ->once();
-    }
+    Mail::assertSent(PostNotificationMail::class, function ($mail) use ($sharedPost) {
+        return $mail->hasTo($this->follower2->email) && $mail->post->title === $sharedPost->title;
+    });
+
+    Mail::assertSent(PostNotificationMail::class, function ($mail) use ($publicJob) {
+        return $mail->hasTo($this->follower1->email) && $mail->post->title === $this->post->title;
+    });
+
+    Mail::assertSent(PostNotificationMail::class, function ($mail) use ($publicJob) {
+        return $mail->hasTo($this->follower2->email) && $mail->post->title === $this->post->title;
+    });
 });
 
-test('SendPostNotificationJob does not log messages when post is private', function () {
+test('SendPostNotificationJob does not send emails when post is private', function () {
     // Arrange
-    Log::spy();
+    Mail::fake();
 
     $privatePost = Post::factory()->create([
         'user_id' => $this->author->id,
@@ -62,5 +70,5 @@ test('SendPostNotificationJob does not log messages when post is private', funct
     $job->handle();
 
     // Assert
-    Log::shouldNotHaveReceived('info');
+    Mail::assertNotSent(PostNotificationMail::class);
 });

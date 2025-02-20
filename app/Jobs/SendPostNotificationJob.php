@@ -2,13 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Mail\PostNotificationMail;
 use App\Models\Post;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class SendPostNotificationJob implements ShouldQueue
 {
@@ -29,7 +30,7 @@ class SendPostNotificationJob implements ShouldQueue
 
         if ($post->visibility === 'public' || $post->visibility === 'shared') {
             foreach ($followers as $follower) {
-                Log::info("Notificación: El usuario {$author->name} ha publicado un nuevo post '{$post->title}'. Se notifica a: {$follower->email}");
+                Mail::to($follower->email)->send(new PostNotificationMail($post));
             }
         }
     }

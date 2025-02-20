@@ -143,6 +143,7 @@ class PostController extends Controller
 
         $post->load('user');
         event(new PostCreatedEvent($post));
+
         SendPostNotificationJob::dispatch($post);
 
         return to_route('posts.index')->with('status', 'Receta creada correctamente');

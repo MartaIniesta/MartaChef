@@ -1,7 +1,6 @@
 <?php
 
 use App\Events\UserFollowedEvent;
-use App\Events\UserUnfollowedEvent;
 use App\Listeners\SendFollowNotificationListener;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
@@ -24,18 +23,22 @@ test('SendFollowNotificationListener logs message when a user follows another us
 
     // Act
     $this->listener->handle($event);
+
+    // Assert
+    expect($this->follower->isFollowing($this->followed))->toBeTrue();
 });
 
-test('SendFollowNotificationListener logs message when a user unfollows another user', function () {
+test('SendFollowNotificationListener does not log message if user already follows', function () {
     // Arrange
-    Log::shouldReceive('info')
-        ->once()
-        ->withArgs(function ($message) {
-            return str_contains($message, "{$this->follower->name} ha dejado de seguir a {$this->followed->name}");
-        });
+    $this->follower->follow($this->followed);
 
-    $event = new UserUnfollowedEvent($this->follower, $this->followed);
+    Log::shouldReceive('info')->never();
+
+    $event = new UserFollowedEvent($this->follower, $this->followed);
 
     // Act
     $this->listener->handle($event);
+
+    // Assert
+    expect($this->follower->isFollowing($this->followed))->toBeTrue();
 });
