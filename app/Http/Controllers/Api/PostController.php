@@ -7,6 +7,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\{StorePostRequest, UpdatePostRequest};
 use App\Models\{User, Tag};
@@ -23,7 +24,10 @@ class PostController extends Controller
     public function index()
     {
         return PostResource::collection(
-            Post::visibilityPublic()->orderBy('id', 'asc')->get()
+            Post::with(['categories', 'tags'])
+                ->visibilityPublic()
+                ->orderBy('id', 'asc')
+                ->get()
         );
     }
 
@@ -67,6 +71,7 @@ class PostController extends Controller
 
         $sharedPosts = Post::visibilityShared($user->id)
             ->whereIn('user_id', $followedUserIds)
+            ->with(['categories', 'tags'])
             ->latest()
             ->get();
 

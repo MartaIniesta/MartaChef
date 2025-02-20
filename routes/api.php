@@ -5,31 +5,31 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register'])->name('api.register');
+Route::post('login', [AuthController::class, 'login'])->name('api.login');
 
 Route::prefix('posts')->group(function () {
-    Route::get('/', [PostController::class, 'index']);
-    Route::get('/{post}', [PostController::class, 'show']);
+    Route::get('/', [PostController::class, 'index'])->name('api.posts.index');
+    Route::get('/{post}', [PostController::class, 'show'])->name('api.posts.show');
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/', [PostController::class, 'store']);
-        Route::put('/{post}', [PostController::class, 'update']);
-        Route::delete('/{post}', [PostController::class, 'destroy']);
+        Route::post('/', [PostController::class, 'store'])->name('api.posts.store');
+        Route::put('/{post}', [PostController::class, 'update'])->name('api.posts.update');
+        Route::delete('/{post}', [PostController::class, 'destroy'])->name('api.posts.destroy');
     });
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/myPosts', [PostController::class, 'myPosts']);
-    Route::get('/sharedPosts', [PostController::class, 'sharedPosts']);
+    Route::get('/myPosts', [PostController::class, 'myPosts'])->name('api.myPosts');
+    Route::get('/sharedPosts', [PostController::class, 'sharedPosts'])->name('api.sharedPosts');
 });
 
 Route::prefix('users')->group(function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::get('{user}', [UserController::class, 'show']);
+    Route::get('/', [UserController::class, 'index'])->name('api.users.index');
+    Route::get('{user}', [UserController::class, 'show'])->name('api.users.show');
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('{user}/follow', [UserController::class, 'follow']);
-        Route::post('{user}/unfollow', [UserController::class, 'unfollow']);
+        Route::post('{user}/follow', [UserController::class, 'follow'])->name('api.users.follow');
+        Route::post('{user}/unfollow', [UserController::class, 'unfollow'])->name('api.users.unfollow');
     });
 });
