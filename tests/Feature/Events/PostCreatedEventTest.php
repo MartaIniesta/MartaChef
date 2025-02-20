@@ -15,6 +15,8 @@ test('PostCreatedEvent is dispatched when a post is created', function () {
     // Arrange
     $user = User::factory()->create();
     $user->givePermissionTo('create-posts');
+    $user->refresh();
+
     loginAsUser($user);
 
     $category = Category::factory()->create();
@@ -32,10 +34,13 @@ test('PostCreatedEvent is dispatched when a post is created', function () {
     Event::fake();
 
     // Act
-    $this->post(route('posts.store'), $postData);
+    $response = $this->post(route('posts.store'), $postData);
+    $response->assertRedirect();
+
+    $createdPost = $user->posts()->latest()->first();
 
     // Assert
-    Event::assertDispatched(PostCreatedEvent::class, function ($event) use ($user, $postData) {
-        return $event->post->user_id === $user->id && $event->post->title === $postData['title'];
+    Event::assertDispatched(PostCreatedEvent::class, function ($event) use ($createdPost) {
+        return $event->post->id === $createdPost->id && $event->post->title === $createdPost->title;
     });
 });

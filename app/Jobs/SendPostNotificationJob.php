@@ -2,10 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Mail\PostNotificationMail;
 use App\Models\Post;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -29,14 +27,9 @@ class SendPostNotificationJob implements ShouldQueue
         $author = $post->user;
         $followers = $author->followers;
 
-        foreach ($followers as $follower) {
-            try {
-                Mail::to($follower->email)->send(new PostNotificationMail($post));
-
-                Log::info("Correo enviado a {$follower->email} por la creacion de una nueva receta ('{$post->title}') de '{$post->user->name}'.");
-
-            } catch (\Exception $e) {
-                Log::error("No se pudo enviar el correo a {$follower->email} por la creacion de una nueva receta ('{$post->title}') de '{$post->user->name}'. Error: " . $e->getMessage());
+        if ($post->visibility === 'public' || $post->visibility === 'shared') {
+            foreach ($followers as $follower) {
+                Log::info("Notificación: El usuario {$author->name} ha publicado un nuevo post '{$post->title}'. Se notifica a: {$follower->email}");
             }
         }
     }

@@ -17,14 +17,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
+        PostCreatedEvent::class => [
+            SendPostNotificationListener::class,
+        ],
         UserFollowedEvent::class => [
             SendFollowNotificationListener::class,
         ],
         UserUnfollowedEvent::class => [
             SendFollowNotificationListener::class,
-        ],
-        PostCreatedEvent::class => [
-            SendPostNotificationListener::class,
         ],
     ];
 

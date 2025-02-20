@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 beforeEach(function () {
     $this->author = User::factory()->create();
-    $this->follower1 = User::factory()->create();
-    $this->follower2 = User::factory()->create();
-
-    $this->author->refresh()->followers()->attach([$this->follower1->id, $this->follower2->id]);
 
     $this->post = Post::factory()->create([
         'user_id' => $this->author->id,
@@ -21,7 +17,7 @@ beforeEach(function () {
     $this->listener = new SendPostNotificationListener();
 });
 
-test('SendPostNotificationListener logs messages for each follower', function () {
+test('SendPostNotificationListener logs a message for the author', function () {
     // Arrange
     Log::spy();
 
@@ -32,14 +28,6 @@ test('SendPostNotificationListener logs messages for each follower', function ()
 
     // Assert
     Log::shouldHaveReceived('info')
-        ->with("Notificación: El usuario {$this->author->name} ha publicado un nuevo post '{$this->post->title}'. Se notifica a: {$this->follower1->email}")
-        ->once();
-
-    Log::shouldHaveReceived('info')
-        ->with("Notificación: El usuario {$this->author->name} ha publicado un nuevo post '{$this->post->title}'. Se notifica a: {$this->follower2->email}")
-        ->once();
-
-    Log::shouldHaveReceived('info')
-        ->with("Agradecimiento: Gracias a {$this->author->name} ({$this->author->email}) por compartir su post '{$this->post->title}'.")
+        ->with("Notificación al autor: El usuario {$this->author->name} ha creado un nuevo post '{$this->post->title}'. ¡Gracias por compartirlo!")
         ->once();
 });
