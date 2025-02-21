@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\PostCreatedEvent;
+use App\Jobs\SendDownloadedPdfJob;
 use App\Jobs\SendPostNotificationJob;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Requests\{StorePostRequest, UpdatePostRequest};
 use App\Models\{Category, Comment, Post, Tag, User};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
@@ -102,14 +101,9 @@ class PostController extends Controller
 
     public function generatePDF(Post $post)
     {
-        $data = [
-            'post' => $post,
-            'isAuthenticated' => auth()->check(),
-        ];
+        $user = auth()->user();
 
-        $pdf = Pdf::loadView('posts.pdf', $data);
-
-        return $pdf->download('Receta_' . $post->title . '.pdf');
+        return (new SendDownloadedPdfJob($post, $user))->handle();
     }
 
     public function create()
@@ -179,11 +173,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-
-        if ($post->image) {
-            Storage::disk('public')->delete($post->image);
-        }
-
         $post->delete();
 
         return to_route('posts.index')->with('status', 'Receta eliminada correctamente');
@@ -193,10 +182,6 @@ class PostController extends Controller
     {
         if (!$request->hasFile('image')) {
             return $post->image;
-        }
-
-        if ($post->image) {
-            Storage::disk('public')->delete($post->image);
         }
 
         $image = $request->file('image');
@@ -220,11 +205,8 @@ class PostController extends Controller
         $post = Post::withTrashed()->findOrFail($id);
         $this->authorize('forceDelete', $post);
 
-        if ($post->image) {
-            Storage::disk('public')->delete($post->image);
-        }
-
         $post->forceDelete();
+
         return redirect()->route('posts.index')->with('status', 'Receta eliminada permanentemente');
     }
 

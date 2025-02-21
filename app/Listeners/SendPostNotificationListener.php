@@ -12,6 +12,6 @@ class SendPostNotificationListener
         $post = $event->post;
         $author = $post->user;
 
-        Log::info("Notificación al autor: El usuario {$author->name} ha creado un nuevo post '{$post->title}'. ¡Gracias por compartirlo!");
+        Log::info("Usuario {$author->name} ha creado un nuevo post '{$post->title}'. ¡Gracias por compartirlo!");
     }
 }
