@@ -96,14 +96,10 @@ class PostController extends Controller
             ->with('replies.user')
             ->get();
 
-        return view('posts.show', compact('post', 'comments'));
-    }
-
-    public function generatePDF(Post $post)
-    {
         $user = auth()->user();
+        dispatch(new SendDownloadedPdfJob($post, $user));
 
-        return (new SendDownloadedPdfJob($post, $user))->handle();
+        return view('posts.show', compact('post', 'comments'));
     }
 
     public function create()

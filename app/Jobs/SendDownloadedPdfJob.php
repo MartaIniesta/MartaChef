@@ -6,8 +6,10 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Storage;
 
-class SendDownloadedPdfJob
+class SendDownloadedPdfJob implements ShouldQueue
 {
     protected $post;
     protected $user;
@@ -27,8 +29,11 @@ class SendDownloadedPdfJob
 
         $pdf = Pdf::loadView('posts.pdf', $data);
 
-        Log::info("Usuario {$this->user->name} ha descargado el PDF de la receta con id: {$this->post->id}.");
+        Log::info("Usuario {$this->user->name} ha solicitado la generación del PDF de la receta con id: {$this->post->id}.");
 
-        return $pdf->download('Receta_' . $this->post->title . '.pdf');
+        $pdfPath = 'pdf/Receta_' . $this->post->title . '.pdf';
+        Storage::disk('public')->put($pdfPath, $pdf->output());
+
+        Log::info("PDF generado y guardado correctamente en: {$pdfPath}");
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -7,13 +8,12 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__.'/admin.php';
 
-// Rutas públicas (sin necesidad de autenticación)
 Route::get('/', [PostController::class, 'index'])->name('posts.index');
 Route::get('recipes', [PostController::class, 'recipes'])->name('posts.recipes');
 
 // Ruta para ver la lista de usuarios (no necesita autenticación)
-Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Mostrar todos los usuarios
-Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show'); // Mostrar perfil de un usuario específico
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -46,8 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Rutas para ver un post específico (públicas, no requiere autenticación)
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/posts/{post}/pdf', [PostController::class, 'generatePDF'])->name('posts.pdf');
+Route::get('/posts/{post}/pdf', [PdfController::class, 'generatePDF'])->name('posts.pdf');
 
 require __DIR__.'/auth.php';
