@@ -15,17 +15,19 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('index', 'show');
     }
 
     public function index()
     {
-        return view('users.index', ['users' => User::paginate(15)]);
+        return view('users.index', ['users' => User::paginate(16)]);
     }
 
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $posts = $user->posts()->where('visibility', 'public')->paginate(6);
+
+        return view('users.show', compact('user', 'posts'));
     }
 
     public function follow(User $user): RedirectResponse
