@@ -10,6 +10,27 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * @group Autenticación
+     *
+     * Registra un nuevo usuario en el sistema.
+     *
+     * @bodyParam name string El nombre del usuario. Example: Pepe
+     * @bodyParam email string El correo electrónico del usuario. Example: pepe@example.com
+     * @bodyParam password string La contraseña del usuario (mínimo 8 caracteres). Example: 12345678
+     * @bodyParam password_confirmation string Confirmar la contraseña del usuario. Example: 12345678
+     *
+     * @response 201 {
+     *   "message": "User registered successfully.",
+     *   "token": "your_generated_token_here"
+     * }
+     *
+     * @response 422 {
+     *   "errors": {
+     *     "email": ["The email has already been taken."]
+     *   }
+     * }
+     */
     public function register(RegisterRequest $request)
     {
         $user = User::create([
@@ -26,6 +47,23 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @group Autenticación
+     *
+     * Inicia sesión y devuelve un token de autenticación para el usuario.
+     *
+     * @bodyParam email string El correo electrónico del usuario. Example: pepe@example.com
+     * @bodyParam password string La contraseña del usuario. Example: 12345678
+     *
+     * @response 200 {
+     *   "access_token": "your_generated_token_here",
+     *   "token_type": "Bearer"
+     * }
+     *
+     * @response 401 {
+     *   "message": "Credenciales incorrectas"
+     * }
+     */
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();

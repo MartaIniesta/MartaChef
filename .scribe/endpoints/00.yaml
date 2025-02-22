@@ -1,0 +1,704 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/register
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'El campo value no debe ser mayor que 255 caracteres.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'El campo value no es un correo válido. El campo value no debe ser mayor que 255 caracteres.'
+        required: true
+        example: zbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: 'El campo value debe contener al menos 8 caracteres.'
+        required: true
+        example: '-0pBNvYgxw'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: b
+      email: zbailey@example.net
+      password: '-0pBNvYgxw'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/login
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/posts
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":2,"title":"Tarta de Fresas","description":"Tarta con base de galleta y fresas frescas.","ingredients":"Galletas, Mantequilla, Fresas, Crema Pastelera","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":1,"name":"Paqui"},"categories":[{"category":"2: Tartas"}],"tags":[{"name":"#Fresas #Tarta #Galletas #Cremapastelera #Verano #Postre #Sencillo"}]},{"id":3,"title":"Tarta de Manzana","description":"Tarta tradicional de manzana con una base crujiente y relleno jugoso, ideal para el t\u00e9.","ingredients":"Manzanas, Masa quebrada, Az\u00facar, Canela, Mantequilla, Huevo, Lim\u00f3n","image":"http:\/\/MartaChef.test\/storage\/images\/pastel.png","visibility":"public","user":{"id":1,"name":"Paqui"},"categories":[{"category":"2: Tartas"}],"tags":[{"name":"#Postre #Fruta #F\u00e1cil #Tradicional"}]},{"id":5,"title":"Cupcakes de Vainilla","description":"Peque\u00f1os bizcochos esponjosos con un suave sabor a vainilla, perfectos para decorar.","ingredients":"Harina, Az\u00facar, Mantequilla, Huevo, Esencia de vainilla, Polvo de hornear, Leche","image":"http:\/\/MartaChef.test\/storage\/images\/pastel.png","visibility":"public","user":{"id":1,"name":"Paqui"},"categories":[{"category":"4: Cupcakes"}],"tags":[{"name":"#Vainilla #Suave #Postre #Fiesta"}]},{"id":6,"title":"Galletas de Avena y Pasas","description":"Galletas crujientes con avena y pasas, una combinaci\u00f3n saludable y deliciosa.","ingredients":"Avena, Pasas, Harina, Mantequilla, Az\u00facar moreno, Huevo, Polvo de hornear","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":1,"name":"Paqui"},"categories":[{"category":"5: Galletas"}],"tags":[{"name":"#Saludable #Avena #Dulce #F\u00e1cil"}]},{"id":7,"title":"Pastel de Zanahoria","description":"Un pastel h\u00famedo y esponjoso con zanahorias, nueces y cubierto con un glaseado de queso crema.","ingredients":"Zanahorias, Harina, Az\u00facar, Nueces, Huevo, Aceite, Especias, Queso crema","image":"http:\/\/MartaChef.test\/storage\/images\/pastel.png","visibility":"public","user":{"id":1,"name":"Paqui"},"categories":[{"category":"1: Pasteles"}],"tags":[{"name":"#Saludable #Especias #Dulce #F\u00e1cil"}]},{"id":9,"title":"Pudin de Ch\u00eda y Cacao","description":"Un postre saludable y f\u00e1cil de hacer, ideal para las tardes de verano.","ingredients":"Semillas de ch\u00eda, Cacao en polvo, Leche de almendra, Miel","image":"http:\/\/MartaChef.test\/storage\/images\/pastel.png","visibility":"public","user":{"id":1,"name":"Paqui"},"categories":[{"category":"10: Postres Saludables"}],"tags":[{"name":"#Saludable #Vegano #Cacao #R\u00e1pido"}]},{"id":11,"title":"Galletas de Chocolate Chips","description":"Galletas crujientes por fuera y suaves por dentro, con chips de chocolate.","ingredients":"Harina, Az\u00facar, Mantequilla, Chocolate, Huevo, Polvo de hornear","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":1,"name":"Paqui"},"categories":[{"category":"5: Galletas"}],"tags":[{"name":"#Chocolate #R\u00e1pido #Crujiente #Postre"}]},{"id":16,"title":"Bizcocho de Yogur","description":"Bizcocho f\u00e1cil de hacer con la receta del yogurt como medida.","ingredients":"Yogur natural, Az\u00facar, Huevo, Harina, Aceite, Levadura","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":2,"name":"Antonio"},"categories":[{"category":"6: Bizcochos"}],"tags":[{"name":"#F\u00e1cil #Esponjoso #B\u00e1sico #Dulce"}]},{"id":17,"title":"Tarta de Queso al Horno","description":"Deliciosa tarta de queso con una base crujiente y un relleno cremoso.","ingredients":"Queso crema, Huevos, Az\u00facar, Galletas, Mantequilla","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":2,"name":"Antonio"},"categories":[{"category":"2: Tartas"}],"tags":[{"name":"#Queso #Horneado #Cremoso #Postre"}]},{"id":20,"title":"Pastelitos de Naranja y Almendra","description":"Pastelitos arom\u00e1ticos con un toque de naranja y almendra, perfectos para cualquier ocasi\u00f3n.","ingredients":"Almendra molida, Naranja, Harina, Az\u00facar, Huevo, Mantequilla","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":2,"name":"Antonio"},"categories":[{"category":"1: Pasteles"}],"tags":[{"name":"#Naranja #Almendra #Arom\u00e1tico #Dulce"}]},{"id":22,"title":"Galletas de Mantequilla","description":"Galletas cl\u00e1sicas de mantequilla con un sabor suave y textura crujiente.","ingredients":"Mantequilla, Az\u00facar, Harina, Huevo, Esencia de vainilla","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":2,"name":"Antonio"},"categories":[{"category":"5: Galletas"}],"tags":[{"name":"#Mantequilla #Cl\u00e1sicas #F\u00e1cil #Dulce"}]},{"id":25,"title":"Bizcocho de Caf\u00e9","description":"Bizcocho con un toque de caf\u00e9 que lo convierte en el acompa\u00f1ante perfecto para el desayuno.","ingredients":"Caf\u00e9, Harina, Az\u00facar, Huevo, Mantequilla","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":2,"name":"Antonio"},"categories":[{"category":"6: Bizcochos"}],"tags":[{"name":"#Caf\u00e9 #Energ\u00e9tico #Dulce #Desayuno"}]},{"id":26,"title":"Tiramisu","description":"Postre italiano con capas de bizcocho empapado en caf\u00e9 y mascarpone cremoso.","ingredients":"Mascarpone, Caf\u00e9, Bizcochos de soletilla, Cacao en polvo, Az\u00facar, Huevo","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":3,"name":"Maria"},"categories":[{"category":"11: Reposteria Internacional"}],"tags":[{"name":"#Italiano #Caf\u00e9 #Cremoso #Dulce"}]},{"id":27,"title":"Barras de Granola Caseras","description":"Deliciosas barras de granola crujiente y saludable, perfectas para un snack r\u00e1pido.","ingredients":"Avena, Frutos secos, Miel, Az\u00facar, Mantequilla, Chocolate (opcional)","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":3,"name":"Maria"},"categories":[{"category":"10: Postres Saludables"}],"tags":[{"name":"#Saludable #Snack #Crujiente #F\u00e1cil"}]},{"id":29,"title":"Galletas de Lim\u00f3n y Jengibre","description":"Galletas con un toque c\u00edtrico de lim\u00f3n y el sabor picante del jengibre.","ingredients":"Lim\u00f3n, Jengibre, Az\u00facar, Mantequilla, Harina, Huevo","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":3,"name":"Maria"},"categories":[],"tags":[{"name":"#Lim\u00f3n #Jengibre #C\u00edtrico #Dulce"}]},{"id":31,"title":"Mousse de Chocolate","description":"Un postre ligero y esponjoso con un intenso sabor a chocolate.","ingredients":"Chocolate, Nata, Az\u00facar, Huevo, Vainilla","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":3,"name":"Maria"},"categories":[],"tags":[{"name":"#Chocolate #Cremoso #Ligero #R\u00e1pido"}]},{"id":33,"title":"Eclairs de Chocolate","description":"Deliciosos profiteroles alargados rellenos de crema pastelera y cubiertos con chocolate.","ingredients":"Harina, Huevos, Mantequilla, Leche, Az\u00facar, Chocolate, Crema pastelera","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":3,"name":"Maria"},"categories":[{"category":"11: Reposteria Internacional"}],"tags":[{"name":"#Eclairs #Chocolate #Pasteler\u00eda #Cremapastelera #Dulce"}]},{"id":34,"title":"Donas Glaseadas","description":"Cl\u00e1sicas donas esponjosas fritas y cubiertas con un glaseado dulce.","ingredients":"Harina, Az\u00facar, Levadura, Leche, Huevos, Mantequilla, Esencia de vainilla","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":3,"name":"Maria"},"categories":[{"category":"9: Postres Fritos"}],"tags":[{"name":"#Donas #Glaseado #Esponjoso #Casero #Dulce"}]},{"id":35,"title":"Macarons de Frambuesa","description":"Galletas francesas de almendra con relleno cremoso de frambuesa.","ingredients":"Harina de almendra, Az\u00facar glas, Claras de huevo, Frambuesas, Chocolate blanco","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":4,"name":"David"},"categories":[{"category":"11: Reposteria Internacional"}],"tags":[{"name":"#Macarons #Frambuesa #Pasteler\u00eda #Delicado #Colorido"}]},{"id":36,"title":"Chocotorta Argentina","description":"Postre argentino sin horno hecho con capas de galletas de chocolate y crema de dulce de leche.","ingredients":"Galletas de chocolate, Dulce de leche, Queso crema, Caf\u00e9","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":4,"name":"David"},"categories":[{"category":"11: Reposteria Internacional"},{"category":"12: Postres Sin Horno"}],"tags":[{"name":"#Chocotorta #Sinhorno #Argentino #Dulcedeleche #F\u00e1cil"}]},{"id":38,"title":"Baklava de Pistacho","description":"Dulce t\u00edpico del Medio Oriente hecho con capas de masa filo, miel y pistachos.","ingredients":"Masa filo, Pistachos, Miel, Az\u00facar, Mantequilla","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":4,"name":"David"},"categories":[{"category":"11: Reposteria Internacional"}],"tags":[{"name":"#Baklava #Pistacho #Dulceoriental #Crujiente #Casero"}]},{"id":39,"title":"Helado Casero de Vainilla","description":"Cremoso y delicioso helado casero con un intenso sabor a vainilla.","ingredients":"Leche, Nata, Az\u00facar, Yemas de huevo, Esencia de vainilla","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":4,"name":"David"},"categories":[{"category":"13: Postres Fr\u00edos"},{"category":"14: Helado"}],"tags":[{"name":"#Helado #Vainilla #Casero #F\u00e1cil #Refrescante"}]},{"id":40,"title":"Panettone Italiano","description":"Pan dulce esponjoso con frutas confitadas y pasas, tradicional en Navidad.","ingredients":"Harina, Levadura, Az\u00facar, Mantequilla, Huevo, Pasas, Frutas confitadas","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":4,"name":"David"},"categories":[{"category":"8: Panes Dulces"},{"category":"11: Reposteria Internacional"}],"tags":[{"name":"#Panettone #Italiano #Navide\u00f1o #Esponjoso #Dulce"}]}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/posts/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":2,"title":"Tarta de Fresas","description":"Tarta con base de galleta y fresas frescas.","ingredients":"Galletas, Mantequilla, Fresas, Crema Pastelera","image":"http:\/\/MartaChef.test\/storage\/images\/tarta-fresas.png","visibility":"public","user":{"id":1,"name":"Paqui"},"categories":[{"category":"2: Tartas"}],"tags":[{"name":"#Fresas #Tarta #Galletas #Cremapastelera #Verano #Postre #Sencillo"}]}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/posts
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: 'El campo value no debe ser mayor que 255 caracteres.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: true
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      ingredients:
+        name: ingredients
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      visibility:
+        name: visibility
+        description: ''
+        required: true
+        example: shared
+        type: string
+        enumValues:
+          - public
+          - private
+          - shared
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      categories:
+        name: categories
+        description: 'The <code>id</code> of an existing record in the categories table.'
+        required: false
+        example: null
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      tags:
+        name: tags
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      image:
+        name: image
+        description: 'El campo value debe ser una imagen.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      title: b
+      description: 'Eius et animi quos velit et.'
+      ingredients: architecto
+      visibility: shared
+      tags: architecto
+    fileParameters:
+      image: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/posts/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: 'El campo value no debe ser mayor que 255 caracteres.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: true
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      ingredients:
+        name: ingredients
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      visibility:
+        name: visibility
+        description: ''
+        required: true
+        example: shared
+        type: string
+        enumValues:
+          - public
+          - private
+          - shared
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      categories:
+        name: categories
+        description: 'The <code>id</code> of an existing record in the categories table.'
+        required: false
+        example: null
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      tags:
+        name: tags
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      image:
+        name: image
+        description: 'El campo value debe ser una imagen.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      title: b
+      description: 'Eius et animi quos velit et.'
+      ingredients: architecto
+      visibility: shared
+      tags: architecto
+    fileParameters:
+      image: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/posts/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/myPosts
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/sharedPosts
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/users
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/users/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/users/{user_id}/follow'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      user_id:
+        name: user_id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      user_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/users/{user_id}/unfollow'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      user_id:
+        name: user_id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      user_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
