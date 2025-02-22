@@ -66,49 +66,71 @@
                     <a href="#authenticating-requests">Authenticating requests</a>
                 </li>
                             </ul>
-                    <ul id="tocify-header-endpoints" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="endpoints">
-                    <a href="#endpoints">Endpoints</a>
+                    <ul id="tocify-header-autenticacion" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="autenticacion">
+                    <a href="#autenticacion">Autenticación</a>
                 </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-register">
-                                <a href="#endpoints-POSTapi-register">POST api/register</a>
+                                    <ul id="tocify-subheader-autenticacion" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="autenticacion-POSTapi-register">
+                                <a href="#autenticacion-POSTapi-register">Registra un nuevo usuario en el sistema.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-login">
-                                <a href="#endpoints-POSTapi-login">POST api/login</a>
+                                                                                <li class="tocify-item level-2" data-unique="autenticacion-POSTapi-login">
+                                <a href="#autenticacion-POSTapi-login">Inicia sesión y devuelve un token de autenticación para el usuario.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-posts">
-                                <a href="#endpoints-GETapi-posts">GET api/posts</a>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-publicacion" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="publicacion">
+                    <a href="#publicacion">Publicación</a>
+                </li>
+                                    <ul id="tocify-subheader-publicacion" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="publicacion-GETapi-posts">
+                                <a href="#publicacion-GETapi-posts">Obtiene una lista de posts públicos ordenados por ID.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-posts--id-">
-                                <a href="#endpoints-GETapi-posts--id-">GET api/posts/{id}</a>
+                                                                                <li class="tocify-item level-2" data-unique="publicacion-GETapi-posts--id-">
+                                <a href="#publicacion-GETapi-posts--id-">Muestra una publicación específica.
+Solo se podrá ver si el usuario es propietario o el post es publico.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-posts">
-                                <a href="#endpoints-POSTapi-posts">POST api/posts</a>
+                                                                                <li class="tocify-item level-2" data-unique="publicacion-POSTapi-posts">
+                                <a href="#publicacion-POSTapi-posts">Crea una nueva publicación para el usuario autenticado.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-PUTapi-posts--id-">
-                                <a href="#endpoints-PUTapi-posts--id-">PUT api/posts/{id}</a>
+                                                                                <li class="tocify-item level-2" data-unique="publicacion-PUTapi-posts--id-">
+                                <a href="#publicacion-PUTapi-posts--id-">Actualiza una publicación existente.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-posts--id-">
-                                <a href="#endpoints-DELETEapi-posts--id-">DELETE api/posts/{id}</a>
+                                                                                <li class="tocify-item level-2" data-unique="publicacion-DELETEapi-posts--id-">
+                                <a href="#publicacion-DELETEapi-posts--id-">Elimina una publicación.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-myPosts">
-                                <a href="#endpoints-GETapi-myPosts">GET api/myPosts</a>
+                                                                                <li class="tocify-item level-2" data-unique="publicacion-GETapi-myPosts">
+                                <a href="#publicacion-GETapi-myPosts">Obtiene las publicaciones de un usuario autenticado, sin tener en cuenta su visibilidad.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-sharedPosts">
-                                <a href="#endpoints-GETapi-sharedPosts">GET api/sharedPosts</a>
+                                                                                <li class="tocify-item level-2" data-unique="publicacion-GETapi-sharedPosts">
+                                <a href="#publicacion-GETapi-sharedPosts">Obtiene las publicaciones compartidas de los usuarios seguidos.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-users">
-                                <a href="#endpoints-GETapi-users">GET api/users</a>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-seguimiento" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="seguimiento">
+                    <a href="#seguimiento">Seguimiento</a>
+                </li>
+                                    <ul id="tocify-subheader-seguimiento" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="seguimiento-POSTapi-users--user_id--follow">
+                                <a href="#seguimiento-POSTapi-users--user_id--follow">Permite al usuario autenticado seguir a otro usuario.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-users--id-">
-                                <a href="#endpoints-GETapi-users--id-">GET api/users/{id}</a>
+                                                                                <li class="tocify-item level-2" data-unique="seguimiento-POSTapi-users--user_id--unfollow">
+                                <a href="#seguimiento-POSTapi-users--user_id--unfollow">Permite al usuario autenticado dejar de seguir a otro usuario.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users--user_id--follow">
-                                <a href="#endpoints-POSTapi-users--user_id--follow">POST api/users/{user_id}/follow</a>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-usuarios" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="usuarios">
+                    <a href="#usuarios">Usuarios</a>
+                </li>
+                                    <ul id="tocify-subheader-usuarios" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="usuarios-GETapi-users">
+                                <a href="#usuarios-GETapi-users">Obtiene una lista de todos los usuarios, excluyendo el usuario autenticado.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users--user_id--unfollow">
-                                <a href="#endpoints-POSTapi-users--user_id--unfollow">POST api/users/{user_id}/unfollow</a>
+                                                                                <li class="tocify-item level-2" data-unique="usuarios-GETapi-users--id-">
+                                <a href="#usuarios-GETapi-users--id-">Muestra los detalles de un usuario específico.</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -140,11 +162,11 @@ You can switch the language used with the tabs at the top right (or from the nav
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>This API is not authenticated.</p>
 
-        <h1 id="endpoints">Endpoints</h1>
+        <h1 id="autenticacion">Autenticación</h1>
 
     
 
-                                <h2 id="endpoints-POSTapi-register">POST api/register</h2>
+                                <h2 id="autenticacion-POSTapi-register">Registra un nuevo usuario en el sistema.</h2>
 
 <p>
 </p>
@@ -161,9 +183,10 @@ You can switch the language used with the tabs at the top right (or from the nav
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"name\": \"b\",
-    \"email\": \"zbailey@example.net\",
-    \"password\": \"-0pBNvYgxw\"
+    \"name\": \"Pepe\",
+    \"email\": \"pepe@example.com\",
+    \"password\": \"12345678\",
+    \"password_confirmation\": \"12345678\"
 }"
 </code></pre></div>
 
@@ -179,9 +202,10 @@ const headers = {
 };
 
 let body = {
-    "name": "b",
-    "email": "zbailey@example.net",
-    "password": "-0pBNvYgxw"
+    "name": "Pepe",
+    "email": "pepe@example.com",
+    "password": "12345678",
+    "password_confirmation": "12345678"
 };
 
 fetch(url, {
@@ -193,7 +217,30 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-register">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;User registered successfully.&quot;,
+    &quot;token&quot;: &quot;your_generated_token_here&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;errors&quot;: {
+        &quot;email&quot;: [
+            &quot;The email has already been taken.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-register" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-register"></span>:
@@ -267,39 +314,50 @@ You can check the Dev Tools console for debugging information.</code></pre>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="name"                data-endpoint="POSTapi-register"
-               value="b"
+               value="Pepe"
                data-component="body">
     <br>
-<p>El campo value no debe ser mayor que 255 caracteres. Example: <code>b</code></p>
+<p>El nombre del usuario. Example: <code>Pepe</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="email"                data-endpoint="POSTapi-register"
-               value="zbailey@example.net"
+               value="pepe@example.com"
                data-component="body">
     <br>
-<p>El campo value no es un correo válido. El campo value no debe ser mayor que 255 caracteres. Example: <code>zbailey@example.net</code></p>
+<p>El correo electrónico del usuario. Example: <code>pepe@example.com</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="password"                data-endpoint="POSTapi-register"
-               value="-0pBNvYgxw"
+               value="12345678"
                data-component="body">
     <br>
-<p>El campo value debe contener al menos 8 caracteres. Example: <code>-0pBNvYgxw</code></p>
+<p>La contraseña del usuario (mínimo 8 caracteres). Example: <code>12345678</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="password_confirmation"                data-endpoint="POSTapi-register"
+               value="12345678"
+               data-component="body">
+    <br>
+<p>Confirmar la contraseña del usuario. Example: <code>12345678</code></p>
         </div>
         </form>
 
-                    <h2 id="endpoints-POSTapi-login">POST api/login</h2>
+                    <h2 id="autenticacion-POSTapi-login">Inicia sesión y devuelve un token de autenticación para el usuario.</h2>
 
 <p>
 </p>
@@ -314,7 +372,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <pre><code class="language-bash">curl --request POST \
     "http://MartaChef.test/api/login" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json" \
+    --data "{
+    \"email\": \"pepe@example.com\",
+    \"password\": \"12345678\"
+}"
+</code></pre></div>
 
 
 <div class="javascript-example">
@@ -327,15 +390,40 @@ const headers = {
     "Accept": "application/json",
 };
 
+let body = {
+    "email": "pepe@example.com",
+    "password": "12345678"
+};
+
 fetch(url, {
     method: "POST",
     headers,
+    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
 
 <span id="example-responses-POSTapi-login">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;access_token&quot;: &quot;your_generated_token_here&quot;,
+    &quot;token_type&quot;: &quot;Bearer&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Credenciales incorrectas&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-login" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-login"></span>:
@@ -405,9 +493,36 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        </form>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="POSTapi-login"
+               value="pepe@example.com"
+               data-component="body">
+    <br>
+<p>El correo electrónico del usuario. Example: <code>pepe@example.com</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="POSTapi-login"
+               value="12345678"
+               data-component="body">
+    <br>
+<p>La contraseña del usuario. Example: <code>12345678</code></p>
+        </div>
+        </form>
 
-                    <h2 id="endpoints-GETapi-posts">GET api/posts</h2>
+                <h1 id="publicacion">Publicación</h1>
+
+    
+
+                                <h2 id="publicacion-GETapi-posts">Obtiene una lista de posts públicos ordenados por ID.</h2>
 
 <p>
 </p>
@@ -446,526 +561,25 @@ fetch(url, {
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
-<code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 2,
-            &quot;title&quot;: &quot;Tarta de Fresas&quot;,
-            &quot;description&quot;: &quot;Tarta con base de galleta y fresas frescas.&quot;,
-            &quot;ingredients&quot;: &quot;Galletas, Mantequilla, Fresas, Crema Pastelera&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;Paqui&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;2: Tartas&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Fresas #Tarta #Galletas #Cremapastelera #Verano #Postre #Sencillo&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 3,
-            &quot;title&quot;: &quot;Tarta de Manzana&quot;,
-            &quot;description&quot;: &quot;Tarta tradicional de manzana con una base crujiente y relleno jugoso, ideal para el t&eacute;.&quot;,
-            &quot;ingredients&quot;: &quot;Manzanas, Masa quebrada, Az&uacute;car, Canela, Mantequilla, Huevo, Lim&oacute;n&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/pastel.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;Paqui&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;2: Tartas&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Postre #Fruta #F&aacute;cil #Tradicional&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 5,
-            &quot;title&quot;: &quot;Cupcakes de Vainilla&quot;,
-            &quot;description&quot;: &quot;Peque&ntilde;os bizcochos esponjosos con un suave sabor a vainilla, perfectos para decorar.&quot;,
-            &quot;ingredients&quot;: &quot;Harina, Az&uacute;car, Mantequilla, Huevo, Esencia de vainilla, Polvo de hornear, Leche&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/pastel.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;Paqui&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;4: Cupcakes&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Vainilla #Suave #Postre #Fiesta&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 6,
-            &quot;title&quot;: &quot;Galletas de Avena y Pasas&quot;,
-            &quot;description&quot;: &quot;Galletas crujientes con avena y pasas, una combinaci&oacute;n saludable y deliciosa.&quot;,
-            &quot;ingredients&quot;: &quot;Avena, Pasas, Harina, Mantequilla, Az&uacute;car moreno, Huevo, Polvo de hornear&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;Paqui&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;5: Galletas&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Saludable #Avena #Dulce #F&aacute;cil&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 7,
-            &quot;title&quot;: &quot;Pastel de Zanahoria&quot;,
-            &quot;description&quot;: &quot;Un pastel h&uacute;medo y esponjoso con zanahorias, nueces y cubierto con un glaseado de queso crema.&quot;,
-            &quot;ingredients&quot;: &quot;Zanahorias, Harina, Az&uacute;car, Nueces, Huevo, Aceite, Especias, Queso crema&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/pastel.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;Paqui&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;1: Pasteles&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Saludable #Especias #Dulce #F&aacute;cil&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 9,
-            &quot;title&quot;: &quot;Pudin de Ch&iacute;a y Cacao&quot;,
-            &quot;description&quot;: &quot;Un postre saludable y f&aacute;cil de hacer, ideal para las tardes de verano.&quot;,
-            &quot;ingredients&quot;: &quot;Semillas de ch&iacute;a, Cacao en polvo, Leche de almendra, Miel&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/pastel.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;Paqui&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;10: Postres Saludables&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Saludable #Vegano #Cacao #R&aacute;pido&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 11,
-            &quot;title&quot;: &quot;Galletas de Chocolate Chips&quot;,
-            &quot;description&quot;: &quot;Galletas crujientes por fuera y suaves por dentro, con chips de chocolate.&quot;,
-            &quot;ingredients&quot;: &quot;Harina, Az&uacute;car, Mantequilla, Chocolate, Huevo, Polvo de hornear&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;Paqui&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;5: Galletas&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Chocolate #R&aacute;pido #Crujiente #Postre&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 16,
-            &quot;title&quot;: &quot;Bizcocho de Yogur&quot;,
-            &quot;description&quot;: &quot;Bizcocho f&aacute;cil de hacer con la receta del yogurt como medida.&quot;,
-            &quot;ingredients&quot;: &quot;Yogur natural, Az&uacute;car, Huevo, Harina, Aceite, Levadura&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;Antonio&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;6: Bizcochos&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#F&aacute;cil #Esponjoso #B&aacute;sico #Dulce&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 17,
-            &quot;title&quot;: &quot;Tarta de Queso al Horno&quot;,
-            &quot;description&quot;: &quot;Deliciosa tarta de queso con una base crujiente y un relleno cremoso.&quot;,
-            &quot;ingredients&quot;: &quot;Queso crema, Huevos, Az&uacute;car, Galletas, Mantequilla&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;Antonio&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;2: Tartas&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Queso #Horneado #Cremoso #Postre&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 20,
-            &quot;title&quot;: &quot;Pastelitos de Naranja y Almendra&quot;,
-            &quot;description&quot;: &quot;Pastelitos arom&aacute;ticos con un toque de naranja y almendra, perfectos para cualquier ocasi&oacute;n.&quot;,
-            &quot;ingredients&quot;: &quot;Almendra molida, Naranja, Harina, Az&uacute;car, Huevo, Mantequilla&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;Antonio&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;1: Pasteles&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Naranja #Almendra #Arom&aacute;tico #Dulce&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 22,
-            &quot;title&quot;: &quot;Galletas de Mantequilla&quot;,
-            &quot;description&quot;: &quot;Galletas cl&aacute;sicas de mantequilla con un sabor suave y textura crujiente.&quot;,
-            &quot;ingredients&quot;: &quot;Mantequilla, Az&uacute;car, Harina, Huevo, Esencia de vainilla&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;Antonio&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;5: Galletas&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Mantequilla #Cl&aacute;sicas #F&aacute;cil #Dulce&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 25,
-            &quot;title&quot;: &quot;Bizcocho de Caf&eacute;&quot;,
-            &quot;description&quot;: &quot;Bizcocho con un toque de caf&eacute; que lo convierte en el acompa&ntilde;ante perfecto para el desayuno.&quot;,
-            &quot;ingredients&quot;: &quot;Caf&eacute;, Harina, Az&uacute;car, Huevo, Mantequilla&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;Antonio&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;6: Bizcochos&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Caf&eacute; #Energ&eacute;tico #Dulce #Desayuno&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 26,
-            &quot;title&quot;: &quot;Tiramisu&quot;,
-            &quot;description&quot;: &quot;Postre italiano con capas de bizcocho empapado en caf&eacute; y mascarpone cremoso.&quot;,
-            &quot;ingredients&quot;: &quot;Mascarpone, Caf&eacute;, Bizcochos de soletilla, Cacao en polvo, Az&uacute;car, Huevo&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 3,
-                &quot;name&quot;: &quot;Maria&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;11: Reposteria Internacional&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Italiano #Caf&eacute; #Cremoso #Dulce&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 27,
-            &quot;title&quot;: &quot;Barras de Granola Caseras&quot;,
-            &quot;description&quot;: &quot;Deliciosas barras de granola crujiente y saludable, perfectas para un snack r&aacute;pido.&quot;,
-            &quot;ingredients&quot;: &quot;Avena, Frutos secos, Miel, Az&uacute;car, Mantequilla, Chocolate (opcional)&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 3,
-                &quot;name&quot;: &quot;Maria&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;10: Postres Saludables&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Saludable #Snack #Crujiente #F&aacute;cil&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 29,
-            &quot;title&quot;: &quot;Galletas de Lim&oacute;n y Jengibre&quot;,
-            &quot;description&quot;: &quot;Galletas con un toque c&iacute;trico de lim&oacute;n y el sabor picante del jengibre.&quot;,
-            &quot;ingredients&quot;: &quot;Lim&oacute;n, Jengibre, Az&uacute;car, Mantequilla, Harina, Huevo&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 3,
-                &quot;name&quot;: &quot;Maria&quot;
-            },
-            &quot;categories&quot;: [],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Lim&oacute;n #Jengibre #C&iacute;trico #Dulce&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 31,
-            &quot;title&quot;: &quot;Mousse de Chocolate&quot;,
-            &quot;description&quot;: &quot;Un postre ligero y esponjoso con un intenso sabor a chocolate.&quot;,
-            &quot;ingredients&quot;: &quot;Chocolate, Nata, Az&uacute;car, Huevo, Vainilla&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 3,
-                &quot;name&quot;: &quot;Maria&quot;
-            },
-            &quot;categories&quot;: [],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Chocolate #Cremoso #Ligero #R&aacute;pido&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 33,
-            &quot;title&quot;: &quot;Eclairs de Chocolate&quot;,
-            &quot;description&quot;: &quot;Deliciosos profiteroles alargados rellenos de crema pastelera y cubiertos con chocolate.&quot;,
-            &quot;ingredients&quot;: &quot;Harina, Huevos, Mantequilla, Leche, Az&uacute;car, Chocolate, Crema pastelera&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 3,
-                &quot;name&quot;: &quot;Maria&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;11: Reposteria Internacional&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Eclairs #Chocolate #Pasteler&iacute;a #Cremapastelera #Dulce&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 34,
-            &quot;title&quot;: &quot;Donas Glaseadas&quot;,
-            &quot;description&quot;: &quot;Cl&aacute;sicas donas esponjosas fritas y cubiertas con un glaseado dulce.&quot;,
-            &quot;ingredients&quot;: &quot;Harina, Az&uacute;car, Levadura, Leche, Huevos, Mantequilla, Esencia de vainilla&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 3,
-                &quot;name&quot;: &quot;Maria&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;9: Postres Fritos&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Donas #Glaseado #Esponjoso #Casero #Dulce&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 35,
-            &quot;title&quot;: &quot;Macarons de Frambuesa&quot;,
-            &quot;description&quot;: &quot;Galletas francesas de almendra con relleno cremoso de frambuesa.&quot;,
-            &quot;ingredients&quot;: &quot;Harina de almendra, Az&uacute;car glas, Claras de huevo, Frambuesas, Chocolate blanco&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;David&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;11: Reposteria Internacional&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Macarons #Frambuesa #Pasteler&iacute;a #Delicado #Colorido&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 36,
-            &quot;title&quot;: &quot;Chocotorta Argentina&quot;,
-            &quot;description&quot;: &quot;Postre argentino sin horno hecho con capas de galletas de chocolate y crema de dulce de leche.&quot;,
-            &quot;ingredients&quot;: &quot;Galletas de chocolate, Dulce de leche, Queso crema, Caf&eacute;&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;David&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;11: Reposteria Internacional&quot;
-                },
-                {
-                    &quot;category&quot;: &quot;12: Postres Sin Horno&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Chocotorta #Sinhorno #Argentino #Dulcedeleche #F&aacute;cil&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 38,
-            &quot;title&quot;: &quot;Baklava de Pistacho&quot;,
-            &quot;description&quot;: &quot;Dulce t&iacute;pico del Medio Oriente hecho con capas de masa filo, miel y pistachos.&quot;,
-            &quot;ingredients&quot;: &quot;Masa filo, Pistachos, Miel, Az&uacute;car, Mantequilla&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;David&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;11: Reposteria Internacional&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Baklava #Pistacho #Dulceoriental #Crujiente #Casero&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 39,
-            &quot;title&quot;: &quot;Helado Casero de Vainilla&quot;,
-            &quot;description&quot;: &quot;Cremoso y delicioso helado casero con un intenso sabor a vainilla.&quot;,
-            &quot;ingredients&quot;: &quot;Leche, Nata, Az&uacute;car, Yemas de huevo, Esencia de vainilla&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;David&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;13: Postres Fr&iacute;os&quot;
-                },
-                {
-                    &quot;category&quot;: &quot;14: Helado&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Helado #Vainilla #Casero #F&aacute;cil #Refrescante&quot;
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 40,
-            &quot;title&quot;: &quot;Panettone Italiano&quot;,
-            &quot;description&quot;: &quot;Pan dulce esponjoso con frutas confitadas y pasas, tradicional en Navidad.&quot;,
-            &quot;ingredients&quot;: &quot;Harina, Levadura, Az&uacute;car, Mantequilla, Huevo, Pasas, Frutas confitadas&quot;,
-            &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-            &quot;visibility&quot;: &quot;public&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;David&quot;
-            },
-            &quot;categories&quot;: [
-                {
-                    &quot;category&quot;: &quot;8: Panes Dulces&quot;
-                },
-                {
-                    &quot;category&quot;: &quot;11: Reposteria Internacional&quot;
-                }
-            ],
-            &quot;tags&quot;: [
-                {
-                    &quot;name&quot;: &quot;#Panettone #Italiano #Navide&ntilde;o #Esponjoso #Dulce&quot;
-                }
-            ]
-        }
-    ]
-}</code>
+<code class="language-json" style="max-height: 300px;">[
+  {
+    &quot;id&quot;: 1,
+    &quot;title&quot;: &quot;Post Title&quot;,
+    &quot;description&quot;: &quot;Post Description&quot;,
+    &quot;ingredients&quot;: &quot;ingredient1, ingredients2&quot;,
+    &quot;image&quot;: &quot;image_url&quot;,
+    &quot;visibility&quot;: &quot;public&quot;,
+    &quot;user&quot;: {
+         &quot;id&quot;: 1,
+         &quot;name&quot;: &quot;Pepe&quot;
+    },
+    &quot;categories&quot;: [...],
+    &quot;tags&quot;: [...]
+  },
+  ...
+]</code>
  </pre>
     </span>
 <span id="execution-results-GETapi-posts" hidden>
@@ -1039,7 +653,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-GETapi-posts--id-">GET api/posts/{id}</h2>
+                    <h2 id="publicacion-GETapi-posts--id-">Muestra una publicación específica.
+Solo se podrá ver si el usuario es propietario o el post es publico.</h2>
 
 <p>
 </p>
@@ -1078,38 +693,31 @@ fetch(url, {
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">[
+   {
+     &quot;id&quot;: 1,
+     &quot;title&quot;: &quot;Post Title&quot;,
+     &quot;description&quot;: &quot;Post Description&quot;,
+     &quot;ingredients&quot;: &quot;ingredient1, ingredients2&quot;,
+     &quot;image&quot;: &quot;image_url&quot;,
+     &quot;visibility&quot;: &quot;public&quot;,
+     &quot;user&quot;: {
+          &quot;id&quot;: 1,
+          &quot;name&quot;: &quot;Pepe&quot;
+     },
+     &quot;categories&quot;: [...],
+     &quot;tags&quot;: [...]
+   },</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403):</p>
+        </blockquote>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 2,
-        &quot;title&quot;: &quot;Tarta de Fresas&quot;,
-        &quot;description&quot;: &quot;Tarta con base de galleta y fresas frescas.&quot;,
-        &quot;ingredients&quot;: &quot;Galletas, Mantequilla, Fresas, Crema Pastelera&quot;,
-        &quot;image&quot;: &quot;http://MartaChef.test/storage/images/tarta-fresas.png&quot;,
-        &quot;visibility&quot;: &quot;public&quot;,
-        &quot;user&quot;: {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;Paqui&quot;
-        },
-        &quot;categories&quot;: [
-            {
-                &quot;category&quot;: &quot;2: Tartas&quot;
-            }
-        ],
-        &quot;tags&quot;: [
-            {
-                &quot;name&quot;: &quot;#Fresas #Tarta #Galletas #Cremapastelera #Verano #Postre #Sencillo&quot;
-            }
-        ]
-    }
+    &quot;error&quot;: &quot;No autorizado&quot;
 }</code>
  </pre>
     </span>
@@ -1194,9 +802,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>The ID of the post. Example: <code>2</code></p>
             </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>post</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="post"                data-endpoint="GETapi-posts--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>Requiere el ID de la publicación. Example: <code>1</code></p>
+            </div>
                     </form>
 
-                    <h2 id="endpoints-POSTapi-posts">POST api/posts</h2>
+                    <h2 id="publicacion-POSTapi-posts">Crea una nueva publicación para el usuario autenticado.</h2>
 
 <p>
 </p>
@@ -1212,12 +831,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://MartaChef.test/api/posts" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "title=b"\
-    --form "description=Eius et animi quos velit et."\
-    --form "ingredients=architecto"\
-    --form "visibility=shared"\
-    --form "tags=architecto"\
-    --form "image=@C:\Users\Usuario\AppData\Local\Temp\php16F0.tmp" </code></pre></div>
+    --form "title="Delicious Cake""\
+    --form "description="This is a recipe for a delicious cake.""\
+    --form "ingredients="Flour, Eggs, Sugar""\
+    --form "visibility="public""\
+    --form "categories[]=1"\
+    --form "tags="dessert cake""\
+    --form "image=@C:\Users\Usuario\AppData\Local\Temp\php279B.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1231,11 +851,12 @@ const headers = {
 };
 
 const body = new FormData();
-body.append('title', 'b');
-body.append('description', 'Eius et animi quos velit et.');
-body.append('ingredients', 'architecto');
-body.append('visibility', 'shared');
-body.append('tags', 'architecto');
+body.append('title', '"Delicious Cake"');
+body.append('description', '"This is a recipe for a delicious cake."');
+body.append('ingredients', '"Flour, Eggs, Sugar"');
+body.append('visibility', '"public"');
+body.append('categories[]', '1');
+body.append('tags', '"dessert cake"');
 body.append('image', document.querySelector('input[name="image"]').files[0]);
 
 fetch(url, {
@@ -1247,7 +868,36 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-posts">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+  &quot;id&quot;: 1,
+  &quot;title&quot;: &quot;New Post&quot;,
+  &quot;description&quot;: &quot;Description of new post&quot;,
+  &quot;ingredients&quot;: &quot;ingredient1, ingredients2&quot;,
+  &quot;visibility&quot;: &quot;public&quot;,
+  &quot;categories&quot;: [...],
+  &quot;tags&quot;: [...],
+  &quot;image&quot;: &quot;image_url&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;errors&quot;: {
+        &quot;image&quot;: [
+            &quot;The image field is required.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-posts" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-posts"></span>:
@@ -1321,48 +971,46 @@ You can check the Dev Tools console for debugging information.</code></pre>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-posts"
-               value="b"
+               value=""Delicious Cake""
                data-component="body">
     <br>
-<p>El campo value no debe ser mayor que 255 caracteres. Example: <code>b</code></p>
+<p>El título de la publicación. Example: <code>"Delicious Cake"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="description"                data-endpoint="POSTapi-posts"
-               value="Eius et animi quos velit et."
+               value=""This is a recipe for a delicious cake.""
                data-component="body">
     <br>
-<p>Example: <code>Eius et animi quos velit et.</code></p>
+<p>La descripción de la publicación. Example: <code>"This is a recipe for a delicious cake."</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ingredients</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="ingredients"                data-endpoint="POSTapi-posts"
-               value="architecto"
+               value=""Flour, Eggs, Sugar""
                data-component="body">
     <br>
-<p>Example: <code>architecto</code></p>
+<p>Los ingredientes necesarios. Example: <code>"Flour, Eggs, Sugar"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="visibility"                data-endpoint="POSTapi-posts"
-               value="shared"
+               value=""public""
                data-component="body">
     <br>
-<p>Example: <code>shared</code></p>
-Must be one of:
-<ul style="list-style-type: square;"><li><code>public</code></li> <li><code>private</code></li> <li><code>shared</code></li></ul>
+<p>La visibilidad de la publicación. Example: <code>"public"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>categories</code></b>&nbsp;&nbsp;
@@ -1375,7 +1023,7 @@ Must be one of:
                name="categories[1]"                data-endpoint="POSTapi-posts"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the categories table.</p>
+<p>Los IDs de las categorías asociadas a la publicación.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>tags</code></b>&nbsp;&nbsp;
@@ -1383,25 +1031,25 @@ Must be one of:
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="tags"                data-endpoint="POSTapi-posts"
-               value="architecto"
+               value=""dessert cake""
                data-component="body">
     <br>
-<p>Example: <code>architecto</code></p>
+<p>Etiquetas separadas por espacio. Example: <code>"dessert cake"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image</code></b>&nbsp;&nbsp;
 <small>file</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="file" style="display: none"
                               name="image"                data-endpoint="POSTapi-posts"
                value=""
                data-component="body">
     <br>
-<p>El campo value debe ser una imagen. Example: <code>C:\Users\Usuario\AppData\Local\Temp\php16F0.tmp</code></p>
+<p>La imagen asociada a la publicación. Example: <code>C:\Users\Usuario\AppData\Local\Temp\php279B.tmp</code></p>
         </div>
         </form>
 
-                    <h2 id="endpoints-PUTapi-posts--id-">PUT api/posts/{id}</h2>
+                    <h2 id="publicacion-PUTapi-posts--id-">Actualiza una publicación existente.</h2>
 
 <p>
 </p>
@@ -1417,12 +1065,13 @@ Must be one of:
     "http://MartaChef.test/api/posts/2" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "title=b"\
-    --form "description=Eius et animi quos velit et."\
-    --form "ingredients=architecto"\
-    --form "visibility=shared"\
-    --form "tags=architecto"\
-    --form "image=@C:\Users\Usuario\AppData\Local\Temp\php172F.tmp" </code></pre></div>
+    --form "title="Updated Post""\
+    --form "description="Updated description""\
+    --form "ingredients="Updated ingredients""\
+    --form "visibility="private""\
+    --form "categories[]=1"\
+    --form "tags="updated tag""\
+    --form "image=@C:\Users\Usuario\AppData\Local\Temp\php27EC.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1436,11 +1085,12 @@ const headers = {
 };
 
 const body = new FormData();
-body.append('title', 'b');
-body.append('description', 'Eius et animi quos velit et.');
-body.append('ingredients', 'architecto');
-body.append('visibility', 'shared');
-body.append('tags', 'architecto');
+body.append('title', '"Updated Post"');
+body.append('description', '"Updated description"');
+body.append('ingredients', '"Updated ingredients"');
+body.append('visibility', '"private"');
+body.append('categories[]', '1');
+body.append('tags', '"updated tag"');
 body.append('image', document.querySelector('input[name="image"]').files[0]);
 
 fetch(url, {
@@ -1452,7 +1102,39 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PUTapi-posts--id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+  &quot;message&quot;: &quot;Post actualizado correctamente.&quot;,
+  &quot;post&quot;: {
+    &quot;id&quot;: 1,
+    &quot;title&quot;: &quot;Updated Post&quot;,
+    &quot;description&quot;: &quot;Updated description&quot;,
+    &quot;ingredients&quot;: &quot;ingredient1, ingredients2&quot;,
+    &quot;visibility&quot;: &quot;private&quot;,
+    &quot;categories&quot;: [...],
+    &quot;tags&quot;: [...],
+    &quot;image&quot;: &quot;new_image_url&quot;
+  }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;errors&quot;: {
+        &quot;image&quot;: [
+            &quot;The image field is required.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-posts--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-posts--id-"></span>:
@@ -1534,52 +1216,61 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>The ID of the post. Example: <code>2</code></p>
             </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>post</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="post"                data-endpoint="PUTapi-posts--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>Requiere el ID de la publicación. Example: <code>1</code></p>
+            </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="PUTapi-posts--id-"
-               value="b"
+               value=""Updated Post""
                data-component="body">
     <br>
-<p>El campo value no debe ser mayor que 255 caracteres. Example: <code>b</code></p>
+<p>El título de la publicación. Example: <code>"Updated Post"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="description"                data-endpoint="PUTapi-posts--id-"
-               value="Eius et animi quos velit et."
+               value=""Updated description""
                data-component="body">
     <br>
-<p>Example: <code>Eius et animi quos velit et.</code></p>
+<p>La descripción actualizada. Example: <code>"Updated description"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ingredients</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="ingredients"                data-endpoint="PUTapi-posts--id-"
-               value="architecto"
+               value=""Updated ingredients""
                data-component="body">
     <br>
-<p>Example: <code>architecto</code></p>
+<p>Los ingredientes actualizados. Example: <code>"Updated ingredients"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="visibility"                data-endpoint="PUTapi-posts--id-"
-               value="shared"
+               value=""private""
                data-component="body">
     <br>
-<p>Example: <code>shared</code></p>
-Must be one of:
-<ul style="list-style-type: square;"><li><code>public</code></li> <li><code>private</code></li> <li><code>shared</code></li></ul>
+<p>La visibilidad actualizada. Example: <code>"private"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>categories</code></b>&nbsp;&nbsp;
@@ -1592,7 +1283,7 @@ Must be one of:
                name="categories[1]"                data-endpoint="PUTapi-posts--id-"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the categories table.</p>
+<p>Los IDs de las categorías actualizadas.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>tags</code></b>&nbsp;&nbsp;
@@ -1600,25 +1291,25 @@ Must be one of:
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="tags"                data-endpoint="PUTapi-posts--id-"
-               value="architecto"
+               value=""updated tag""
                data-component="body">
     <br>
-<p>Example: <code>architecto</code></p>
+<p>Etiquetas separadas por espacio. Example: <code>"updated tag"</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image</code></b>&nbsp;&nbsp;
 <small>file</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="file" style="display: none"
                               name="image"                data-endpoint="PUTapi-posts--id-"
                value=""
                data-component="body">
     <br>
-<p>El campo value debe ser una imagen. Example: <code>C:\Users\Usuario\AppData\Local\Temp\php172F.tmp</code></p>
+<p>La nueva imagen de la publicación. Example: <code>C:\Users\Usuario\AppData\Local\Temp\php27EC.tmp</code></p>
         </div>
         </form>
 
-                    <h2 id="endpoints-DELETEapi-posts--id-">DELETE api/posts/{id}</h2>
+                    <h2 id="publicacion-DELETEapi-posts--id-">Elimina una publicación.</h2>
 
 <p>
 </p>
@@ -1654,7 +1345,16 @@ fetch(url, {
 </span>
 
 <span id="example-responses-DELETEapi-posts--id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;status&quot;: &quot;Post eliminado correctamente&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-posts--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-posts--id-"></span>:
@@ -1736,9 +1436,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>The ID of the post. Example: <code>2</code></p>
             </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>post</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="post"                data-endpoint="DELETEapi-posts--id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>Requiere el ID de la publicación a eliminar. Example: <code>1</code></p>
+            </div>
                     </form>
 
-                    <h2 id="endpoints-GETapi-myPosts">GET api/myPosts</h2>
+                    <h2 id="publicacion-GETapi-myPosts">Obtiene las publicaciones de un usuario autenticado, sin tener en cuenta su visibilidad.</h2>
 
 <p>
 </p>
@@ -1775,19 +1486,35 @@ fetch(url, {
 
 <span id="example-responses-GETapi-myPosts">
             <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">[
+    {
+      &quot;id&quot;: 1,
+      &quot;title&quot;: &quot;Post Title&quot;,
+      &quot;description&quot;: &quot;Post Description&quot;,
+      &quot;ingredients&quot;: &quot;ingredient1, ingredients2&quot;,
+      &quot;image&quot;: &quot;image_url&quot;,
+      &quot;visibility&quot;: &quot;private&quot;,
+      &quot;user&quot;: {
+           &quot;id&quot;: 1,
+           &quot;name&quot;: &quot;Pepe&quot;
+      },
+      &quot;categories&quot;: [...],
+      &quot;tags&quot;: [...]
+    },
+  ...
+]</code>
+ </pre>
+            <blockquote>
             <p>Example response (401):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;error&quot;: &quot;No autenticado&quot;
 }</code>
  </pre>
     </span>
@@ -1862,7 +1589,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-GETapi-sharedPosts">GET api/sharedPosts</h2>
+                    <h2 id="publicacion-GETapi-sharedPosts">Obtiene las publicaciones compartidas de los usuarios seguidos.</h2>
 
 <p>
 </p>
@@ -1899,19 +1626,35 @@ fetch(url, {
 
 <span id="example-responses-GETapi-sharedPosts">
             <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">[
+    {
+      &quot;id&quot;: 1,
+      &quot;title&quot;: &quot;Post Title&quot;,
+      &quot;description&quot;: &quot;Post Description&quot;,
+      &quot;ingredients&quot;: &quot;ingredient1, ingredients2&quot;,
+      &quot;image&quot;: &quot;image_url&quot;,
+      &quot;visibility&quot;: &quot;shared&quot;,
+      &quot;user&quot;: {
+           &quot;id&quot;: 1,
+           &quot;name&quot;: &quot;Pepe&quot;
+      },
+      &quot;categories&quot;: [...],
+      &quot;tags&quot;: [...]
+    },
+  ...
+]</code>
+ </pre>
+            <blockquote>
             <p>Example response (401):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;error&quot;: &quot;No autenticado&quot;
 }</code>
  </pre>
     </span>
@@ -1986,7 +1729,304 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-GETapi-users">GET api/users</h2>
+                <h1 id="seguimiento">Seguimiento</h1>
+
+    
+
+                                <h2 id="seguimiento-POSTapi-users--user_id--follow">Permite al usuario autenticado seguir a otro usuario.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-users--user_id--follow">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://MartaChef.test/api/users/1/follow" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://MartaChef.test/api/users/1/follow"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-users--user_id--follow">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: &quot;You are now following John Doe.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: &quot;You cannot follow yourself.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-users--user_id--follow" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-users--user_id--follow"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users--user_id--follow"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-users--user_id--follow" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users--user_id--follow">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-users--user_id--follow" data-method="POST"
+      data-path="api/users/{user_id}/follow"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users--user_id--follow', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-users--user_id--follow"
+                    onclick="tryItOut('POSTapi-users--user_id--follow');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-users--user_id--follow"
+                    onclick="cancelTryOut('POSTapi-users--user_id--follow');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-users--user_id--follow"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/users/{user_id}/follow</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-users--user_id--follow"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-users--user_id--follow"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>user_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="user_id"                data-endpoint="POSTapi-users--user_id--follow"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the user. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="user"                data-endpoint="POSTapi-users--user_id--follow"
+               value="2"
+               data-component="url">
+    <br>
+<p>Requiere el ID del usuario a seguir. Example: <code>2</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="seguimiento-POSTapi-users--user_id--unfollow">Permite al usuario autenticado dejar de seguir a otro usuario.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-users--user_id--unfollow">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://MartaChef.test/api/users/1/unfollow" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://MartaChef.test/api/users/1/unfollow"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-users--user_id--unfollow">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: &quot;You have unfollowed John Doe.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-users--user_id--unfollow" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-users--user_id--unfollow"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users--user_id--unfollow"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-users--user_id--unfollow" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users--user_id--unfollow">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-users--user_id--unfollow" data-method="POST"
+      data-path="api/users/{user_id}/unfollow"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users--user_id--unfollow', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-users--user_id--unfollow"
+                    onclick="tryItOut('POSTapi-users--user_id--unfollow');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-users--user_id--unfollow"
+                    onclick="cancelTryOut('POSTapi-users--user_id--unfollow');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-users--user_id--unfollow"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/users/{user_id}/unfollow</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-users--user_id--unfollow"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-users--user_id--unfollow"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>user_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="user_id"                data-endpoint="POSTapi-users--user_id--unfollow"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the user. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="user"                data-endpoint="POSTapi-users--user_id--unfollow"
+               value="2"
+               data-component="url">
+    <br>
+<p>Requiere el ID del usuario a dejar de seguir. Example: <code>2</code></p>
+            </div>
+                    </form>
+
+                <h1 id="usuarios">Usuarios</h1>
+
+    
+
+                                <h2 id="usuarios-GETapi-users">Obtiene una lista de todos los usuarios, excluyendo el usuario autenticado.</h2>
 
 <p>
 </p>
@@ -2023,20 +2063,18 @@ fetch(url, {
 
 <span id="example-responses-GETapi-users">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
-}</code>
+<code class="language-json" style="max-height: 300px;">[
+  {
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;Pepe&quot;,
+    &quot;email&quot;: &quot;pepe@example.com&quot;
+  },
+  ...
+]</code>
  </pre>
     </span>
 <span id="execution-results-GETapi-users" hidden>
@@ -2110,7 +2148,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-GETapi-users--id-">GET api/users/{id}</h2>
+                    <h2 id="usuarios-GETapi-users--id-">Muestra los detalles de un usuario específico.</h2>
 
 <p>
 </p>
@@ -2147,19 +2185,14 @@ fetch(url, {
 
 <span id="example-responses-GETapi-users--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;Pepe&quot;,
+    &quot;email&quot;: &quot;pepe@example.com&quot;
 }</code>
  </pre>
     </span>
@@ -2244,245 +2277,16 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>The ID of the user. Example: <code>1</code></p>
             </div>
-                    </form>
-
-                    <h2 id="endpoints-POSTapi-users--user_id--follow">POST api/users/{user_id}/follow</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-users--user_id--follow">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://MartaChef.test/api/users/1/follow" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://MartaChef.test/api/users/1/follow"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-users--user_id--follow">
-</span>
-<span id="execution-results-POSTapi-users--user_id--follow" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-users--user_id--follow"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-users--user_id--follow"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-users--user_id--follow" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-users--user_id--follow">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-users--user_id--follow" data-method="POST"
-      data-path="api/users/{user_id}/follow"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users--user_id--follow', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-users--user_id--follow"
-                    onclick="tryItOut('POSTapi-users--user_id--follow');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-users--user_id--follow"
-                    onclick="cancelTryOut('POSTapi-users--user_id--follow');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-users--user_id--follow"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/users/{user_id}/follow</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-users--user_id--follow"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-users--user_id--follow"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>user_id</code></b>&nbsp;&nbsp;
+                <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
 <small>integer</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="user_id"                data-endpoint="POSTapi-users--user_id--follow"
+               step="any"               name="user"                data-endpoint="GETapi-users--id-"
                value="1"
                data-component="url">
     <br>
-<p>The ID of the user. Example: <code>1</code></p>
-            </div>
-                    </form>
-
-                    <h2 id="endpoints-POSTapi-users--user_id--unfollow">POST api/users/{user_id}/unfollow</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-users--user_id--unfollow">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://MartaChef.test/api/users/1/unfollow" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://MartaChef.test/api/users/1/unfollow"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-users--user_id--unfollow">
-</span>
-<span id="execution-results-POSTapi-users--user_id--unfollow" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-users--user_id--unfollow"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-users--user_id--unfollow"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-users--user_id--unfollow" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-users--user_id--unfollow">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-users--user_id--unfollow" data-method="POST"
-      data-path="api/users/{user_id}/unfollow"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users--user_id--unfollow', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-users--user_id--unfollow"
-                    onclick="tryItOut('POSTapi-users--user_id--unfollow');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-users--user_id--unfollow"
-                    onclick="cancelTryOut('POSTapi-users--user_id--unfollow');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-users--user_id--unfollow"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/users/{user_id}/unfollow</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-users--user_id--unfollow"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-users--user_id--unfollow"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>user_id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="user_id"                data-endpoint="POSTapi-users--user_id--unfollow"
-               value="1"
-               data-component="url">
-    <br>
-<p>The ID of the user. Example: <code>1</code></p>
+<p>Requiere el ID del usuario. Example: <code>1</code></p>
             </div>
                     </form>
 

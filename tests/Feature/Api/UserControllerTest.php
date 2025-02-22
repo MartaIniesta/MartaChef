@@ -1,10 +1,7 @@
 <?php
 
-use App\Events\UserFollowedEvent;
-use App\Events\UserUnfollowedEvent;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
-use Illuminate\Support\Facades\Event;
 
 beforeEach(function () {
     $this->seed(RolesSeeder::class);
@@ -45,7 +42,6 @@ it('follows another user', function () {
 
     $authUser->givePermissionTo('follow-users');
     loginAsUser($authUser);
-    Event::fake();
 
     expect($authUser->isFollowing($userToFollow))->toBeFalse();
 
@@ -57,8 +53,6 @@ it('follows another user', function () {
         ->assertJson(['success' => "You are now following {$userToFollow->name}."]);
 
     expect($authUser->isFollowing($userToFollow))->toBeTrue();
-
-    Event::assertDispatched(UserFollowedEvent::class);
 });
 
 it('A user cannot follow himself', function () {
@@ -83,7 +77,6 @@ it('should unfollow another user', function () {
 
     $authUser->givePermissionTo('unfollow-users');
     loginAsUser($authUser);
-    Event::fake();
 
     $authUser->follow($userToUnfollow);
 
@@ -95,6 +88,4 @@ it('should unfollow another user', function () {
         ->assertJson(['success' => "You have unfollowed {$userToUnfollow->name}."]);
 
     expect($authUser->isFollowing($userToUnfollow))->toBeFalse();
-
-    Event::assertDispatched(UserUnfollowedEvent::class);
 });

@@ -75,8 +75,13 @@ class UserController extends Controller
 
         $this->authorize('follow-users');
 
-        $this->cannotFollowSelf($user, $authUser);
-        $this->followUser($user, $authUser);
+        if ($authUser->id === $user->id) {
+            return response()->json(['error' => 'You cannot follow yourself.'], 400);
+        }
+
+        if (!$authUser->isFollowing($user)) {
+            $authUser->follow($user);
+        }
 
         return response()->json([
             'success' => "You are now following {$user->name}."
@@ -99,31 +104,12 @@ class UserController extends Controller
 
         $this->authorize('unfollow-users');
 
-        $this->unfollowUser($user, $authUser);
+        if ($authUser->isFollowing($user)) {
+            $authUser->unfollow($user);
+        }
 
         return response()->json([
             'success' => "You have unfollowed {$user->name}."
         ]);
-    }
-
-    private function cannotFollowSelf(User $user, $authUser)
-    {
-        if ($authUser->id === $user->id) {
-            return response()->json(['error' => 'You cannot follow yourself.'], 400);
-        }
-    }
-
-    private function followUser(User $user, $authUser){
-        if (!$authUser->isFollowing($user)) {
-            $authUser->follow($user);
-            event(new UserFollowedEvent($authUser, $user));
-        }
-    }
-
-    private function unfollowUser(User $user, $authUser){
-        if ($authUser->isFollowing($user)) {
-            $authUser->unfollow($user);
-            event(new UserUnfollowedEvent($authUser, $user));
-        }
     }
 }
