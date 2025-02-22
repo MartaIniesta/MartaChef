@@ -42,6 +42,7 @@
                     <th class="border p-3">Nombre</th>
                     <th class="border p-3">Email</th>
                     <th class="border p-3">Estado</th>
+                    <th class="border p-3">Rol</th>
                     <th class="border p-3">Acciones</th>
                 </tr>
                 </thead>
@@ -57,22 +58,39 @@
                                 <span class="text-green-500 font-semibold">Activo</span>
                             @endif
                         </td>
-                        <td class="border p-3 flex justify-center space-x-2">
+
+                        <td class="border p-3">
+                            <form action="{{ route('admin.users.updateRole', $user->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+
+                                <select name="role" class="border rounded p-1">
+                                    @foreach(['user', 'admin', 'moderator'] as $role)
+                                        <option value="{{ $role }}" {{ $user->hasRole($role) ? 'selected' : '' }}>
+                                            {{ ucfirst($role) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 mt-1">
+                                    Asignar
+                                </button>
+                            </form>
+                        </td>
+
+                        <td class="border p-3 flex flex-col items-center space-y-2">
                             @if ($user->trashed())
-                                <!-- Botón para restaurar -->
                                 <form action="{{ route('admin.users.restore', $user->id) }}" method="POST">
                                     @csrf
                                     <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Restaurar</button>
                                 </form>
 
-                                <!-- Botón para eliminar permanentemente -->
                                 <form action="{{ route('admin.users.forceDelete', $user->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar permanentemente este usuario?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">Borrar Definitivo</button>
                                 </form>
                             @else
-                                <!-- Botón para eliminar (soft delete) -->
                                 <form action="{{ route('admin.users.softDelete', $user->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este usuario?');">
                                     @csrf
                                     @method('DELETE')
