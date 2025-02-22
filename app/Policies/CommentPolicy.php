@@ -36,8 +36,8 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment): bool
     {
-        return $user->can('edit-comments') && ($user->id === $comment->user_id ||
-            $user->hasRole('admin') || $user->hasRole('moderator'));
+        return $user->hasPermissionTo('edit-comments') &&
+            ($user->id === $comment->user_id || $user->hasRole('admin'));
     }
 
     /**
@@ -47,21 +47,5 @@ class CommentPolicy
     {
         return $user->can('delete-comments') && ($user->id === $comment->user_id ||
             $user->hasRole('admin') || $user->hasRole('moderator'));
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Comment $comment): bool
-    {
-        return $user->hasRole('admin') || $user->hasRole('moderator');
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Comment $comment): bool
-    {
-        return $user->hasRole('admin') || $user->hasRole('moderator');
     }
 }

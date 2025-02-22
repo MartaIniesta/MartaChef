@@ -112,7 +112,6 @@ class Comments extends Component
 
     public function deleteComment(Comment $comment)
     {
-        $this->render();
         $this->authorize('delete', $comment);
 
         try {
@@ -121,6 +120,8 @@ class Comments extends Component
         } catch (\Exception $e) {
             session()->flash('error');
         }
+
+        $this->render();
     }
 
     public function loadMoreComments()

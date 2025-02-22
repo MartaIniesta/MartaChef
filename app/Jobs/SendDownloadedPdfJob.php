@@ -14,7 +14,7 @@ class SendDownloadedPdfJob implements ShouldQueue
     protected $post;
     protected $user;
 
-    public function __construct(Post $post, User $user)
+    public function __construct(Post $post, ?User $user)
     {
         $this->post = $post;
         $this->user = $user;
@@ -31,7 +31,8 @@ class SendDownloadedPdfJob implements ShouldQueue
 
         Log::info("Usuario {$this->user->name} ha solicitado la generación del PDF de la receta con id: {$this->post->id}.");
 
-        $pdfPath = 'pdf/Receta_' . $this->post->title . '.pdf';
+        $pdfTitle = str_replace(' ', '_', $this->post->title);
+        $pdfPath = 'pdf/Receta_' . $pdfTitle . '.pdf';
         Storage::disk('public')->put($pdfPath, $pdf->output());
 
         Log::info("PDF generado y guardado correctamente en: {$pdfPath}");

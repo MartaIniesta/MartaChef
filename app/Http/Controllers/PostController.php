@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\PostCreatedEvent;
 use App\Jobs\SendDownloadedPdfJob;
 use App\Jobs\SendPostNotificationJob;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\{StorePostRequest, UpdatePostRequest};
 use App\Models\{Category, Comment, Post, Tag, User};
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class PostController extends Controller
     public function index()
     {
         $latestPosts = Post::visibilityPublic()
-            ->reorder('created_at', 'desc')
+            ->latest('created_at')
             ->take(3)
             ->get();
 
@@ -97,7 +98,12 @@ class PostController extends Controller
             ->get();
 
         $user = auth()->user();
-        dispatch(new SendDownloadedPdfJob($post, $user));
+        $pdfTitle = str_replace(' ', '_', $post->title);
+        $pdfPath = 'pdf/Receta_' . $pdfTitle . '.pdf';
+
+        if (!Storage::disk('public')->exists($pdfPath)) {
+            dispatch(new SendDownloadedPdfJob($post, $user));
+        }
 
         return view('posts.show', compact('post', 'comments'));
     }
@@ -161,6 +167,12 @@ class PostController extends Controller
         if ($request->filled('tags')) {
             $tags = $this->saveTags($request->tags);
             $post->tags()->sync($tags);
+        }
+
+        $pdfTitle = str_replace(' ', '_', $post->title);
+        $pdfPath = 'pdf/Receta_' . $pdfTitle . '.pdf';
+        if (Storage::disk('public')->exists($pdfPath)) {
+            Storage::disk('public')->delete($pdfPath);
         }
 
         return redirect()->route('posts.show', $post)->with('status', 'Post actualizado correctamente.');
