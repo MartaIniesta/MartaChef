@@ -2,7 +2,7 @@
     <div class="container mx-auto text-center">
         <p class="text-sm">Copyright &copy; {{ date('Y') }} MartaChef | Marta Iniesta.
             <a href="#" class="text-[12px] underline hover:text-[#004B7B]">
-                Política de privacidad
+                {{__('Privacy Policy')}}
             </a>
         </p>
     </div>

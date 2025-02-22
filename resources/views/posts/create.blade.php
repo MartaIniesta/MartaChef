@@ -1,9 +1,39 @@
 <x-app-layout>
-    <div class="bg-gray-100 py-8">
+    <x-first-navigation-bar/>
+
+    <nav>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-end items-center py-8 space-x-8">
+                @auth
+                    <a href="{{ route('posts.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
+                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
+                            <img src="{{ asset('storage/icons/blog.png') }}" class="h-12 w-12">
+                        </div>
+                        {{ __('BLOG') }}
+                    </a>
+
+                    <a href="{{ route('posts.recipes') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
+                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
+                            <img src="{{ asset('storage/icons/recipes.png') }}" class="h-12 w-12">
+                        </div>
+                        {{ __('RECIPES') }}
+                    </a>
+                @endauth
+            </div>
+        </div>
+    </nav>
+
+    <a href="{{ route('posts.recipes') }}" class="ml-14 text-[18px] text-gray-800 hover:text-gray-600 font-semibold">
+        < {{ __('Return') }}
+    </a>
+
+    <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-3xl font-semibold mb-6 text-center">
-                {{ __('Create new recipe') }}
-            </h1>
+            <div class="w-64 mx-auto pt-6">
+                <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
+                    {{ __('Create new recipe') }}
+                </h1>
+            </div>
 
             <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-lg shadow-lg">
                 @csrf
@@ -115,13 +145,9 @@
                     {{ __('Create Post') }}
                 </button>
             </form>
-
-            <div class="text-center mt-6">
-                <a href="{{ route('posts.index') }}" class="text-blue-500 hover:underline">
-                    &lt; {{ __('Return') }}
-                </a>
-            </div>
         </div>
+
+        <x-footer/>
     </div>
 
     {{-- Scripts específicos para esta vista --}}

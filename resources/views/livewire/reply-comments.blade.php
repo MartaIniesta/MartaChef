@@ -3,17 +3,15 @@
         @include('livewire.comment-item', ['comment' => $reply, 'level' => $level + 1])
     @endforeach
 
-    <!-- Botón para CARGAR MÁS respuestas -->
     @if($comment->replies->count() > ($this->repliesToShow[$comment->id] ?? 1))
         <button wire:click="loadMoreReplies({{ $comment->id }})" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">
-            Cargar más respuestas
+            {{__('Load more comments')}}
         </button>
     @endif
 
-    <!-- Botón para CARGAR MENOS respuestas -->
     @if(isset($this->repliesToShow[$comment->id]) && $this->repliesToShow[$comment->id] > 1)
         <button wire:click="loadLessReplies({{ $comment->id }})" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">
-            Cargar menos respuestas
+            {{__('Load fewer comments')}}
         </button>
     @endif
 </div>

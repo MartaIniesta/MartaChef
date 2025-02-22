@@ -10,7 +10,7 @@
                             <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                                 <img src="{{ asset('storage/icons/administrar.png') }}" class="h-12 w-12">
                             </div>
-                            ADMINISTRAR
+                            {{__('MANAGE')}}
                         </a>
                     @endif
                 @endauth
@@ -35,7 +35,7 @@
     <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="w-44 mx-auto mt-1">
             <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
-                BLOG USERS
+                {{__('BLOG USERS')}}
             </h1>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -55,7 +55,7 @@
                             <div class="mt-4">
                                 <a href="{{ route('users.show', $user) }}"
                                    class="inline-block bg-[#B6D5E9] px-4 py-2 rounded-lg hover:bg-[#5C99C1] transition duration-300 shadow-md">
-                                    Ver perfil
+                                    {{__('View profile')}}
                                 </a>
                             </div>
                         </div>

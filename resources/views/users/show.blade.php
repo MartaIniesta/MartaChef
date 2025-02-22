@@ -10,7 +10,7 @@
                             <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                                 <img src="{{ asset('storage/icons/administrar.png') }}" class="h-12 w-12">
                             </div>
-                            ADMINISTRAR
+                            {{__('MANAGE')}}
                         </a>
                     @endif
                 @endauth
@@ -19,7 +19,7 @@
                     <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                         <img src="{{ asset('storage/icons/users.png') }}" class="h-12 w-12">
                     </div>
-                    USUARIOS
+                    {{__('USERS')}}
                 </a>
 
                 <a href="{{ route('posts.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
@@ -44,7 +44,9 @@
             <div class="flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h1>
-                    <p class="text-gray-600 mt-2">Email: {{ $user->email }}</p>
+                    <p class="text-gray-600 mt-2">
+                        {{__('Email')}}: {{ $user->email }}
+                    </p>
                 </div>
 
                 @auth
@@ -54,14 +56,14 @@
                                 <form action="{{ route('users.unfollow', $user) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-all">
-                                        Unfollow
+                                        {{__('Unfollow')}}
                                     </button>
                                 </form>
                             @else
                                 <form action="{{ route('users.follow', $user) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all">
-                                        Follow
+                                        {{__('Follow')}}
                                     </button>
                                 </form>
                             @endif
@@ -90,7 +92,9 @@
                     @endforeach
                 </div>
             @else
-                <p class="text-center text-gray-500">This user has no published recipes.</p>
+                <p class="text-center text-gray-500">
+                    {{__('This user has no published recipes.')}}
+                </p>
             @endif
         </div>
 

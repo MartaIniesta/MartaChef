@@ -1,28 +1,26 @@
 <div>
-    <h3 class="text-lg font-bold mb-4">Comentarios</h3>
+    <h3 class="text-lg font-bold mb-4">
+        {{__('Comments')}}
+    </h3>
 
-    <!-- Muestra los comentarios -->
     <div class="space-y-4">
         @foreach($comments as $comment)
             @include('livewire.comment-item', ['comment' => $comment, 'level' => 0])
         @endforeach
     </div>
 
-    <!-- Boton de CARGAR MAS -->
     @if($comments->count() < \App\Models\Comment::where('post_id', $postId)->whereNull('parent_id')->count())
         <button wire:click="loadMoreComments" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">
-            Cargar más comentarios
+            {{__('Load more comments')}}
         </button>
     @endif
 
-    <!-- Boton de CARGAR MENOS -->
     @if($commentsToShow > 4)
         <button wire:click="loadLessComments" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">
-            Cargar menos comentarios
+            {{__('Load fewer comments')}}
         </button>
     @endif
 
-    <!-- Boton de COMENTAR -->
     @auth
         @can('create', App\Models\Comment::class)
             <div class="mt-4">
@@ -34,11 +32,10 @@
                     placeholder="Escribe un comentario...">
                 </textarea>
                 <button wire:click="addComment" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">
-                    Comentar
+                    {{__('Comment')}}
                 </button>
             </div>
 
-            <!-- Muestra un ERROR -->
             <div class="mt-3">
                 @error('content')
                     <span class="text-red-500">{{ $message }}</span>

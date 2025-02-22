@@ -10,7 +10,7 @@
                             <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                                 <img src="{{ asset('storage/icons/administrar.png') }}" class="h-12 w-12">
                             </div>
-                            ADMINISTRAR
+                            {{__('MANAGE')}}
                         </a>
                     @endif
                 @endauth
@@ -26,7 +26,7 @@
                     <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                         <img src="{{ asset('storage/icons/users.png') }}" class="h-12 w-12">
                     </div>
-                    USUARIOS
+                    {{__('USERS')}}
                 </a>
 
                 @auth
@@ -34,14 +34,14 @@
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/myRecipes.png') }}" class="h-12 w-12">
                         </div>
-                        MY RECIPES
+                        {{__('MY RECIPES')}}
                     </a>
 
                     <a href="{{ route('posts.shared') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/sharedRecipes.png') }}" class="h-12 w-12">
                         </div>
-                        RECETAS COMPARTIDAS
+                        {{__('SHARED RECIPES')}}
                     </a>
                 @endauth
             </div>
@@ -51,7 +51,7 @@
     <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="w-36 mx-auto pt-6">
             <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
-                RECETAS
+                {{__('RECIPES')}}
             </h1>
         </div>
 

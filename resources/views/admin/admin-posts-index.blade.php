@@ -15,14 +15,14 @@
                     <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                         <img src="{{ asset('storage/icons/administrar.png') }}" class="h-12 w-12">
                     </div>
-                    ADMINISTRAR
+                    {{__('MANAGE')}}
                 </a>
 
                 <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
                     <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                         <img src="{{ asset('storage/icons/administrar2.png') }}" class="h-12 w-12">
                     </div>
-                    ADMINISTRAR USUARIOS
+                    {{__('MANAGE USERS')}}
                 </a>
             </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="container mx-auto mt-8">
             <div class="w-1/4 mx-auto pb-3">
                 <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
-                    ADMINISTRAR RECETAS
+                    {{__('MANAGE RECIPES')}}
                 </h1>
             </div>
 
@@ -40,64 +40,65 @@
                 <thead>
                 <tr class="bg-gray-100">
                     <th class="border p-3">ID</th>
-                    <th class="border p-3">Título</th>
-                    <th class="border p-3">Autor</th>
-                    <th class="border p-3">Estado</th>
-                    <th class="border p-3">Acciones</th>
+                    <th class="border p-3">{{__('Title')}}</th>
+                    <th class="border p-3">{{__('Author')}}</th>
+                    <th class="border p-3">{{__('State')}}</th>
+                    <th class="border p-3">{{__('Actions')}}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($posts as $post)
                     <tr class="text-center">
-                        <!-- ID del post -->
                         <td class="border p-3">{{ $post->id }}</td>
 
-                        <!-- Título del post -->
                         <td class="border p-3">{{ $post->title }}</td>
 
-                        <!-- Autor del post -->
                         <td class="border p-3">{{ $post->user->name ?? 'Autor desconocido' }}</td>
 
-                        <!-- Estado del post -->
                         <td class="border p-3">
                             @if ($post->trashed())
-                                <span class="text-red-500 font-semibold">Eliminado</span>
+                                <span class="text-red-500 font-semibold">
+                                    {{__('Deleted')}}
+                                </span>
                             @else
-                                <span class="text-green-500 font-semibold">Activo</span>
+                                <span class="text-green-500 font-semibold">
+                                    {{__('Asset')}}
+                                </span>
                             @endif
                         </td>
 
-                        <!-- Acciones -->
                         <td class="border p-3 flex justify-center space-x-2">
                             @can('edit-posts', $post)
-                                @if (!$post->trashed()) <!-- Solo mostrar botón de editar si el post no ha sido eliminado -->
-                                <!-- Botón para editar el post -->
+                                @if (!$post->trashed())
                                 <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
-                                    Editar post
+                                    {{__('Edit')}}
                                 </button>
                                 @endif
                             @endcan
 
                             @if ($post->trashed())
-                                <!-- Botón para restaurar -->
                                 <form action="{{ route('admin.posts.restore', $post->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Restaurar</button>
+                                    <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
+                                        {{__('Restore')}}
+                                    </button>
                                 </form>
 
-                                <!-- Botón para eliminar permanentemente -->
                                 <form action="{{ route('admin.posts.forceDelete', $post->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar permanentemente este post?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">Borrar Definitivo</button>
+                                    <button class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">
+                                        {{__('Permanently Delete')}}
+                                    </button>
                                 </form>
                             @else
-                                <!-- Botón para eliminar (soft delete) -->
                                 <form action="{{ route('admin.posts.softDelete', $post->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este post?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Eliminar</button>
+                                    <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                        {{__('Delete')}}
+                                    </button>
                                 </form>
                             @endif
                         </td>

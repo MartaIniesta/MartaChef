@@ -16,7 +16,7 @@
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/users.png') }}" class="h-12 w-12">
                         </div>
-                        USUARIOS
+                        {{__('USERS')}}
                     </a>
                 @endauth
 
@@ -32,14 +32,14 @@
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/myRecipes.png') }}" class="h-12 w-12">
                         </div>
-                        MY RECIPES
+                        {{ __('MY RECIPES') }}
                     </a>
 
                     <a href="{{ route('posts.shared') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/sharedRecipes.png') }}" class="h-12 w-12">
                         </div>
-                        RECETAS COMPARTIDAS
+                        {{ __('SHARED RECIPES') }}
                     </a>
                 @endauth
             </div>
@@ -50,14 +50,14 @@
         <div class="max-w-4xl mx-auto px-4 py-8">
             <div class="flex justify-between items-center">
                 <a href="{{ route('users.show', $post->user) }}" class="text-gray-800 hover:text-gray-600 text-[17px]">
-                    <p><strong>Autor:</strong> {{ $post->user->name ?? 'Autor desconocido' }}</p>
+                    <p><strong>{{__('Author')}}:</strong> {{ $post->user->name ?? 'Autor desconocido' }}</p>
                 </a>
                 @auth
                     <a href="{{ route('posts.pdf', $post) }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold text-[17px]">
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] w-14 h-14 rounded-full">
                             <img src="{{ asset('storage/icons/pdf.png') }}" class="h-10 w-10">
                         </div>
-                        Descargar PDF
+                        {{__('Download PDF')}}
                     </a>
                 @endauth
             </div>
@@ -73,7 +73,9 @@
 
             @auth
                 <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-2">Ingredientes:</h3>
+                    <h3 class="text-xl font-semibold mb-2">
+                        {{__('Ingredients')}}:
+                    </h3>
                     <ul class="list-disc ml-6">
                         @foreach(array_filter(array_map('trim', explode(',', $post->ingredients))) as $ingredient)
                             <li>{{ $ingredient }}</li>
@@ -83,7 +85,9 @@
             @endauth
 
             <div class="mb-6">
-                <h3 class="text-xl font-semibold mb-2">Categorías:</h3>
+                <h3 class="text-xl font-semibold mb-2">
+                    {{__('Categories')}}:
+                </h3>
                 <ul class="list-disc ml-6">
                     @foreach ($post->categories as $category)
                         <li>{{ $category->name }}</li>
@@ -92,7 +96,9 @@
             </div>
 
             <div class="mb-6">
-                <h3 class="text-xl font-semibold mb-2">Etiquetas:</h3>
+                <h3 class="text-xl font-semibold mb-2">
+                    {{__('Tags')}}:
+                </h3>
                 @if($post->tags->isNotEmpty())
                     <div class="flex flex-wrap gap-2">
                         @foreach($post->tags as $tag)
@@ -107,7 +113,7 @@
                     @can('edit-posts', $post)
                         <div class="mb-6">
                             <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
-                                Editar receta
+                                {{__('Edit Recipe')}}
                             </button>
                         </div>
                     @endcan
@@ -117,21 +123,27 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
-                                Eliminar
+                                {{__('Delete')}}
                             </button>
                         </form>
                     @endcan
                 @endif
 
                 @can('rate-posts')
-                    <h3 class="text-xl font-semibold mb-2">Opiniones de clientes</h3>
+                    <h3 class="text-xl font-semibold mb-2">
+                        {{__('Customer opinions')}}
+                    </h3>
                     <livewire:post-rating :post="$post"/>
                 @endcan
 
                 <livewire:comments :postId="$post->id" />
                 @else
                     <p class="text-gray-500 text-center mt-6">
-                        <a href="{{ route('login') }}"><strong>Inicia sesión para ver la receta completa.</strong></a>
+                        <a href="{{ route('login') }}">
+                            <strong>
+                                {{__('Log in to see the full recipe.')}}
+                            </strong>
+                        </a>
                     </p>
             @endauth
         </div>

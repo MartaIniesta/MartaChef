@@ -6,7 +6,7 @@
                 ★
             </span>
         @endfor
-        <p class="ml-2 mt-1 text-xl">{{ number_format($averageRating, 1) }} de 5</p>
+        <p class="ml-2 mt-1 text-xl">{{ number_format($averageRating, 1) }} {{__('of')}} 5</p>
     </div>
 
     @auth

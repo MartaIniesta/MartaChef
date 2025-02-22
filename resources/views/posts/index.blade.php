@@ -4,15 +4,13 @@
     <nav>
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-end items-center py-8 space-x-8">
-
-                <!-- ADMINISTRAR solo para admin -->
                 @auth
                     @if(auth()->user()->hasRole('admin'))
                         <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
                             <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                                 <img src="{{ asset('storage/icons/administrar.png') }}" class="h-12 w-12">
                             </div>
-                            ADMINISTRAR
+                            {{__('MANAGE')}}
                         </a>
                     @endif
                 @endauth
@@ -28,7 +26,7 @@
                     <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                         <img src="{{ asset('storage/icons/users.png') }}" class="h-12 w-12">
                     </div>
-                    USUARIOS
+                    {{__('USERS')}}
                 </a>
             </div>
         </div>
@@ -45,7 +43,7 @@
             <div class="flex items-center my-8">
                 <div class="flex-grow border-t border-gray-300"></div>
                 <h2 class="mx-7 px-7 py-3 border border-gray-400 font-semibold uppercase tracking-wide">
-                    LO + NUEVO
+                    {{__('THE')}} + {{__('NEW')}}
                 </h2>
                 <div class="flex-grow border-t border-gray-300"></div>
             </div>
@@ -74,7 +72,7 @@
             <div class="flex items-center my-8">
                 <div class="flex-grow border-t border-gray-300"></div>
                 <h2 class="mx-7 px-7 py-3 border border-gray-400 font-semibold uppercase tracking-wide">
-                    RECETAS x CATEGORIA
+                    {{__('RECIPES')}} x {{__('CATEGORY')}}
                 </h2>
                 <div class="flex-grow border-t border-gray-300"></div>
             </div>
@@ -97,7 +95,7 @@
             <div class="flex items-center my-8">
                 <div class="flex-grow border-t border-gray-300"></div>
                 <h2 class="mx-7 px-7 py-3 border border-gray-400 font-semibold uppercase tracking-wide">
-                    NUESTROS MEJORES USUARIOS
+                    {{__('OUR BEST USERS')}}
                 </h2>
                 <div class="flex-grow border-t border-gray-300"></div>
             </div>
@@ -106,9 +104,13 @@
                     <div class="border border-gray-300 p-4 text-center rounded-lg shadow-md">
                         <a href="{{ route('users.show', $user) }}">
                             <img src="{{ $user->profile_image ? asset('storage/public' . $user->profile_image) : asset('default-images/default-profile.png') }}" alt="{{ $user->name }}" class="h-16 w-16 mx-auto rounded-full">
-                            <h2 class="text-lg font-semibold mt-2">{{ $user->name }}</h2>
+                            <h2 class="text-lg font-semibold mt-2">
+                                {{ $user->name }}
+                            </h2>
                         </a>
-                        <p class="text-gray-700">Seguidores: {{ $user->followers_count }}</p>
+                        <p class="text-gray-700">
+                            {{__('Followers')}}: {{ $user->followers_count }}
+                        </p>
                     </div>
                 @endforeach
             </div>

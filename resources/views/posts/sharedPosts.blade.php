@@ -10,7 +10,7 @@
                             <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                                 <img src="{{ asset('storage/icons/administrar.png') }}" class="h-12 w-12">
                             </div>
-                            ADMINISTRAR
+                            {{__('MANAGE')}}
                         </a>
                     @endif
 
@@ -25,7 +25,7 @@
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/users.png') }}" class="h-12 w-12">
                         </div>
-                        USUARIOS
+                        {{__('USERS')}}
                     </a>
 
                     <a href="{{ route('posts.recipes') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
@@ -39,7 +39,7 @@
                         <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
                             <img src="{{ asset('storage/icons/myRecipes.png') }}" class="h-12 w-12">
                         </div>
-                        MY RECIPES
+                        {{ __('MY RECIPES') }}
                     </a>
                 @endauth
             </div>
@@ -49,7 +49,7 @@
     <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="w-56 mx-auto pt-6">
             <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
-                SHARED RECIPES
+                {{ __('SHARED RECIPES') }}
             </h1>
         </div>
 
@@ -77,7 +77,9 @@
             </div>
 
         @else
-            <p class="text-center text-gray-500">No hay posts compartidos de las personas que sigues.</p>
+            <p class="text-center text-gray-500">
+                {{__('There are no shared posts from the people you follow.')}}
+            </p>
         @endif
 
 

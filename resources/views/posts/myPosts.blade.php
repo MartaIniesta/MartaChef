@@ -46,7 +46,7 @@
         </div>
     </nav>
 
-    <div class="flex-grow mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9] flex flex-col"> <!-- Aquí usamos flex-col para que el footer se quede abajo -->
+    <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="w-36 mx-auto pt-6">
             <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
                 MY RECIPES
@@ -94,7 +94,9 @@
             </div>
 
         @else
-            <p class="text-center text-gray-500">No tienes posts en esta categoría.</p>
+            <p class="text-center text-gray-500">
+                {{__('You dont have your own recipes.')}}
+            </p>
         @endif
 
         <x-footer />
