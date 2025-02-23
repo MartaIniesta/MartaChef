@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\PostCreatedEvent;
-use App\Jobs\SendDownloadedPdfJob;
-use App\Jobs\SendPostNotificationJob;
+use App\Jobs\{SendDownloadedPdfJob, SendPostNotificationJob};
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\{StorePostRequest, UpdatePostRequest};
 use App\Models\{Category, Comment, Post, Tag, User};
@@ -17,34 +16,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'recipes', 'show');
-    }
-
-    public function index()
-    {
-        $latestPosts = Post::visibilityPublic()
-            ->latest('created_at')
-            ->take(3)
-            ->get();
-
-        $categoriesToShow = ['Tartas', 'Bizcochos', 'Galletas'];
-        $categories = Category::whereIn('name', $categoriesToShow)->get();
-        $categoryPosts = $categories->mapWithKeys(function($category) {
-            $post = $category->posts()
-                ->visibilityPublic()
-                ->withAvg('ratings', 'rating')
-                ->orderByDesc('ratings_avg_rating')
-                ->first();
-
-            return [$category->name => $post];
-        });
-
-        $topUsers = User::withCount('followers')
-            ->orderByDesc('followers_count')
-            ->take(3)
-            ->get();
-
-        return view('posts.index', compact('latestPosts', 'categoryPosts', 'topUsers'));
+        $this->middleware('auth')->except('recipes', 'show');
     }
 
     public function recipes()
@@ -68,7 +40,8 @@ class PostController extends Controller
                 }
             })
             ->latest()
-            ->paginate(12);
+            ->paginate(6)
+            ->appends(['visibility' => $visibility]);
 
         return view('posts.myPosts', compact('userPosts', 'visibility'));
     }
@@ -91,6 +64,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        $this->authorize('view', $post);
+
         $post->load('tags');
         $comments = Comment::where('post_id', $post->id)
             ->whereNull('parent_id')
@@ -142,7 +117,7 @@ class PostController extends Controller
 
         SendPostNotificationJob::dispatch($post);
 
-        return to_route('posts.index')->with('status', 'Receta creada correctamente');
+        return to_route('blog')->with('status', 'Receta creada correctamente');
     }
 
     public function edit(Post $post)
@@ -183,10 +158,10 @@ class PostController extends Controller
         $this->authorize('delete', $post);
         $post->delete();
 
-        return to_route('posts.index')->with('status', 'Receta eliminada correctamente');
+        return to_route('blog')->with('status', 'Receta eliminada correctamente');
     }
 
-    protected function handleImageUpload($request, Post $post)
+    private function handleImageUpload($request, Post $post)
     {
         if (!$request->hasFile('image')) {
             return $post->image;
@@ -197,25 +172,6 @@ class PostController extends Controller
         $image->storeAs('images', $imageName, 'public');
 
         return 'images/' . $imageName;
-    }
-
-    public function restore($id)
-    {
-        $post = Post::withTrashed()->findOrFail($id);
-        $this->authorize('restore', $post);
-        $post->restore();
-
-        return redirect()->route('posts.index')->with('status', 'Receta restaurada correctamente');
-    }
-
-    public function forceDelete($id)
-    {
-        $post = Post::withTrashed()->findOrFail($id);
-        $this->authorize('forceDelete', $post);
-
-        $post->forceDelete();
-
-        return redirect()->route('posts.index')->with('status', 'Receta eliminada permanentemente');
     }
 
     private function saveTags($tagsString)

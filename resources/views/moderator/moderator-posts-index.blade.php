@@ -3,15 +3,8 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
+            <x-nav-moderate-link/>
             <x-nav-blog-link/>
-            <x-nav-manage-link/>
-
-            <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                    <img src="{{ asset('storage/icons/administrar2.png') }}" class="h-12 w-12">
-                </div>
-                {{__('MANAGE USERS')}}
-            </a>
         </div>
     </div>
 
@@ -19,7 +12,7 @@
         <div class="container mx-auto mt-8">
             <div class="w-1/4 mx-auto pb-3">
                 <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
-                    {{__('MANAGE RECIPES')}}
+                    {{__('MODERATE RECIPES')}}
                 </h1>
             </div>
 
@@ -55,16 +48,8 @@
                         </td>
 
                         <td class="border p-3 flex justify-center space-x-2">
-                            @can('edit-posts', $post)
-                                @if (!$post->trashed())
-                                <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
-                                    {{__('Edit')}}
-                                </button>
-                                @endif
-                            @endcan
-
                             @if ($post->trashed())
-                                <form action="{{ route('admin.posts.restore', $post->id) }}" method="POST">
+                                <form action="{{ route('moderator.posts.restore', $post->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
                                     <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
@@ -72,7 +57,7 @@
                                     </button>
                                 </form>
 
-                                <form action="{{ route('admin.posts.forceDelete', $post->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar permanentemente este post?');">
+                                <form action="{{ route('moderator.posts.forceDelete', $post->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar permanentemente este post?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">
@@ -80,7 +65,7 @@
                                     </button>
                                 </form>
                             @else
-                                <form action="{{ route('admin.posts.softDelete', $post->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este post?');">
+                                <form action="{{ route('moderator.posts.softDelete', $post->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este post?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">

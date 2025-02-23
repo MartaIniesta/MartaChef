@@ -1,27 +1,14 @@
 <x-app-layout>
     <x-first-navigation-bar/>
 
-    <nav>
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-end items-center py-8 space-x-8">
-                @auth
-                    <a href="{{ route('posts.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/blog.png') }}" class="h-12 w-12">
-                        </div>
-                        {{ __('BLOG') }}
-                    </a>
-
-                    <a href="{{ route('posts.recipes') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/recipes.png') }}" class="h-12 w-12">
-                        </div>
-                        {{ __('RECIPES') }}
-                    </a>
-                @endauth
-            </div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-end items-center py-8 space-x-8">
+            @auth
+                <x-nav-blog-link/>
+                <x-nav-recipes-link/>
+            @endauth
         </div>
-    </nav>
+    </div>
 
     <a href="{{ route('posts.show', $post) }}" class="ml-14 text-[18px] text-gray-800 hover:text-gray-600 font-semibold">
         < {{ __('Return') }}

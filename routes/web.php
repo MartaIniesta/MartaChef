@@ -1,14 +1,12 @@
 <?php
 
-use App\Http\Controllers\PdfController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\{PdfController, PostController, ProfileController, UserController, BlogController};
 use Illuminate\Support\Facades\Route;
 
 require __DIR__.'/admin.php';
+require __DIR__.'/moderator.php';
 
-Route::get('/', [PostController::class, 'index'])->name('posts.index');
+Route::get('/', [BlogController::class, 'index'])->name('blog');
 Route::get('recipes', [PostController::class, 'recipes'])->name('posts.recipes');
 
 // Ruta para ver la lista de usuarios (no necesita autenticación)

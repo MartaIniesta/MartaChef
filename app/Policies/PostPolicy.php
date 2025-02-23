@@ -18,8 +18,12 @@ class PostPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Post $post): bool
+    public function view(?User $user, Post $post): bool
     {
+        if (!$user) {
+            return $post->visibility === 'public';
+        }
+
         return $post->visibility === 'public' ||
             $user->id === $post->user_id ||
             $user->hasRole('admin') ||
@@ -58,25 +62,8 @@ class PostPolicy
         return $user->hasPermissionTo('delete-posts') && $user->id === $post->user_id;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Post $post): bool
-    {
-        return $user->hasPermissionTo('restore-posts');
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Post $post): bool
-    {
-        return $user->hasPermissionTo('force-delete-posts') || $user->hasRole('admin');
-    }
-
     public function rate(User $user, Post $post): bool
     {
         return $user->can('rate-posts') && $user->id !== $post->user_id;
     }
 }
-

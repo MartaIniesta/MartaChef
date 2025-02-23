@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678')
         ]);
 
-        $david->assignRole('moderator');
+        $david->assignRole('user');
 
         $admin = User::create([
             'name' => 'Admin',
@@ -55,6 +55,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $admin->assignRole('admin');
+
+        $moderator = User::create([
+            'name' => 'Moderator',
+            'email' => 'moderator@gmail.com',
+            'password' => bcrypt('12345678')
+        ]);
+
+        $moderator->assignRole('moderator');
 
         $paqui->following()->attach($antonio);
         $antonio->following()->attach($paqui);

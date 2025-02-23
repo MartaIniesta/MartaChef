@@ -85,19 +85,6 @@ it('can delete a post if user has permission or is the owner', function () {
         ->and(Gate::forUser($otherUser)->denies('delete', $post))->toBeTrue();
 });
 
-/* Puede restaurar una publicación si el usuario tiene el permiso */
-it('can restore a post if the user has the permission', function () {
-    // Arrange
-    $user = User::factory()->create();
-    $post = Post::factory()->create(['user_id' => $user->id]);
-    $post->delete();
-
-    $user->givePermissionTo('restore-posts');
-
-    // Act & Assert
-    expect(Gate::forUser($user)->allows('restore', $post))->toBeTrue();
-});
-
 /* No se puede restaurar una publicación si el usuario no tiene el permiso */
 it('cannot restore a post if the user does not have the permission', function () {
     // Arrange
@@ -107,19 +94,6 @@ it('cannot restore a post if the user does not have the permission', function ()
 
     // Act & Assert
     expect(Gate::forUser($user)->denies('restore', $post))->toBeTrue();
-});
-
-/* Puede eliminar permanentemente un post si el usuario tiene el permiso */
-it('can permanently delete a post if the user has the permission', function () {
-    // Arrange
-    $user = User::factory()->create();
-    $post = Post::factory()->create(['user_id' => $user->id]);
-    $post->delete();
-
-    $user->givePermissionTo('force-delete-posts');
-
-    // Act & Assert
-    expect(Gate::forUser($user)->allows('forceDelete', $post))->toBeTrue();
 });
 
 /* Puede calificar un post si el usuario tiene el permiso */

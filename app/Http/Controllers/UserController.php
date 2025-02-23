@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\UserFollowedEvent;
-use App\Events\UserUnfollowedEvent;
+use App\Events\{UserFollowedEvent, UserUnfollowedEvent};
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -20,12 +19,12 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('users.index', ['users' => User::paginate(16)]);
+        return view('users.index', ['users' => User::paginate(8)]);
     }
 
     public function show(User $user)
     {
-        $posts = $user->posts()->where('visibility', 'public')->paginate(6);
+        $posts = $user->posts()->visibilityPublic()->paginate(6);
 
         return view('users.show', compact('user', 'posts'));
     }
@@ -34,7 +33,7 @@ class UserController extends Controller
     {
         $authUser = auth()->user();
 
-        $this->authorize('follow-users');
+        $this->authorize('follow', $authUser);
 
         if ($authUser->id === $user->id) {
             return back()->with('error', 'You cannot follow yourself.');
@@ -49,7 +48,7 @@ class UserController extends Controller
     {
         $authUser = auth()->user();
 
-        $this->authorize('unfollow-users');
+        $this->authorize('unfollow', $authUser);
 
         event(new UserUnfollowedEvent($authUser, $user));
 

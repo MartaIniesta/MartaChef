@@ -63,14 +63,6 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    public function toggleFollow(User $user): void
-    {
-        if ($this->id === $user->id) {
-            return;
-        }
-        $this->isFollowing($user) ? $this->unfollow($user) : $this->follow($user);
-    }
-
     public function isFollowing(User $user): bool
     {
         return $this->following()->where('followed_id', $user->id)->exists();

@@ -1,50 +1,20 @@
 <x-app-layout>
     <x-first-navigation-bar />
 
-    <nav>
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-end items-center py-8 space-x-8">
-                <a href="{{ route('posts.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                    <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                        <img src="{{ asset('storage/icons/blog.png') }}" class="h-12 w-12">
-                    </div>
-                    {{ __('BLOG') }}
-                </a>
-
-                @auth
-                    <a href="{{ route('users.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/users.png') }}" class="h-12 w-12">
-                        </div>
-                        {{__('USERS')}}
-                    </a>
-                @endauth
-
-                <a href="{{ route('posts.recipes') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                    <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                        <img src="{{ asset('storage/icons/recipes.png') }}" class="h-12 w-12">
-                    </div>
-                    {{ __('RECIPES') }}
-                </a>
-
-                @auth
-                    <a href="{{ route('posts.myPosts') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/myRecipes.png') }}" class="h-12 w-12">
-                        </div>
-                        {{ __('MY RECIPES') }}
-                    </a>
-
-                    <a href="{{ route('posts.shared') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/sharedRecipes.png') }}" class="h-12 w-12">
-                        </div>
-                        {{ __('SHARED RECIPES') }}
-                    </a>
-                @endauth
-            </div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-end items-center py-8 space-x-8">
+            <x-nav-manage-link/>
+            <x-nav-blog-link/>
+            @auth
+                <x-nav-users-link/>
+            @endauth
+            <x-nav-recipes-link/>
+            @auth
+                <x-nav-my-recipes-link/>
+                <x-nav-shared-recipes-link/>
+            @endauth
         </div>
-    </nav>
+    </div>
 
     <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="max-w-4xl mx-auto px-4 py-8">

@@ -146,5 +146,11 @@
     "Customer opinions": "Opiniones de clientes",
     "Log in to see the full recipe.": "Inicia sesión para ver la receta completa.",
     "BLOG USERS": "BLOG DE USUARIOS",
-    "This user has no published recipes.": "Este usuario no tiene recetas publicadas."
+    "This user has no published recipes.": "Este usuario no tiene recetas publicadas.",
+    "Filter by visibility": "Filtrar por visibilidad",
+    "All": "Todos",
+    "WELCOME TO THE MODERATION PANEL": "BIENVENIDO AL PANEL DE MODERACIÓN",
+    "MODERATE USERS": "MODERAR USUARIOS",
+    "MODERATE RECIPES": "MODERAR RECETAS",
+    "MODERATE": "MODERAR"
 }

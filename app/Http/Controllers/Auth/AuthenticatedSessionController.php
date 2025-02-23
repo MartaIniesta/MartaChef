@@ -13,11 +13,7 @@ class AuthenticatedSessionController extends Controller
 {
     protected function authenticated(Request $request, $user)
     {
-        if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard');
-        }
-
-        return redirect()->route('posts.index');
+        return redirect()->route('blog');
     }
 
     /**
@@ -37,7 +33,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('posts.index', absolute: false));
+        return redirect()->intended(route('blog', absolute: false));
     }
 
     /**

@@ -1,36 +1,14 @@
 <x-app-layout>
     <x-first-navigation-bar />
 
-    <nav>
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-end items-center py-8 space-x-8">
-                @auth
-                    @if(auth()->user()->hasRole('admin'))
-                        <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                            <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                                <img src="{{ asset('storage/icons/administrar.png') }}" class="h-12 w-12">
-                            </div>
-                            {{__('MANAGE')}}
-                        </a>
-                    @endif
-                @endauth
-
-                <a href="{{ route('posts.recipes') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                    <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                        <img src="{{ asset('storage/icons/recipes.png') }}" class="h-12 w-12">
-                    </div>
-                    {{ __('RECIPES') }}
-                </a>
-
-                <a href="{{ route('users.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                    <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                        <img src="{{ asset('storage/icons/users.png') }}" class="h-12 w-12">
-                    </div>
-                    {{__('USERS')}}
-                </a>
-            </div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-end items-center py-8 space-x-8">
+            <x-nav-manage-link/>
+            <x-nav-moderate-link/>
+            <x-nav-recipes-link/>
+            <x-nav-users-link/>
         </div>
-    </nav>
+    </div>
 
     <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="w-36 mx-auto pt-6">

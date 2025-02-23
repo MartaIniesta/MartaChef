@@ -1,55 +1,22 @@
-<x-app-layout class="flex flex-col min-h-screen">
+<x-app-layout>
     <x-first-navigation-bar />
 
-    <nav>
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-end items-center py-8 space-x-8">
-                @auth
-                    @if(auth()->user()->hasRole('admin'))
-                        <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                            <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                                <img src="{{ asset('storage/icons/administrar.png') }}" class="h-12 w-12">
-                            </div>
-                            ADMINISTRAR
-                        </a>
-                    @endif
-
-                    <a href="{{ route('posts.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/blog.png') }}" class="h-12 w-12">
-                        </div>
-                        {{ __('BLOG') }}
-                    </a>
-
-                    <a href="{{ route('users.index') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/users.png') }}" class="h-12 w-12">
-                        </div>
-                        USUARIOS
-                    </a>
-
-                    <a href="{{ route('posts.recipes') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/recipes.png') }}" class="h-12 w-12">
-                        </div>
-                        {{ __('RECIPES') }}
-                    </a>
-
-                    <a href="{{ route('posts.shared') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
-                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">
-                            <img src="{{ asset('storage/icons/sharedRecipes.png') }}" class="h-12 w-12">
-                        </div>
-                        RECETAS COMPARTIDAS
-                    </a>
-                @endauth
-            </div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-end items-center py-8 space-x-8">
+            <x-nav-manage-link/>
+            @auth
+                <x-nav-blog-link/>
+                <x-nav-users-link/>
+                <x-nav-recipes-link/>
+                <x-nav-shared-recipes-link/>
+            @endauth
         </div>
-    </nav>
+    </div>
 
     <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="w-36 mx-auto pt-6">
             <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
-                MY RECIPES
+                {{__('MY RECIPES')}}
             </h1>
         </div>
 
@@ -62,12 +29,22 @@
         </div>
 
         <form method="GET" action="{{ route('posts.myPosts') }}" class="mb-6 text-center">
-            <label for="visibility" class="font-semibold">Filtrar por visibilidad:</label>
+            <label for="visibility" class="font-semibold">
+                {{__('Filter by visibility')}}:
+            </label>
             <select name="visibility" id="visibility" onchange="this.form.submit()" class="border rounded px-3 py-1">
-                <option value="all" {{ request('visibility') == 'all' ? 'selected' : '' }}>Todos</option>
-                <option value="public" {{ request('visibility') == 'public' ? 'selected' : '' }}>Públicos</option>
-                <option value="private" {{ request('visibility') == 'private' ? 'selected' : '' }}>Privados</option>
-                <option value="shared" {{ request('visibility') == 'shared' ? 'selected' : '' }}>Compartidos</option>
+                <option value="all" {{ request('visibility') == 'all' ? 'selected' : '' }}>
+                    {{__('All')}}
+                </option>
+                <option value="public" {{ request('visibility') == 'public' ? 'selected' : '' }}>
+                    {{__('Public')}}
+                </option>
+                <option value="private" {{ request('visibility') == 'private' ? 'selected' : '' }}>
+                    {{__('Private')}}
+                </option>
+                <option value="shared" {{ request('visibility') == 'shared' ? 'selected' : '' }}>
+                    {{__('Shared')}}
+                </option>
             </select>
         </form>
 
