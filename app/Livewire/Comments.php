@@ -23,7 +23,8 @@ class Comments extends Component
 
     protected $rules = [
         'content' => 'required|max:300',
-        'replyContent' => 'required|max:300'
+        'replyContent' => 'required|max:300',
+        'editingContent' => 'required|max:300',
     ];
 
     protected $messages = [
@@ -39,23 +40,18 @@ class Comments extends Component
 
     public function addComment()
     {
-        $this->validate([
-            'content' => 'required|max:300'
-        ]);
+        $this->resetValidation();
+        $this->validateOnly('content');
 
         $this->authorize('create', Comment::class);
 
-        try {
-            Comment::create([
-                'post_id' => $this->postId,
-                'user_id' => Auth::id(),
-                'content' => $this->content,
-            ]);
-            $this->resetForm();
-            $this->dispatch('comment-updated');
-        } catch (\Exception $e) {
-            session()->flash('error');
-        }
+        Comment::create([
+            'post_id' => $this->postId,
+            'user_id' => Auth::id(),
+            'content' => $this->content,
+        ]);
+
+        $this->resetForm();
     }
 
     public function replyToComment($commentId)
@@ -65,24 +61,19 @@ class Comments extends Component
 
     public function addReply()
     {
-        $this->validate([
-            'replyContent' => 'required|max:300'
-        ]);
+        $this->resetValidation();
+        $this->validateOnly('replyContent');
 
         $this->authorize('create', Comment::class);
 
-        try {
-            Comment::create([
-                'post_id' => $this->postId,
-                'user_id' => Auth::id(),
-                'content' => $this->replyContent,
-                'parent_id' => $this->replyingToId,
-            ]);
-            $this->resetForm();
-            $this->dispatch('comment-updated');
-        } catch (\Exception $e) {
-            session()->flash('error');
-        }
+        Comment::create([
+            'post_id' => $this->postId,
+            'user_id' => Auth::id(),
+            'content' => $this->replyContent,
+            'parent_id' => $this->replyingToId,
+        ]);
+
+        $this->resetForm();
     }
 
     public function editComment(Comment $comment)
@@ -93,35 +84,22 @@ class Comments extends Component
 
     public function updateComment()
     {
-        $this->validate([
-            'editingContent' => 'required|max:300'
-        ]);
+        $this->resetValidation();
+        $this->validateOnly('editingContent');
 
         $comment = Comment::findOrFail($this->editingCommentId);
 
         $this->authorize('update', $comment);
 
-        try {
-            $comment->update(['content' => $this->editingContent]);
-            $this->resetForm();
-            $this->dispatch('comment-updated');
-        } catch (\Exception $e) {
-            session()->flash('error');
-        }
+        $comment->update(['content' => $this->editingContent]);
+
+        $this->resetForm();
     }
 
     public function deleteComment(Comment $comment)
     {
         $this->authorize('delete', $comment);
-
-        try {
-            $comment->delete();
-            $this->dispatch('comment-updated');
-        } catch (\Exception $e) {
-            session()->flash('error');
-        }
-
-        $this->render();
+        $comment->delete();
     }
 
     public function loadMoreComments()

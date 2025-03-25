@@ -57,4 +57,9 @@ class Post extends Model
                 $q->where('follower_id', $userId);
             });
     }
+
+    public function favoritedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }

@@ -12,14 +12,11 @@ class UserController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index', 'show');
-    }
-
     public function index()
     {
-        return view('users.index', ['users' => User::paginate(8)]);
+        $users = User::visibleProfiles()->paginate(8);
+
+        return view('users.index', ['users' => $users]);
     }
 
     public function show(User $user)

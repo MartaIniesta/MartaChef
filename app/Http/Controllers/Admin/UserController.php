@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        return $this->middleware('role:admin');
-    }
-
     public function index()
     {
         $users = User::withTrashed()->where('id', '!=', auth()->id())->get();

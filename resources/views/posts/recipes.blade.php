@@ -10,6 +10,7 @@
             @auth
                 <x-nav-my-recipes-link/>
                 <x-nav-shared-recipes-link/>
+                <x-nav-favorites-link/>
             @endauth
         </div>
     </div>

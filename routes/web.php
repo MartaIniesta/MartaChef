@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\{PdfController, PostController, ProfileController, UserController, BlogController};
+use App\Http\Controllers\{FavoriteController,
+    PdfController,
+    PostController,
+    ProfileController,
+    UserController,
+    BlogController};
 use Illuminate\Support\Facades\Route;
-
-require __DIR__.'/admin.php';
-require __DIR__.'/moderator.php';
 
 Route::get('/', [BlogController::class, 'index'])->name('blog');
 Route::get('recipes', [PostController::class, 'recipes'])->name('posts.recipes');
 
-// Ruta para ver la lista de usuarios (no necesita autenticación)
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
@@ -44,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/posts/{post}/pdf', [PdfController::class, 'generatePDF'])->name('posts.pdf');
+    Route::get('/favorites', [FavoriteController::class, "index"])->name('favorites.index');
 });
 
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');

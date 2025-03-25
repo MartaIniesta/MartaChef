@@ -14,11 +14,6 @@ class PostController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct()
-    {
-        $this->middleware('auth')->except('recipes', 'show');
-    }
-
     public function recipes()
     {
         $publicPosts = Post::visibilityPublic()->paginate(12);
@@ -28,11 +23,10 @@ class PostController extends Controller
 
     public function myPosts(Request $request)
     {
-        $userId = auth()->id();
         $visibility = $request->query('visibility', 'all');
 
-        $userPosts = Post::where('user_id', $userId)
-            ->when($visibility !== 'all', function ($query) use ($visibility, $userId) {
+        $userPosts = Post::where('user_id', auth()->id())
+            ->when($visibility !== 'all', function ($query) use ($visibility) {
                 if ($visibility === 'public' || $visibility === 'private') {
                     $query->where('visibility', $visibility);
                 } elseif ($visibility === 'shared') {
@@ -50,12 +44,7 @@ class PostController extends Controller
     {
         $userId = auth()->id();
 
-        $followedUserIds = User::whereHas('followers', function ($query) use ($userId) {
-            $query->where('follower_id', $userId);
-        })->pluck('id');
-
-        $sharedPosts = Post::whereIn('user_id', $followedUserIds)
-            ->where('visibility', 'shared')
+        $sharedPosts = Post::visibilityShared($userId)
             ->latest()
             ->paginate(12);
 
@@ -85,7 +74,6 @@ class PostController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Post::class);
         $categories = Category::all();
 
         return view('posts.create', ['post' => new Post(), 'categories' => $categories]);
@@ -93,18 +81,12 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        $this->authorize('create', Post::class);
-
         $data = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $image->storeAs('images', $imageName, 'public');
-            $data['image'] = 'images/' . $imageName;
-        }
+        $data['image'] = $this->handleImageUpload($request);
 
         $post = auth()->user()->posts()->create($data);
+
         $post->categories()->sync($request->categories);
 
         if ($request->tags) {
@@ -113,8 +95,8 @@ class PostController extends Controller
         }
 
         $post->load('user');
-        event(new PostCreatedEvent($post));
 
+        event(new PostCreatedEvent($post));
         SendPostNotificationJob::dispatch($post);
 
         return to_route('blog')->with('status', 'Receta creada correctamente');
@@ -122,7 +104,6 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        $this->authorize('update', $post);
         $categories = Category::all();
         $selectedCategories = $post->categories->pluck('id')->toArray();
 
@@ -155,16 +136,15 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $this->authorize('delete', $post);
         $post->delete();
 
         return to_route('blog')->with('status', 'Receta eliminada correctamente');
     }
 
-    private function handleImageUpload($request, Post $post)
+    private function handleImageUpload($request, Post $post = null)
     {
         if (!$request->hasFile('image')) {
-            return $post->image;
+            return $post ? $post->image : null;
         }
 
         $image = $request->file('image');

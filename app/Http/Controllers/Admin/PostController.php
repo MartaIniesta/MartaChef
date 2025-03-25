@@ -7,11 +7,6 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        return $this->middleware('role:admin');
-    }
-
     public function index()
     {
         $posts = Post::withTrashed()->get();

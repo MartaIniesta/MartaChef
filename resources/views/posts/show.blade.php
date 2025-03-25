@@ -31,7 +31,9 @@
                     </a>
                 @endauth
             </div>
-
+            @auth
+                @livewire('favorite-button', ['postId' => $post->id])
+            @endauth
             <div class="w-48 mx-auto pt-6">
                 <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
                     {{ $post->title }}

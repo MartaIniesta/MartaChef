@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -66,5 +67,39 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isFollowing(User $user): bool
     {
         return $this->following()->where('followed_id', $user->id)->exists();
+    }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function scopeVisibleProfiles(Builder $query)
+    {
+        if (auth()->check()) {
+            $authUser = auth()->user();
+
+            if ($authUser->hasRole('user')) {
+                return $query->where('id', '!=', $authUser->id)
+                ->whereDoesntHave('roles', function ($q) {
+                    $q->whereIn('name', ['admin', 'moderator']);
+                });
+            }
+
+            if ($authUser->hasRole('admin')) {
+                return $query->where('id', '!=', $authUser->id);
+            }
+
+            if ($authUser->hasRole('moderator')) {
+                return $query->where('id', '!=', $authUser->id)
+                ->whereDoesntHave('roles', function ($q) {
+                    $q->where('name', ['admin', 'moderator']);
+                });
+            }
+        }
+
+        return $query->whereHas('roles', function ($q) {
+            $q->where('name', 'user');
+        });
     }
 }

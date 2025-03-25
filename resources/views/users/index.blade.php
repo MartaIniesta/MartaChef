@@ -17,26 +17,23 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach ($users as $user)
-                <!-- No muestra su propio perfil, ni de admins ni moderadores -->
-                @if ($user->id !== auth()->id() && !$user->hasRole('admin') && !$user->hasRole('moderator'))
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300">
-                        <div class="p-6 flex flex-col items-center text-center">
-                            <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('default-images/default-profile.png') }}"
-                                 alt="{{ $user->name }}"
-                                 class="w-24 h-24 rounded-full shadow-md mb-4 object-cover">
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300">
+                    <div class="p-6 flex flex-col items-center text-center">
+                        <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('default-images/default-profile.png') }}"
+                             alt="{{ $user->name }}"
+                             class="w-24 h-24 rounded-full shadow-md mb-4 object-cover">
 
-                            <h2 class="text-lg font-semibold text-gray-800">{{ $user->name }}</h2>
+                        <h2 class="text-lg font-semibold text-gray-800">{{ $user->name }}</h2>
 
-                            <p class="text-gray-500 text-sm">{{ $user->email }}</p>
+                        <p class="text-gray-500 text-sm">{{ $user->email }}</p>
 
-                            <div class="mt-4">
-                                <a href="{{ route('users.show', $user) }}" class="inline-block bg-[#B6D5E9] px-4 py-2 rounded-lg hover:bg-[#5C99C1] transition duration-300 shadow-md">
-                                    {{__('View profile')}}
-                                </a>
-                            </div>
+                        <div class="mt-4">
+                            <a href="{{ route('users.show', $user) }}" class="inline-block bg-[#B6D5E9] px-4 py-2 rounded-lg hover:bg-[#5C99C1] transition duration-300 shadow-md">
+                                {{__('View profile')}}
+                            </a>
                         </div>
                     </div>
-                @endif
+                </div>
             @endforeach
         </div>
 
