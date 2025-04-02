@@ -3,15 +3,15 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
-            <x-nav-manage-link/>
-            <x-nav-blog-link/>
+            <x-nav.nav-manage-link/>
+            <x-nav.nav-blog-link/>
             @auth
-                <x-nav-users-link/>
+                <x-nav.nav-users-link/>
             @endauth
-            <x-nav-recipes-link/>
+            <x-nav.nav-recipes-link/>
             @auth
-                <x-nav-my-recipes-link/>
-                <x-nav-shared-recipes-link/>
+                <x-nav.nav-my-recipes-link/>
+                <x-nav.nav-shared-recipes-link/>
             @endauth
         </div>
     </div>
@@ -119,7 +119,5 @@
                     </p>
             @endauth
         </div>
-
-        <x-footer />
     </div>
 </x-app-layout>

@@ -3,19 +3,19 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
-            <x-nav-manage-link/>
-            <x-nav-moderate-link/>
-            <x-nav-blog-link/>
-            <x-nav-users-link/>
+            <x-nav.nav-manage-link/>
+            <x-nav.nav-moderate-link/>
+            <x-nav.nav-blog-link/>
+            <x-nav.nav-users-link/>
             @auth
-                <x-nav-my-recipes-link/>
-                <x-nav-shared-recipes-link/>
-                <x-nav-favorites-link/>
+                <x-nav.nav-my-recipes-link/>
+                <x-nav.nav-shared-recipes-link/>
+                <x-nav.nav-favorites-link/>
             @endauth
         </div>
     </div>
 
-    <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
+    <div class="bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="w-36 mx-auto pt-6">
             <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
                 {{__('RECIPES')}}
@@ -53,7 +53,5 @@
         <div>
             {{ $publicPosts->links('vendor.pagination.pagination') }}
         </div>
-
-        <x-footer />
     </div>
 </x-app-layout>

@@ -3,12 +3,12 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
-            <x-nav-manage-link/>
+            <x-nav.nav-manage-link/>
             @auth
-                <x-nav-blog-link/>
-                <x-nav-users-link/>
-                <x-nav-recipes-link/>
-                <x-nav-my-recipes-link/>
+                <x-nav.nav-blog-link/>
+                <x-nav.nav-users-link/>
+                <x-nav.nav-recipes-link/>
+                <x-nav.nav-my-recipes-link/>
             @endauth
         </div>
     </div>
@@ -48,7 +48,5 @@
                 {{__('There are no shared posts from the people you follow.')}}
             </p>
         @endif
-
-        <x-footer />
     </div>
 </x-app-layout>
