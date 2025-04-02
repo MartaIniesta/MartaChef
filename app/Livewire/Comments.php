@@ -99,6 +99,7 @@ class Comments extends Component
     public function deleteComment(Comment $comment)
     {
         $this->authorize('delete', $comment);
+        Comment::where('parent_id', $comment->id)->delete();
         $comment->delete();
     }
 
@@ -130,20 +131,10 @@ class Comments extends Component
         }
     }
 
-    public function render()
+    public function cancelEdit()
     {
-        $comments = Comment::where('post_id', $this->postId)
-            ->whereNull('parent_id')
-            ->with(['replies' => function ($query) {
-                $query->latest();
-            }])
-            ->latest()
-            ->take($this->commentsToShow)
-            ->get();
-
-        return view('livewire.comments', [
-            'comments' => $comments
-        ]);
+        $this->editingCommentId = null;
+        $this->editingContent = '';
     }
 
     public function cancelReply()
@@ -160,5 +151,26 @@ class Comments extends Component
         $this->editingContent = '';
         $this->replyingToId = null;
         $this->resetKey = uniqid();
+    }
+
+    public function render()
+    {
+        $comments = Comment::where('post_id', $this->postId)
+            ->whereNull('parent_id')
+            ->whereDoesntHave('parent', function ($query) {
+                $query->onlyTrashed();
+            })
+            ->with(['replies' => function ($query) {
+                $query->whereDoesntHave('parent', function ($subQuery) {
+                    $subQuery->onlyTrashed();
+                })->latest();
+            }])
+            ->latest()
+            ->take($this->commentsToShow)
+            ->get();
+
+        return view('livewire.comments', [
+            'comments' => $comments
+        ]);
     }
 }

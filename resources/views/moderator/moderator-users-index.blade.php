@@ -7,7 +7,5 @@
         </div>
     </div>
 
-    <div class="flex flex-1 min-h-screen bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
-        <x-nav.moderate-browser/>
-    </div>
+    <livewire:moderator.users />
 </x-app-layout>

@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->foreignId('post_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

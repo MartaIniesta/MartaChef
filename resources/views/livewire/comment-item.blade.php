@@ -1,64 +1,62 @@
-<div class="p-4 bg-gray-100 rounded ml-{{ $level * 4 }}">
-    <p class="font-semibold">{{ $comment->user->name }}</p>
+<div class="p-4 bg-gray-100 border border-b-gray-200 rounded ml-{{ $level * 4 }}">
+    <div class="flex justify-between items-center">
+        <p class="font-semibold">{{ $comment->user->name }}</p>
+
+        <div class="flex space-x-2">
+            @can('update', $comment)
+                <button wire:click="editComment({{ $comment->id }})">
+                    <img src="{{ asset('storage/icons/editar.png') }}" class="h-6 w-6">
+                </button>
+            @endcan
+
+            @can('delete', $comment)
+                <button wire:click="deleteComment({{ $comment->id }})">
+                    <img src="{{ asset('storage/icons/borrar.png') }}" class="h-6 w-6">
+                </button>
+            @endcan
+        </div>
+    </div>
 
     @if($editingCommentId === $comment->id)
-        <textarea wire:model="editingContent" maxlength="300" class="w-full border rounded p-2"></textarea>
-        <button wire:click="updateComment" class="bg-green-500 text-white px-4 py-1 rounded mt-2">
-            {{__('Update')}}
-        </button>
+        <div class="mt-4">
+            <textarea
+                wire:model="editingContent"
+                maxlength="300"
+                class="w-full border rounded-lg p-2"
+                placeholder="{{ __('Edit your comment...') }}">
+            </textarea>
 
-        <div class="mt-3">
+            <div class="flex space-x-2 mt-2">
+                <button wire:click="updateComment" class="bg-green-500 text-white p-2 rounded-lg">
+                    {{ __('Update') }}
+                </button>
+
+                <button wire:click="cancelEdit" class="bg-gray-500 text-white p-2 rounded-lg">
+                    {{ __('Cancel') }}
+                </button>
+            </div>
+
             @error('editingContent')
-            <span class="text-red-500">{{ $message }}</span>
+                <span class="text-red-500">{{ $message }}</span>
             @enderror
         </div>
     @else
         <p>{{ $comment->content }}</p>
 
-        @if(auth()->user()->can('update', $comment))
-            <button wire:click="editComment({{ $comment->id }})" class="text-yellow-500">
-                {{__('Edit')}}
-            </button>
-        @endif
+        <div class="mt-2">
+            @can('create', \App\Models\Comment::class)
+                <button wire:click="replyToComment({{ $comment->id }})" class="bg-gray-200 hover:bg-[#B6D5E9] p-2 rounded-lg">
+                    {{ __('Reply') }}
+                </button>
+            @endcan
+        </div>
 
-        @if(auth()->user()->can('delete', $comment))
-            <button wire:click="deleteComment({{ $comment->id }})" class="text-red-500 ml-2">
-                {{__('Delete')}}
-            </button>
+        @if($replyingToId === $comment->id)
+            @include('livewire.comment-form', ['isReply' => true])
         @endif
     @endif
 
-    @if($editingCommentId !== $comment->id)
-        @can('create', App\Models\Comment::class)
-            <button wire:click="replyToComment({{ $comment->id }})" class="text-blue-500 ml-2">
-                {{__('Reply')}}
-            </button>
-
-            @if($replyingToId === $comment->id)
-                <div class="mt-2 ml-4">
-                    <textarea
-                        wire:model="replyContent"
-                        maxlength="300"
-                        class="w-full border rounded p-2"
-                        placeholder="Escribe tu respuesta..."></textarea>
-                    <button wire:click="addReply" class="bg-purple-500 text-white px-4 py-2 rounded mt-2">
-                        {{__('Reply')}}
-                    </button>
-                    <button wire:click="cancelReply" class="bg-gray-500 text-white px-4 py-2 rounded mt-2 ml-2">
-                        {{__('Cancel')}}
-                    </button>
-
-                    <div class="mt-3">
-                        @error('replyContent')
-                        <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-            @endif
-        @endcan
-    @endif
-
-    @if($comment->replies->count() > 0)
+    @if($comment->replies->whereNull('deleted_at')->count() > 0)
         @include('livewire.reply-comments', ['comment' => $comment, 'level' => $level])
     @endif
 </div>
