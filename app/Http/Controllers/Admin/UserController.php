@@ -10,7 +10,10 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::withTrashed()->where('id', '!=', auth()->id())->get();
+        $users = User::withTrashed()
+            ->VisibleProfiles()
+            ->get();
+
         return view('admin.admin-users-index', compact('users'));
     }
 
