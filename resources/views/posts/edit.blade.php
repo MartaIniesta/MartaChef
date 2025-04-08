@@ -140,15 +140,7 @@
                 </div>
 
                 {{-- Mostrar errores --}}
-                @if ($errors->any())
-                    <div class="mb-4 text-red-500">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <x-global-errors/>
 
                 <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Actualizar Receta</button>
             </form>

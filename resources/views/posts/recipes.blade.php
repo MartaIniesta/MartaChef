@@ -49,7 +49,7 @@
             @endforeach
         </div>
 
-        <div>
+        <div class="mb-4">
             {{ $publicPosts->links('vendor.pagination.pagination') }}
         </div>
     </div>

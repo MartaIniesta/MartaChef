@@ -36,9 +36,7 @@
                 </button>
             </div>
 
-            @error('editingContent')
-                <span class="text-red-500">{{ $message }}</span>
-            @enderror
+            <x-input-error :messages="$errors->get('editingContent')" class="mt-1" />
         </div>
     @else
         <p>{{ $comment->content }}</p>

@@ -19,7 +19,5 @@
         @endif
     </div>
 
-    @error($isReply ? 'replyContent' : 'content')
-        <span class="text-red-500">{{ $message }}</span>
-    @enderror
+    <x-input-error :messages="$errors->get($isReply ? 'replyContent' : 'content')" class="mt-1" />
 </div>

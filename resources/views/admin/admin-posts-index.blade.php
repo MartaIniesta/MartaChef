@@ -3,8 +3,8 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
-            <x-nav-blog-link/>
-            <x-nav-manage-link/>
+            <x-nav.nav-blog-link/>
+            <x-nav.nav-manage-link/>
 
             <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold">
                 <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] border-2 border-dotted border-gray-500 w-16 h-16 rounded-lg mb-1">

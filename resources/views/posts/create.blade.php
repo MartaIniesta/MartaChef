@@ -117,16 +117,21 @@
                     <input type="file" name="image" id="image" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 
-                <!-- Mostrar errores -->
-                @if ($errors->any())
-                    <div class="mb-4 text-red-500">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                {{-- Aceptación de términos y condiciones --}}
+                <div class="mb-4 mt-1">
+                    <p class="text-sm text-gray-700">
+                        {{__('By creating a recipe on our platform, you guarantee that the content is original or that you have the rights to publish it. You agree not to share recipes that contain false, offensive, or inappropriate information. Furthermore, images must be your own or properly authorized for use. You agree that the platform reserves the right to remove any recipe that violates these terms or that is reported by other users.')}}
+                    </p>
+
+                    <div class="mb-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="terms" required class="mr-2">
+                            {{ __('I accept the terms and conditions') }}
+                        </label>
                     </div>
-                @endif
+                </div>
+
+                <x-global-errors/>
 
                 <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
                     {{ __('Create new recipe') }}
@@ -135,7 +140,6 @@
         </div>
     </div>
 
-    {{-- Scripts específicos para esta vista --}}
     @push('scripts')
         <script src="{{ asset('js/category-select-create.js') }}" defer></script>
         <script src="{{ asset('js/category-search.js') }}" defer></script>
