@@ -3,7 +3,7 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
-            <x-nav-blog-link/>
+            <x-nav.nav-blog-link/>
         </div>
     </div>
 
@@ -28,7 +28,5 @@
                 </div>
             </div>
         </div>
-
-        <x-footer/>
     </div>
 </x-app-layout>

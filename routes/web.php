@@ -1,11 +1,6 @@
 <?php
 
-use App\Http\Controllers\{FavoriteController,
-    PdfController,
-    PostController,
-    ProfileController,
-    UserController,
-    BlogController};
+use App\Http\Controllers\{FavoriteController, PdfController, PostController, ProfileController, UserController, BlogController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BlogController::class, 'index'])->name('blog');

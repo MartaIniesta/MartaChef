@@ -14,7 +14,7 @@
         < {{ __('Return') }}
     </a>
 
-    <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
+    <div class="mt-1 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="max-w-4xl mx-auto">
             <div class="w-64 mx-auto pt-6">
                 <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">

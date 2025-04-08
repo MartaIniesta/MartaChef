@@ -38,7 +38,6 @@
                 @endforeach
             </div>
 
-            <!-- Paginación -->
             <div>
                 {{ $sharedPosts->links('vendor.pagination.pagination') }}
             </div>

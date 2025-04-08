@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto mb-4">
     @foreach($favorites as $favorite)
         <div class="relative border border-gray-300 p-4 text-center rounded-lg shadow-md bg-white">
             <div class="flex justify-start -mt-2">
@@ -49,7 +49,7 @@
 
             @if($favorite->note)
                 <div class="mt-4 p-2 border-t border-gray-300 text-gray-600">
-                    <strong>Nota:</strong> {{ $favorite->note }}
+                    <strong>{{__('Note')}}:</strong> {{ $favorite->note }}
                 </div>
             @endif
 

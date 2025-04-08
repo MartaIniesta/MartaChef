@@ -9,8 +9,8 @@
             <x-nav.nav-users-link/>
             @auth
                 <x-nav.nav-my-recipes-link/>
-                <x-nav.nav-shared-recipes-link/>
                 <x-nav.nav-favorites-link/>
+                <x-nav.nav-shared-recipes-link/>
             @endauth
         </div>
     </div>
@@ -49,7 +49,6 @@
             @endforeach
         </div>
 
-        <!-- Paginación -->
         <div>
             {{ $publicPosts->links('vendor.pagination.pagination') }}
         </div>

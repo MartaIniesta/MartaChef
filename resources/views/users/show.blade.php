@@ -18,12 +18,14 @@
                     <p class="text-gray-600 mt-2">
                         {{__('Email')}}: {{ $user->email }}
                     </p>
+                    @auth
+                        @livewire('report-user', ['user' => $user])
+                    @endauth
                 </div>
 
                 @auth
-                    <!-- No muestra su propio perfil, ni de admins ni moderadores -->
                     @if($user->id !== auth()->id() && !$user->hasRole('admin') && !$user->hasRole('moderator'))
-                        <div class="mt-4">
+                        <div>
                             @if(auth()->user()->isFollowing($user))
                                 <form action="{{ route('users.unfollow', $user) }}" method="POST">
                                     @csrf

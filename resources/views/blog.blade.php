@@ -77,7 +77,7 @@
                 </h2>
                 <div class="flex-grow border-t border-gray-300"></div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto mb-4">
                 @foreach ($topUsers as $user)
                     <div class="border border-gray-300 p-4 text-center rounded-lg shadow-md">
                         <a href="{{ route('users.show', $user) }}">
@@ -93,6 +93,5 @@
                 @endforeach
             </div>
         </div>
-
     </div>
 </x-app-layout>
