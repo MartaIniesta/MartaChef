@@ -13,8 +13,8 @@
         </div>
     </div>
 
-    <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
-        <div class="w-36 mx-auto pt-6">
+    <div class="bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
+        <div class="w-48 mx-auto pt-6">
             <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
                 {{__('MY RECIPES')}}
             </h1>
@@ -28,25 +28,18 @@
             </a>
         </div>
 
-        <form method="GET" action="{{ route('posts.myPosts') }}" class="mb-6 text-center">
-            <label for="visibility" class="font-semibold">
-                {{__('Filter by visibility')}}:
-            </label>
-            <select name="visibility" id="visibility" onchange="this.form.submit()" class="border rounded px-3 py-1">
-                <option value="all" {{ request('visibility') == 'all' ? 'selected' : '' }}>
-                    {{__('All')}}
-                </option>
-                <option value="public" {{ request('visibility') == 'public' ? 'selected' : '' }}>
-                    {{__('Public')}}
-                </option>
-                <option value="private" {{ request('visibility') == 'private' ? 'selected' : '' }}>
-                    {{__('Private')}}
-                </option>
-                <option value="shared" {{ request('visibility') == 'shared' ? 'selected' : '' }}>
-                    {{__('Shared')}}
-                </option>
-            </select>
-        </form>
+        <x-select
+            label="Filter by visibility"
+            name="visibility"
+            :options="[
+            'all' => 'All',
+            'public' => 'Public',
+            'private' => 'Private',
+            'shared' => 'Shared',
+            ]"
+            :selected="request('visibility', 'all')"
+            :submitOnChange="true"
+        />
 
         @if ($userPosts->count())
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto">
@@ -66,7 +59,7 @@
                 @endforeach
             </div>
 
-            <div>
+            <div class="mb-4">
                 {{ $userPosts->links('vendor.pagination.pagination') }}
             </div>
 
