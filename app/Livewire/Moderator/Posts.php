@@ -36,6 +36,6 @@ class Posts extends Component
     {
         return view('livewire.moderator.posts', [
             'posts' => Post::withTrashed()->get()
-        ]);
+        ])->layout('layouts.app');
     }
 }

@@ -32,6 +32,6 @@ class Users extends Component
     {
         return view('livewire.moderator.users', [
             'users' => User::withTrashed()->VisibleProfiles()->get(),
-        ]);
+        ])->layout('layouts.app');
     }
 }

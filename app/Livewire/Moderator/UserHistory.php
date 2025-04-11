@@ -27,6 +27,7 @@ class UserHistory extends Component
 
     public function render()
     {
-        return view('livewire.moderator.user-history');
+        return view('livewire.moderator.user-history')
+            ->layout('layouts.app');
     }
 }

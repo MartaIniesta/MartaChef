@@ -40,8 +40,7 @@ class Comments extends Component
                     $query->withTrashed();
                 }, 'replies' => function ($query) {
                     $query->withTrashed();
-                }])
-                ->get()
-        ]);
+                }])->get()
+        ])->layout('layouts.app');
     }
 }
