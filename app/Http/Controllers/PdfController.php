@@ -2,35 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\{Post, PdfDownload};
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class PdfController extends Controller
 {
-    public function generatePDF(Post $post)
+    public function downloadPDF(Post $post)
     {
-        $pdfTitle = str_replace(' ', '_', $post->title);
-        $pdfPath = 'pdf/Receta_' . $pdfTitle . '.pdf';
-
-        $this->notExistPdf($pdfPath, $post->title);
+        $isAuthenticated = auth()->check();
 
         if ($user = auth()->user()) {
             PdfDownload::create([
                 'user_id' => $user->id,
                 'post_id' => $post->id,
-                'pdf_name' => 'Receta_' . $pdfTitle . '.pdf',
+                'pdf_name' => 'Receta_' . str_replace(' ', '_', $post->title) . '.pdf',
             ]);
         }
 
-        return response()->download(storage_path('app/public/' . $pdfPath));
-    }
+        $pdf = Pdf::loadView('posts.pdf', [
+            'post' => $post,
+            'isAuthenticated' => $isAuthenticated
+        ]);
 
-    private function notExistPdf(string $pdfPath, string $title): void
-    {
-        if (!Storage::disk('public')->exists($pdfPath)) {
-            Log::error("El PDF de la receta con el título '{$title}' no está disponible en la ruta: {$pdfPath}");
-            abort(404);
-        }
+        return $pdf->download('Receta_' . str_replace(' ', '_', $post->title) . '.pdf');
     }
 }

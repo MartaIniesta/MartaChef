@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/posts/{post}/pdf', [PdfController::class, 'generatePDF'])->name('posts.pdf');
+    Route::get('/posts/{post}/pdf', [PdfController::class, 'downloadPDF'])->name('posts.pdf');
     Route::get('/favorites', [FavoriteController::class, "index"])->name('favorites.index');
 });
 
