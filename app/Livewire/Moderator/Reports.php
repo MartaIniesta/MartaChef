@@ -30,7 +30,7 @@ class Reports extends Component
     public function render()
     {
         return view('livewire.moderator.reports', [
-            'reports' => Report::latest()->get()
+            'reports' => Report::get()
         ])->layout('layouts.app');
     }
 }

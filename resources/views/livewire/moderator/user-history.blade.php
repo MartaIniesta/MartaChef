@@ -12,7 +12,16 @@
     </a>
 
     <div class="mt-1 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
-        <div class="max-w-6xl mx-auto bg-white shadow-md rounded p-6 mt-4 mb-4">
+        <div class="max-w-6xl mx-auto bg-white shadow-md rounded p-6 mt-4 mb-4 relative">
+            <div class="absolute top-0 right-0 mt-2 mr-2">
+                <a href="{{ route('moderator.user-history.pdf', ['user' => $userId]) }}"
+                   class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold text-[17px]">
+                    <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] w-14 h-14 rounded-full">
+                        <img src="{{ asset('storage/icons/pdf.png') }}" class="h-10 w-10">
+                    </div>
+                    {{__('Download PDF')}}
+                </a>
+            </div>
 
             <h1 class="text-2xl font-bold text-gray-800 mb-4">
                 {{__('User History')}}: {{ $user->name }}
@@ -57,15 +66,41 @@
                     {{__('This user has no published recipes.')}}
                 </p>
             @else
-                <ul class="list-disc ml-6 mt-2">
+                <table class="w-full border-collapse border border-gray-300 mt-3">
+                    <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border p-2">ID</th>
+                        <th class="border p-2">{{__('Title')}}</th>
+                        <th class="border p-2">{{__('State')}}</th>
+                        <th class="border p-2">{{__('Date')}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     @foreach ($posts as $post)
-                        <li class="border-b py-2">
-                            <a href="{{ route('posts.show', $post->id) }}" class="text-blue-600 hover:underline hover:text-blue-800 transition duration-150 ease-in-out">
-                                {{ $post->title }}
-                            </a>
-                        </li>
+                        <tr class="text-center">
+                            <td class="border p-2">{{ $post->id }}</td>
+                            <td class="border p-2">
+                                <a href="{{ route('posts.show', $post->id) }}"
+                                   class="text-blue-600 hover:underline hover:text-blue-800 transition duration-150 ease-in-out">
+                                    {{ $post->title }}
+                                </a>
+                            </td>
+                            <td class="border p-2">
+                                @if ($post->trashed())
+                                    <span class="text-red-500 font-semibold">
+                                    {{__('Deleted')}}
+                                </span>
+                                @else
+                                    <span class="text-green-500 font-semibold">
+                                    {{__('Asset')}}
+                                </span>
+                                @endif
+                            </td>
+                            <td class="border p-2">{{ $post->created_at->format('d/m/Y H:i') }}</td>
+                        </tr>
                     @endforeach
-                </ul>
+                    </tbody>
+                </table>
             @endif
 
             <h2 class="text-lg font-semibold text-gray-700 mt-6">
@@ -76,16 +111,43 @@
                     {{__('This user has not commented.')}}
                 </p>
             @else
-                <ul class="list-disc ml-6 mt-2">
-                    @foreach ($comments as $comment)
-                        <li class="border-b py-2">
-                            <a href="{{ route('posts.show', $comment->post_id) }}" class="text-blue-600 hover:underline hover:text-blue-800 transition duration-150 ease-in-out"
-                               title="Ver post: {{ $comment->post->title }}">
-                                {{ $comment->content }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                <table class="w-full border-collapse border border-gray-300 mt-3">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border p-2">ID</th>
+                            <th class="border p-2">{{__('Comments')}}</th>
+                            <th class="border p-2">{{__('Post')}}</th>
+                            <th class="border p-2">{{__('State')}}</th>
+                            <th class="border p-2">{{__('Date')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($comments as $comment)
+                            <tr class="text-center">
+                                <td class="border p-2">{{ $comment->id }}</td>
+                                <td class="border p-2">{{ $comment->content }}</td>
+                                <td class="border p-2">
+                                    <a href="{{ route('posts.show', $comment->post_id) }}"
+                                       class="text-blue-600 hover:underline hover:text-blue-800">
+                                        {{ $comment->post->id }}: {{ $comment->post->title }}
+                                    </a>
+                                </td>
+                                <td class="border p-2">
+                                    @if ($comment->trashed() || ($comment->parent && $comment->parent->trashed()))
+                                        <span class="text-red-500 font-semibold">
+                                            {{__('Deleted')}}
+                                        </span>
+                                            @else
+                                                <span class="text-green-500 font-semibold">
+                                            {{__('Asset')}}
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="border p-2">{{ $comment->created_at->format('d/m/Y H:i') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             @endif
         </div>
     </div>

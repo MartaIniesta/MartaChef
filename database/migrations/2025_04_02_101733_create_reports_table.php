@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('reporter_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('reported_id')->constrained('users')->onDelete('cascade');
             $table->text('reason');
-            $table->enum('status', ['pending', 'reviewed', 'resolved'])->default('pending');
+            $table->enum('status', ['pending', 'reviewed'])->default('pending');
             $table->timestamps();
         });
     }

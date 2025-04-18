@@ -52,7 +52,7 @@
                             </span>
                             @else
                                 <span class="text-green-500 font-semibold">
-                                {{__('Active')}}
+                                {{__('Asset')}}
                             </span>
                             @endif
                         </td>

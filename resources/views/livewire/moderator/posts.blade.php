@@ -65,7 +65,6 @@
                                 <span class="text-gray-500 italic">{{ __('Action unavailable (user deleted)') }}</span>
                             @endif
                         </td>
-
                     </tr>
                 @endforeach
                 </tbody>

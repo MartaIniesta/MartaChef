@@ -15,4 +15,5 @@ Route::middleware(['auth', 'role:moderator'])->group(function () {
     Route::get('/moderator/comments', Comments::class)->name('moderator.comments');
     Route::get('/moderator/reports', Reports::class)->name('moderator.reports');
     Route::get('/moderator/user-history/{userId}', UserHistory::class)->name('moderator.user-history');
+    Route::get('/moderator/user-history/{user}/pdf', [ModeratorController::class, 'downloadUserHistoryPdf'])->name('moderator.user-history.pdf');
 });

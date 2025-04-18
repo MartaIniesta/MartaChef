@@ -21,8 +21,8 @@ class UserHistory extends Component
         $this->userId = $userId;
         $this->user = User::findOrFail($userId);
         $this->reports = Report::where('reported_id', $userId)->get();
-        $this->posts = Post::where('user_id', $userId)->get();
-        $this->comments = Comment::with('post')->where('user_id', $userId)->get();
+        $this->posts = Post::withTrashed()->where('user_id', $userId)->get();
+        $this->comments = Comment::withTrashed()->with('post')->where('user_id', $userId)->get();
     }
 
     public function render()
