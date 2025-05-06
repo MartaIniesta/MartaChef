@@ -36,25 +36,26 @@
                 </button>
             </div>
 
-            <x-input-error :messages="$errors->get('editingContent')" class="mt-1" />
+            <x-input-error :messages="$errors->get('editingContent')" class="mt-1"/>
         </div>
     @else
         <p>{{ $comment->content }}</p>
 
         <div class="mt-2">
             @can('create', \App\Models\Comment::class)
-                <button wire:click="replyToComment({{ $comment->id }})" class="bg-gray-200 hover:bg-[#B6D5E9] p-2 rounded-lg">
+                <button wire:click="replyToComment({{ $comment->id }})"
+                        class="bg-gray-200 hover:bg-[#B6D5E9] p-2 rounded-lg">
                     {{ __('Reply') }}
                 </button>
             @endcan
         </div>
 
         @if($replyingToId === $comment->id)
-            @include('livewire.comment-form', ['isReply' => true])
+            @include('livewire.comments.comment-form', ['isReply' => true])
         @endif
     @endif
 
     @if($comment->replies->whereNull('deleted_at')->count() > 0)
-        @include('livewire.reply-comments', ['comment' => $comment, 'level' => $level])
+        @include('livewire.comments.reply-comments', ['comment' => $comment, 'level' => $level])
     @endif
 </div>

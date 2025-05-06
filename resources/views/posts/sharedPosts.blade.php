@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
+    <div class="bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9] mb-4">
         <div class="w-56 mx-auto pt-6">
             <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
                 {{ __('SHARED RECIPES') }}
@@ -32,7 +32,7 @@
                         <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="max-w-[80%] max-h-[200px] mx-auto rounded-md mt-2">
                         <p class="mt-2 text-gray-700">{{ $post->description }}</p>
                         <small class="text-gray-500">
-                            By {{ $post->user->name }} | {{ $post->created_at->format('d M Y') }} | {{ ucfirst($post->visibility) }}
+                            By {{ $post->user->name }} | <x-date :date="$post->created_at" /> | {{ ucfirst($post->visibility) }}
                         </small>
                     </div>
                 @endforeach

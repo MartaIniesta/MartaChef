@@ -105,6 +105,7 @@ class FavoriteList extends Component
 
     public function render()
     {
-        return view('livewire.favorite-list');
+        return view('livewire.favorite-list')
+            ->layout('layouts.app');
     }
 }

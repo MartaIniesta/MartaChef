@@ -169,7 +169,7 @@ class Comments extends Component
             ->take($this->commentsToShow)
             ->get();
 
-        return view('livewire.comments', [
+        return view('livewire.comments.comments', [
             'comments' => $comments
         ]);
     }

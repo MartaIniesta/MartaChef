@@ -51,7 +51,9 @@
                             <td class="border p-2">{{ $report->reporter->name }}</td>
                             <td class="border p-2 break-words max-w-xs">{{ $report->reason }}</td>
                             <td class="border p-2">{{ ucfirst($report->status) }}</td>
-                            <td class="border p-2">{{ $report->created_at->format('d/m/Y H:i') }}</td>
+                            <td class="border p-2">
+                                <x-date :date="$report->created_at" />
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -96,7 +98,9 @@
                                 </span>
                                 @endif
                             </td>
-                            <td class="border p-2">{{ $post->created_at->format('d/m/Y H:i') }}</td>
+                            <td class="border p-2">
+                                <x-date :date="$post->created_at" />
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -143,7 +147,9 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="border p-2">{{ $comment->created_at->format('d/m/Y H:i') }}</td>
+                                <td class="border p-2">
+                                    <x-date :date="$comment->created_at" />
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

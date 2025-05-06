@@ -4,6 +4,8 @@
     </button>
 
     @if($isOpen)
+        <div class="fixed inset-0" style="background-color: rgba(0, 0, 0, 0.6); z-index: 40;"></div>
+
         <div class="fixed inset-0 z-50 flex items-center justify-center">
             <div class="bg-white p-8 rounded shadow-lg w-1/3">
                 <h2 class="text-lg font-semibold">

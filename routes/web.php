@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{FavoriteController, PdfController, PostController, ProfileController, UserController, BlogController};
+use App\Livewire\FavoriteList;
+use App\Http\Controllers\{PdfController, PostController, ProfileController, UserController, BlogController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BlogController::class, 'index'])->name('blog');
@@ -40,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/posts/{post}/pdf', [PdfController::class, 'downloadPDF'])->name('posts.pdf');
-    Route::get('/favorites', [FavoriteController::class, "index"])->name('favorites.index');
+    Route::get('/favorites', FavoriteList::class)->name('favorites.index');
 });
 
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');

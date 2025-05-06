@@ -40,7 +40,7 @@
                              class="max-w-[80%] max-h-[200px] mx-auto rounded-md">
                         <p class="mt-2 text-gray-700">{{ $post->description }}</p>
                         <small class="text-gray-500">
-                            By {{ $post->user->name }} | {{ $post->created_at->format('d M Y') }}
+                            By {{ $post->user->name }} | <x-date :date="$post->created_at" />
                         </small>
                     </div>
                 @endforeach

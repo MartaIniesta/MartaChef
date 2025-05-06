@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="mt-5 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
+    <div class="bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="max-w-4xl mx-auto px-4 py-8">
             <div class="flex justify-between items-center">
                 <a href="{{ route('users.show', $post->user) }}" class="text-gray-800 hover:text-gray-600 text-[17px]">

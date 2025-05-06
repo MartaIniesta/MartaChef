@@ -3,7 +3,7 @@
 
     <div class="space-y-4">
         @foreach($comments as $comment)
-            @include('livewire.comment-item', ['comment' => $comment, 'level' => 0])
+            @include('livewire.comments.comment-item', ['comment' => $comment, 'level' => 0])
         @endforeach
     </div>
 
@@ -22,6 +22,6 @@
     </div>
 
     @auth
-        @include('livewire.comment-form', ['isReply' => false])
+        @include('livewire.comments.comment-form', ['isReply' => false])
     @endauth
 </div>
