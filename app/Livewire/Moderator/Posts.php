@@ -35,7 +35,7 @@ class Posts extends Component
     public function render()
     {
         return view('livewire.moderator.posts', [
-            'posts' => Post::withTrashed()->get()
+            'posts' => Post::withTrashed()->paginate(10)
         ])->layout('layouts.app');
     }
 }

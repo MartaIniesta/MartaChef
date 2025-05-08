@@ -32,7 +32,11 @@
                 @foreach ($users as $user)
                     <tr class="text-center">
                         <td class="border py-3">{{ $user->id }}</td>
-                        <td class="border py-3">{{ $user->name }}</td>
+                        <td class="border py-3">
+                            <a href="{{ route('users.show', $user) }}" class="hover:underline">
+                                {{ $user->name }}
+                            </a>
+                        </td>
                         <td class="border py-3">{{ $user->email }}</td>
                         <td class="border py-3">
                             {{ ucfirst($user->getRoleNames()->first() ?? 'No Role') }}
@@ -69,6 +73,10 @@
                 @endforeach
                 </tbody>
             </table>
+
+            <div class="mb-2">
+                {{ $users->links('vendor.pagination.pagination') }}
+            </div>
         </div>
     </div>
 </div>

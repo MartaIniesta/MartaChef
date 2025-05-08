@@ -71,6 +71,10 @@
                 @endforeach
                 </tbody>
             </table>
+
+            <div class="mb-2">
+                {{ $reports->links('vendor.pagination.pagination') }}
+            </div>
         </div>
     </div>
 </div>

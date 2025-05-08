@@ -19,56 +19,64 @@
 
             <table class="w-full border-collapse border border-gray-300">
                 <thead>
-                <tr class="bg-[#EDEDED]">
-                    <th class="border p-2">ID</th>
-                    <th class="border p-2">{{__('Title')}}</th>
-                    <th class="border p-2">{{__('Author')}}</th>
-                    <th class="border p-2">{{__('State')}}</th>
-                    <th class="border p-2">{{__('Actions')}}</th>
-                </tr>
+                    <tr class="bg-[#EDEDED]">
+                        <th class="border p-2">ID</th>
+                        <th class="border p-2">{{__('Title')}}</th>
+                        <th class="border p-2">{{__('Author')}}</th>
+                        <th class="border p-2">{{__('State')}}</th>
+                        <th class="border p-2">{{__('Actions')}}</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ($posts as $post)
-                    <tr class="text-center">
-                        <td class="border py-3">{{ $post->id }}</td>
-                        <td class="border py-3">{{ $post->title }}</td>
-                        <td class="border py-3">{{ $post->user->name ?? 'Autor desconocido' }}</td>
+                    @foreach ($posts as $post)
+                        <tr class="text-center">
+                            <td class="border py-3">{{ $post->id }}</td>
+                            <td class="border py-3">
+                                <a href="{{ route('posts.show', $post)}}" class="hover:underline">
+                                    {{ $post->title }}
+                                </a>
+                            </td>
+                            <td class="border py-3">{{ $post->user->name ?? 'Autor desconocido' }}</td>
 
-                        <td class="border py-3">
-                            @if ($post->trashed())
-                                <span class="text-red-500 font-semibold">
-                                    {{__('Deleted')}}
-                                </span>
-                            @else
-                                <span class="text-green-500 font-semibold">
-                                    {{__('Asset')}}
-                                </span>
-                            @endif
-                        </td>
-
-                        <td class="border py-3 flex justify-center space-x-2">
-                            @if ($post->user && !$post->user->trashed())
+                            <td class="border py-3">
                                 @if ($post->trashed())
-                                    <button wire:click="restorePost({{ $post->id }})" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
-                                        {{__('Restore')}}
-                                    </button>
-
-                                    <button wire:click="forceDeletePost({{ $post->id }})" class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">
-                                        {{__('Perm. Delete')}}
-                                    </button>
+                                    <span class="text-red-500 font-semibold">
+                                        {{__('Deleted')}}
+                                    </span>
                                 @else
-                                    <button wire:click="softDeletePost({{ $post->id }})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                                        {{__('Delete')}}
-                                    </button>
+                                    <span class="text-green-500 font-semibold">
+                                        {{__('Asset')}}
+                                    </span>
                                 @endif
-                            @else
-                                <span class="text-gray-500 italic">{{ __('Action unavailable (user deleted)') }}</span>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
+                            </td>
+
+                            <td class="border py-3 flex justify-center space-x-2">
+                                @if ($post->user && !$post->user->trashed())
+                                    @if ($post->trashed())
+                                        <button wire:click="restorePost({{ $post->id }})" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
+                                            {{__('Restore')}}
+                                        </button>
+
+                                        <button wire:click="forceDeletePost({{ $post->id }})" class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">
+                                            {{__('Perm. Delete')}}
+                                        </button>
+                                    @else
+                                        <button wire:click="softDeletePost({{ $post->id }})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                            {{__('Delete')}}
+                                        </button>
+                                    @endif
+                                @else
+                                    <span class="text-gray-500 italic">{{ __('Action unavailable (user deleted)') }}</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
+
+            <div class="mb-2">
+                {{ $posts->links('vendor.pagination.pagination') }}
+            </div>
         </div>
     </div>
 </div>

@@ -23,9 +23,20 @@
                 </a>
             </div>
 
-            <h1 class="text-2xl font-bold text-gray-800 mb-4">
-                {{__('User History')}}: {{ $user->name }}
-            </h1>
+            <div class="flex items-center space-x-6 mb-6">
+                <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('default-images/default-profile.png') }}"
+                     alt="{{ $user->name }}"
+                     class="w-20 h-20 rounded-full object-cover">
+
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">
+                        {{ __('User History') }}: {{ $user->name }}
+                    </h1>
+                    <p class="font-bold text-gray-700">
+                        {{ __('Email') }}: {{ $user->email }}
+                    </p>
+                </div>
+            </div>
 
             <h2 class="text-lg font-semibold text-gray-700 mt-4">
                 {{__('Reports Received')}}

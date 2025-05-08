@@ -80,6 +80,10 @@
                 @endforeach
                 </tbody>
             </table>
+
+            <div class="mb-2">
+                {{ $comments->links('vendor.pagination.pagination') }}
+            </div>
         </div>
     </div>
 </div>

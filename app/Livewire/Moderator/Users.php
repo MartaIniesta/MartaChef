@@ -31,7 +31,7 @@ class Users extends Component
     public function render()
     {
         return view('livewire.moderator.users', [
-            'users' => User::withTrashed()->VisibleProfiles()->get(),
+            'users' => User::withTrashed()->VisibleProfiles()->paginate(10),
         ])->layout('layouts.app');
     }
 }
