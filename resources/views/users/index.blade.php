@@ -21,7 +21,7 @@
                     <div class="p-6 flex flex-col items-center text-center">
                         <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('default-images/default-profile.png') }}"
                              alt="{{ $user->name }}"
-                             class="w-24 h-24 rounded-full shadow-md mb-4 object-cover">
+                             class="w-24 h-24 rounded-full object-cover">
 
                         <h2 class="text-lg font-semibold text-gray-800">{{ $user->name }}</h2>
 

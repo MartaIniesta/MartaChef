@@ -4,15 +4,12 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
             <x-nav.nav-manage-link/>
+            <x-nav.nav-moderate-link/>
             <x-nav.nav-blog-link/>
-            @auth
-                <x-nav.nav-users-link/>
-            @endauth
             <x-nav.nav-recipes-link/>
-            @auth
-                <x-nav.nav-my-recipes-link/>
-                <x-nav.nav-shared-recipes-link/>
-            @endauth
+            <x-nav.nav-my-recipes-link/>
+            <x-nav.nav-favorites-link/>
+            <x-nav.nav-shared-recipes-link/>
         </div>
     </div>
 
@@ -32,7 +29,9 @@
                 @endauth
             </div>
             @auth
-                @livewire('favorite-button', ['postId' => $post->id])
+                @role('user', 'admin')
+                    @livewire('favorite-button', ['postId' => $post->id])
+                @endrole
             @endauth
             <div class="w-48 mx-auto pt-6">
                 <h1 class="text-2xl text-[#393939] font-bold text-center mb-6 mt-5 border-y-2 border-[#343434] py-3">
@@ -81,27 +80,25 @@
             </div>
 
             @auth
-                @if(auth()->user()->id === $post->user_id || auth()->user()->hasRole('moderator') || auth()->user()->hasRole('admin'))
-                    @can('edit-posts', $post)
-                        <div class="mb-6">
-                            <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
-                                {{__('Edit Recipe')}}
-                            </button>
-                        </div>
-                    @endcan
+                @can('update', $post)
+                    <div class="mb-6">
+                        <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2">
+                            {{__('Edit Recipe')}}
+                        </button>
+                    </div>
+                @endcan
 
-                    @can('delete-posts', $post)
-                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
-                                {{__('Delete')}}
-                            </button>
-                        </form>
-                    @endcan
-                @endif
+                @can('delete', $post)
+                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta receta?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+                            {{__('Delete')}}
+                        </button>
+                    </form>
+                @endcan
 
-                @can('rate-posts')
+                @can('rate', $post)
                     <h3 class="text-xl font-semibold mb-2">
                         {{__('Customer opinions')}}
                     </h3>

@@ -6,12 +6,9 @@
             <x-nav.nav-manage-link/>
             <x-nav.nav-moderate-link/>
             <x-nav.nav-blog-link/>
-            <x-nav.nav-users-link/>
-            @auth
-                <x-nav.nav-my-recipes-link/>
-                <x-nav.nav-favorites-link/>
-                <x-nav.nav-shared-recipes-link/>
-            @endauth
+            <x-nav.nav-my-recipes-link/>
+            <x-nav.nav-favorites-link/>
+            <x-nav.nav-shared-recipes-link/>
         </div>
     </div>
 

@@ -4,12 +4,11 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
             <x-nav.nav-manage-link/>
-            @auth
-                <x-nav.nav-blog-link/>
-                <x-nav.nav-users-link/>
-                <x-nav.nav-recipes-link/>
-                <x-nav.nav-shared-recipes-link/>
-            @endauth
+            <x-nav.nav-blog-link/>
+            <x-nav.nav-users-link/>
+            <x-nav.nav-recipes-link/>
+            <x-nav.nav-favorites-link/>
+            <x-nav.nav-shared-recipes-link/>
         </div>
     </div>
 

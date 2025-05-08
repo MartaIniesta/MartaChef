@@ -12,10 +12,41 @@
             padding: 10px;
         }
 
-        h1 {
-            font-size: 24px;
+        .user-info {
+            display: table;
+            width: 100%;
             margin-bottom: 20px;
+        }
+
+        .user-info-img {
+            display: table-cell;
+            width: 100px;
+            vertical-align: top;
+        }
+
+        .user-info-text {
+            display: table-cell;
+            padding-left: 20px;
+            vertical-align: middle;
+        }
+
+        .user-info-img img {
+            width: 100px;
+            margin-left: -10px;
+        }
+
+        .user-info-text h1 {
+            font-size: 20px;
+            margin: 0;
             color: #393939;
+            margin-left: -12px;
+        }
+
+        .user-info-text p {
+            margin: 5px 0 0;
+            font-weight: bold;
+            color: #555;
+            margin-left: -12px;
         }
 
         h2 {
@@ -56,12 +87,26 @@
             text-decoration: none;
         }
 
+        img {
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+        }
+
         .text-red { color: #e3342f; font-weight: bold; }
         .text-green { color: #38a169; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>Historial de {{ $user->name }}</h1>
+    <div class="user-info">
+        <div class="user-info-img">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/default-images/default-profile.png' . $user->profile_image))) }}" alt="{{ $user->name }}">
+        </div>
+        <div class="user-info-text">
+            <h1>Historial de {{ $user->name }}</h1>
+            <p>Correo electrónico: {{ $user->email }}</p>
+        </div>
+    </div>
 
     <h2>Reportes Recibidos</h2>
     @if($reports->isEmpty())
@@ -82,7 +127,7 @@
                         <td>{{ $report->reporter->name }}</td>
                         <td>{{ $report->reason }}</td>
                         <td>{{ ucfirst($report->status) }}</td>
-                        <td>{{ $report->created_at->format('d/m/Y H:i') }}</td>
+                        <td>{{ $report->created_at->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -114,7 +159,7 @@
                                 <span class="text-green">Activo</span>
                             @endif
                         </td>
-                        <td>{{ $post->created_at->format('d/m/Y H:i') }}</td>
+                        <td>{{ $post->created_at->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -148,7 +193,7 @@
                                 <span class="text-green">Activo</span>
                             @endif
                         </td>
-                        <td>{{ $comment->created_at->format('d/m/Y H:i') }}</td>
+                        <td>{{ $comment->created_at->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach
             </tbody>

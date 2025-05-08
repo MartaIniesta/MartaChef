@@ -47,6 +47,16 @@ class PostPolicy
         return $user->can('delete-posts') && $user->id === $post->user_id;
     }
 
+    public function restore(User $user, Post $post): bool
+    {
+        return $user->can('restore-posts');
+    }
+
+    public function forceDelete(User $user, Post $post): bool
+    {
+        return $user->can('force-delete-posts');
+    }
+
     public function rate(User $user, Post $post): bool
     {
         return $user->can('rate-posts') && $user->id !== $post->user_id;

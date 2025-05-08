@@ -19,29 +19,31 @@
                         {{__('Email')}}: {{ $user->email }}
                     </p>
                     @auth
-                        @livewire('report-user', ['user' => $user])
+                        @if(auth()->user()->id !== $user->id)
+                            @livewire('report-user', ['user' => $user])
+                        @endif
                     @endauth
                 </div>
 
                 @auth
-                    @if($user->id !== auth()->id() && !$user->hasRole('admin') && !$user->hasRole('moderator'))
-                        <div>
-                            @if(auth()->user()->isFollowing($user))
-                                <form action="{{ route('users.unfollow', $user) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-all">
-                                        {{__('Unfollow')}}
-                                    </button>
-                                </form>
-                            @else
-                                <form action="{{ route('users.follow', $user) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all">
-                                        {{__('Follow')}}
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
+                    @if(auth()->user()->isFollowing($user))
+                        @can('unfollow', $user)
+                            <form action="{{ route('users.unfollow', $user) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-all">
+                                    {{ __('Unfollow') }}
+                                </button>
+                            </form>
+                        @endcan
+                    @else
+                        @can('follow', $user)
+                            <form action="{{ route('users.follow', $user) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all">
+                                    {{ __('Follow') }}
+                                </button>
+                            </form>
+                        @endcan
                     @endif
                 @endauth
             </div>

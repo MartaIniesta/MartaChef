@@ -30,11 +30,7 @@ class UserController extends Controller
     {
         $authUser = auth()->user();
 
-        $this->authorize('follow', $authUser);
-
-        if ($authUser->id === $user->id) {
-            return back()->with('error', 'You cannot follow yourself.');
-        }
+        $this->authorize('follow', $user);
 
         event(new UserFollowedEvent($authUser, $user));
 
@@ -45,10 +41,11 @@ class UserController extends Controller
     {
         $authUser = auth()->user();
 
-        $this->authorize('unfollow', $authUser);
+        $this->authorize('unfollow', $user);
 
         event(new UserUnfollowedEvent($authUser, $user));
 
         return back()->with('success', "You have unfollowed {$user->name}.");
     }
+
 }

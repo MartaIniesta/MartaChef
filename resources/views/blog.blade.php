@@ -5,8 +5,8 @@
         <div class="flex justify-end items-center py-8 space-x-8">
             <x-nav.nav-manage-link/>
             <x-nav.nav-moderate-link/>
-            <x-nav.nav-recipes-link/>
             <x-nav.nav-users-link/>
+            <x-nav.nav-recipes-link/>
         </div>
     </div>
 
@@ -64,7 +64,7 @@
                         </h2>
                         <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="max-w-[80%] max-h-[200px] mx-auto rounded-md">
                         <p class="mt-2 text-gray-700">{{ $post->description }}</p>
-                        <small class="text-gray-500">By {{ $post->user->name }} | {{ $post->created_at->format('d M Y') }}</small>
+                        <small class="text-gray-500">By {{ $post->user->name }} | <x-date :date="$post->created_at" /></small>
                     </div>
                 @endforeach
             </div>

@@ -9,13 +9,21 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function follow(User $user): bool
+    public function follow(User $authUser, User $user): bool
     {
-        return $user->can('follow-users');
+        if ($authUser->id === $user->id) {
+            return false;
+        }
+
+        return $authUser->can('follow-users');
     }
 
-    public function unfollow(User $user): bool
+    public function unfollow(User $authUser, User $user): bool
     {
-        return $user->can('unfollow-users');
+        if ($authUser->id === $user->id) {
+            return false;
+        }
+
+        return $authUser->can('unfollow-users');
     }
 }
