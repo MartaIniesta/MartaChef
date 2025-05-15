@@ -32,4 +32,9 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'parent_id')->withTrashed();
     }
+
+    public static function deleteOldComments()
+    {
+        return self::where('created_at', '<', now()->subDays(3))->delete();
+    }
 }

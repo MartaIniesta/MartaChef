@@ -105,6 +105,7 @@
     "SHARED RECIPES": "RECETAS COMPARTIDAS",
     "BLOG USERS": "BLOG DE USUARIOS",
     "MODERATION PANEL": "PANEL DE MODERACIÓN",
+    "MANAGE PANEL": "PANEL DE ADMINISTRACIÓN",
     "COMMENTS": "COMENTARIOS",
     "MODERATE": "MODERAR",
     "FAVORITES": "FAVORITOS",
@@ -180,5 +181,6 @@
     "Search category...": "Buscar categoria...",
     "Indicate the ingredients separated by commas": "Indica los ingredientes separados por comas",
     "#richandeasy #delicious": "#ricoyfacil #delicioso",
-    "Delete Reviewed Reports": "Eliminar reportes revisados"
+    "Delete Reviewed Reports": "Eliminar reportes revisados",
+    "Delete old comments": "Eliminar comentarios antiguos"
 }

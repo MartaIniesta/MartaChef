@@ -2,16 +2,19 @@
 
 namespace App\Livewire\Moderator;
 
+use App\Jobs\DeleteOldCommentsJob;
 use App\Models\Comment;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Comments extends Component
 {
+    use WithPagination;
+
     public function softDeleteComment($id)
     {
         $comment = Comment::findOrFail($id);
         $comment->delete();
-
         $comment->replies()->delete();
     }
 
@@ -19,17 +22,19 @@ class Comments extends Component
     {
         $comment = Comment::withTrashed()->findOrFail($id);
         $comment->restore();
-
         $comment->replies()->withTrashed()->restore();
     }
 
     public function forceDeleteComment($id)
     {
         $comment = Comment::withTrashed()->findOrFail($id);
-
         $comment->replies()->withTrashed()->forceDelete();
-
         $comment->forceDelete();
+    }
+
+    public function deleteOldComments()
+    {
+        Comment::deleteOldComments();
     }
 
     public function render()

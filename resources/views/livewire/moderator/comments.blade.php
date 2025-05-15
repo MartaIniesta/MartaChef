@@ -17,6 +17,12 @@
                 </h1>
             </div>
 
+            <div class="text-right mb-4">
+                <button wire:click="deleteOldComments" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                    {{__('Delete old comments')}}
+                </button>
+            </div>
+
             <table class="w-full border-collapse border border-gray-300">
                 <thead>
                 <tr class="bg-gray-100">
@@ -82,7 +88,7 @@
             </table>
 
             <div class="mb-2">
-                {{ $comments->links('vendor.pagination.pagination') }}
+                {{ $comments->links('vendor.pagination.pagination-livewire') }}
             </div>
         </div>
     </div>
