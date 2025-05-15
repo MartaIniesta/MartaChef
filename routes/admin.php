@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
+use App\Livewire\Admin\PostManage;
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -15,8 +15,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/users/{id}/force-delete', [UserController::class, 'forceDeleteUser'])->name('admin.users.forceDelete');
 
     // Rutas para administrar posts
-    Route::get('/admin/posts', [PostController::class, 'index'])->name('admin.posts');
-    Route::delete('/admin/posts/{id}', [PostController::class, 'softDeletePost'])->name('admin.posts.softDelete');
-    Route::patch('/admin/posts/{id}/restore', [PostController::class, 'restorePost'])->name('admin.posts.restore');
-    Route::delete('/admin/posts/{id}/forceDelete', [PostController::class, 'forceDeletePost'])->name('admin.posts.forceDelete');
+    Route::get('/admin/posts', PostManage::class)->name('admin.posts');
 });
