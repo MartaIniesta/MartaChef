@@ -4,57 +4,67 @@
     <meta charset="UTF-8">
     <title>Historial de {{ $user->name }}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: white;
-            color: #333;
+        body, html {
             margin: 0;
-            padding: 10px;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #f8f8f8;
+            height: 50px;
+            width: 100%;
+        }
+
+        .logo {
+            position: absolute;
+            margin-left: 80px;
+            width: 90px;
+            height: 170px;
+            background-color: #b6d5e9;
+            display: flex;
+            justify-content: center;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+        }
+
+        .img-logo {
+            width: 92px;
+            height: 112px;
+            padding-top: 55px;
+        }
+
+        .img-user {
+            width: 50px;
+            height: auto;
+            float: right;
+            margin-right: 80px;
+            margin-top: -1px;
         }
 
         .user-info {
-            display: table;
-            width: 100%;
-            margin-bottom: 20px;
+            width: 300px;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        .user-info-img {
-            display: table-cell;
-            width: 100px;
-            vertical-align: top;
-        }
-
-        .user-info-text {
-            display: table-cell;
-            padding-left: 20px;
-            vertical-align: middle;
-        }
-
-        .user-info-img img {
-            width: 100px;
-            margin-left: -10px;
-        }
-
-        .user-info-text h1 {
-            font-size: 20px;
-            margin: 0;
+        .user-info h1 {
             color: #393939;
-            margin-left: -12px;
+            margin-top: 35px;
+            border-top: #b6d5e9 dotted 2px;
+            border-bottom: #b6d5e9 dotted 2px;
         }
 
-        .user-info-text p {
-            margin: 5px 0 0;
-            font-weight: bold;
-            color: #555;
-            margin-left: -12px;
+        .user-info p {
+            margin-top: -15px;
+            font-size: 15px;
         }
 
         h2 {
             font-size: 18px;
-            margin-top: 30px;
-            margin-bottom: 10px;
+            margin: 50px 12px 10px 12px;
             color: #393939;
-            padding-bottom: 5px;
+            border-bottom: #b6d5e9 solid 1px;
         }
 
         p.italic {
@@ -63,10 +73,13 @@
             margin-top: 0;
         }
 
+        .tabla-reportes {
+            margin: 12px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 12px;
             font-size: 14px;
         }
 
@@ -82,46 +95,74 @@
             color: #393939;
         }
 
-        a {
-            color: #1a0dab;
-            text-decoration: none;
+        .post-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 15px 15px;
         }
 
-        img {
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+        .post-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            vertical-align: top;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            width: 33.33%;
         }
 
-        .text-red { color: #e3342f; font-weight: bold; }
-        .text-green { color: #38a169; font-weight: bold; }
+        .post-img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .post-date {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .text-red {
+            color: #ef4444;
+        }
+
+        .text-green {
+            color: #22c55e;
+        }
     </style>
 </head>
 <body>
-    <div class="user-info">
-        <div class="user-info-img">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/default-images/default-profile.png' . $user->profile_image))) }}" alt="{{ $user->name }}">
+    <div class="header">
+        <div class="logo">
+            <img class="img-logo"
+                 src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/logo/logo-MartaChef.png' . $user->profile_image))) }}"
+                 alt="MartaChef">
         </div>
-        <div class="user-info-text">
-            <h1>Historial de {{ $user->name }}</h1>
-            <p>Correo electrónico: {{ $user->email }}</p>
-        </div>
+
+        <img class="img-user"
+             src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/default-images/default-profile.png' . $user->profile_image))) }}"
+             alt="{{ $user->name }}">
     </div>
 
-    <h2>Reportes Recibidos</h2>
+    <div class="user-info">
+        <h1>Historial de {{ $user->name }}</h1>
+        <p>Correo electrónico: {{ $user->email }}</p>
+    </div>
+
+    <h2>> Reportes Recibidos</h2>
     @if($reports->isEmpty())
         <p class="italic">Este usuario no ha sido reportado.</p>
     @else
-        <table>
-            <thead>
+        <div class="tabla-reportes">
+            <table>
+                <thead>
                 <tr>
                     <th>Reportado por</th>
                     <th>Razón</th>
                     <th>Estado</th>
                     <th>Fecha</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 @foreach ($reports as $report)
                     <tr>
                         <td>{{ $report->reporter->name }}</td>
@@ -130,72 +171,44 @@
                         <td>{{ $report->created_at->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     @endif
 
-    <h2>Publicaciones</h2>
+    <h2>> Publicaciones</h2>
     @if($posts->isEmpty())
         <p class="italic">Este usuario no ha publicado recetas.</p>
     @else
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Título</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
+        <table class="post-table">
             <tbody>
-                @foreach ($posts as $post)
-                    <tr>
-                        <td>{{ $post->id }}</td>
-                        <td>{{ $post->title }}</td>
-                        <td>
-                            @if ($post->trashed())
-                                <span class="text-red">Eliminado</span>
-                            @else
-                                <span class="text-green">Activo</span>
-                            @endif
-                        </td>
-                        <td>{{ $post->created_at->format('d/m/Y') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endif
-
-    <h2>Comentarios</h2>
-    @if($comments->isEmpty())
-        <p class="italic">Este usuario no ha comentado.</p>
-    @else
-        <table>
-            <thead>
+            @foreach ($posts->chunk(3) as $chunk)
                 <tr>
-                    <th>ID</th>
-                    <th>Comentario</th>
-                    <th>Publicación</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($comments as $comment)
-                    <tr>
-                        <td>{{ $comment->id }}</td>
-                        <td>{{ $comment->content }}</td>
-                        <td>{{ $comment->post->id }}: {{ $comment->post->title }}</td>
+                    @foreach ($chunk as $post)
                         <td>
-                            @if ($comment->trashed())
-                                <span class="text-red">Eliminado</span>
-                            @else
-                                <span class="text-green">Activo</span>
+                            @if($post->image)
+                                <img class="post-img"
+                                     src= "data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/' . $post->image))) }}"
+                                     alt="{{ $post->title }}">
                             @endif
+                            <p>{{ $post->title }}</p>
+                            <p>
+                                <strong>ID:</strong> {{ $post->id }} |
+                                <strong>Estado:</strong>
+                                @if ($post->trashed())
+                                    <span class="text-red">Eliminado</span>
+                                @else
+                                    <span class="text-green">Activo</span>
+                                @endif
+                            </p>
+                            <p class="post-date">{{ $post->created_at->format('d/m/Y') }}</p>
                         </td>
-                        <td>{{ $comment->created_at->format('d/m/Y') }}</td>
-                    </tr>
-                @endforeach
+                    @endforeach
+                    @for ($i = $chunk->count(); $i < 3; $i++)
+                        <td></td>
+                    @endfor
+                </tr>
+            @endforeach
             </tbody>
         </table>
     @endif
