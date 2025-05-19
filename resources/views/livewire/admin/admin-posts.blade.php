@@ -65,14 +65,14 @@
                                             {{ __('Delete') }}
                                         </button>
 
-                                        <button onclick="window.location='{{ route('posts.edit', $post) }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                                        <a href="{{ route('posts.edit', $post) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
                                             {{ __('Edit') }}
-                                        </button>
+                                        </a>
                                     @endif
                                 @else
                                     <span class="text-gray-500 italic">
-                                            {{ __('Action unavailable (user deleted)') }}
-                                    </span>
+                                {{ __('Action unavailable (user deleted)') }}
+                            </span>
                                 @endif
                             @endcan
                         </td>
@@ -82,7 +82,7 @@
             </table>
 
             <div class="mb-2">
-                {{ $posts->links('vendor.pagination.pagination') }}
+                {{ $posts->links('vendor.pagination.pagination-livewire') }}
             </div>
         </div>
     </div>

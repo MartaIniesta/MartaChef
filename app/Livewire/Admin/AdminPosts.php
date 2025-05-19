@@ -6,9 +6,12 @@ use App\Mail\PostDeletedMail;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use App\Models\Post;
+use Livewire\WithPagination;
 
-class UserManage extends Component
+class AdminPosts extends Component
 {
+    use WithPagination;
+
     public function softDeletePost($id)
     {
         $post = Post::findOrFail($id);
@@ -34,7 +37,7 @@ class UserManage extends Component
 
     public function render()
     {
-        return view('livewire.admin.post-manage', [
+        return view('livewire.admin.admin-posts', [
             'posts' => Post::withTrashed()->with('user')->paginate(10)
         ])->layout('layouts.app');
     }
