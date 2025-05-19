@@ -62,7 +62,7 @@
 
         h2 {
             font-size: 18px;
-            margin: 50px 12px 10px 12px;
+            margin: 50px 20px 10px 20px;
             color: #393939;
             border-bottom: #b6d5e9 solid 1px;
         }
@@ -70,11 +70,11 @@
         p.italic {
             font-style: italic;
             color: #707070;
-            margin-top: 0;
+            margin: 20px;
         }
 
-        .tabla-reportes {
-            margin: 12px;
+        .reporting-table {
+            margin: 20px;
         }
 
         table {
@@ -97,18 +97,23 @@
 
         .post-table {
             width: 100%;
+            margin-top: -8px;
             border-collapse: separate;
-            border-spacing: 15px 15px;
+            border-spacing: 20px 20px;
         }
 
         .post-table td {
-            border: 1px solid #ccc;
-            padding: 10px;
+            border: 1px solid #EAEAEA;
+            padding: 8px;
             vertical-align: top;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: #FBFBFB;
             border-radius: 8px;
             width: 33.33%;
+        }
+
+        .post-card.empty {
+            border: none;
+            background-color: transparent;
         }
 
         .post-img {
@@ -119,6 +124,22 @@
         .post-date {
             font-size: 13px;
             color: #555;
+        }
+
+        .post-title {
+            font-size: 15px;
+        }
+
+        .comment {
+            margin-top: -20px;
+        }
+
+        .comments-table{
+            margin: 20px;
+        }
+
+        strong {
+            color: #393939;
         }
 
         .text-red {
@@ -152,7 +173,7 @@
     @if($reports->isEmpty())
         <p class="italic">Este usuario no ha sido reportado.</p>
     @else
-        <div class="tabla-reportes">
+        <div class="reporting-table">
             <table>
                 <thead>
                 <tr>
@@ -191,7 +212,7 @@
                                      src= "data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/' . $post->image))) }}"
                                      alt="{{ $post->title }}">
                             @endif
-                            <p>{{ $post->title }}</p>
+                            <p class="post-title">{{ $post->title }}</p>
                             <p>
                                 <strong>ID:</strong> {{ $post->id }} |
                                 <strong>Estado:</strong>
@@ -205,12 +226,52 @@
                         </td>
                     @endforeach
                     @for ($i = $chunk->count(); $i < 3; $i++)
-                        <td></td>
+                        <td class="post-card empty"></td>
                     @endfor
                 </tr>
             @endforeach
             </tbody>
         </table>
     @endif
+
+    <div class="comment">
+        <h2>> Comentarios</h2>
+        @if($comments->isEmpty())
+            <p class="italic">Este usuario no ha comentado.</p>
+        @else
+            <div class="comments-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID Comentarios</th>
+                        <th>Comentarios</th>
+                        <th>ID Recetas</th>
+                        <th>Recetas</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($comments as $comment)
+                        <tr>
+                            <td>{{ $comment->id }}</td>
+                            <td>{{ $comment->content }}</td>
+                            <td>{{ $comment->post->id }}</td>
+                            <td>{{ $comment->post->title }}</td>
+                            <td>
+                                @if ($comment->trashed())
+                                    <span class="text-red">Eliminado</span>
+                                @else
+                                    <span class="text-green">Activo</span>
+                                @endif
+                            </td>
+                            <td>{{ $comment->created_at->format('d/m/Y') }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </div>
 </body>
 </html>
