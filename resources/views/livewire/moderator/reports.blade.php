@@ -73,7 +73,7 @@
             </table>
 
             <div class="mb-2">
-                {{ $reports->links('vendor.pagination.pagination') }}
+                {{ $reports->links('vendor.pagination.pagination-livewire') }}
             </div>
         </div>
     </div>

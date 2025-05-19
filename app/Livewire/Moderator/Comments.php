@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Moderator;
 
-use App\Jobs\DeleteOldCommentsJob;
 use App\Models\Comment;
 use Livewire\Component;
 use Livewire\WithPagination;

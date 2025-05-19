@@ -6,9 +6,12 @@ use App\Mail\PostDeletedMail;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use App\Models\Post;
+use Livewire\WithPagination;
 
 class Posts extends Component
 {
+    use WithPagination;
+
     public function softDeletePost($id)
     {
         $post = Post::findOrFail($id);

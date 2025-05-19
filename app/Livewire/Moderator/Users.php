@@ -4,9 +4,12 @@ namespace App\Livewire\Moderator;
 
 use Livewire\Component;
 use App\Models\User;
+use Livewire\WithPagination;
 
 class Users extends Component
 {
+    use WithPagination;
+
     public function softDeleteUser($id)
     {
         $user = User::findOrFail($id);

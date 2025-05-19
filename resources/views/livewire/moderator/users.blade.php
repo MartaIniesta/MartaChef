@@ -75,7 +75,7 @@
             </table>
 
             <div class="mb-2">
-                {{ $users->links('vendor.pagination.pagination') }}
+                {{ $users->links('vendor.pagination.pagination-livewire') }}
             </div>
         </div>
     </div>

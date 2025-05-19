@@ -5,9 +5,12 @@ namespace App\Livewire\Moderator;
 use Livewire\Component;
 use App\Models\Report;
 use Artisan;
+use Livewire\WithPagination;
 
 class Reports extends Component
 {
+    use WithPagination;
+
     public string $deleteMessage = '';
 
     public function markAsReviewed($reportId)

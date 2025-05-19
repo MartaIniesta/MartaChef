@@ -66,7 +66,9 @@
                                         </button>
                                     @endif
                                 @else
-                                    <span class="text-gray-500 italic">{{ __('Action unavailable (user deleted)') }}</span>
+                                    <span class="text-gray-500 italic">
+                                        {{ __('Action unavailable (user deleted)') }}
+                                    </span>
                                 @endif
                             </td>
                         </tr>
@@ -75,7 +77,7 @@
             </table>
 
             <div class="mb-2">
-                {{ $posts->links('vendor.pagination.pagination') }}
+                {{ $posts->links('vendor.pagination.pagination-livewire') }}
             </div>
         </div>
     </div>
