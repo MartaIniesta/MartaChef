@@ -38,13 +38,17 @@
                             </a>
                         </td>
 
-                        <td class="border py-3">{{ $post->user->name ?? 'Autor desconocido' }}</td>
+                        <td class="border py-3">{{ $post->user->name }}</td>
 
                         <td class="border py-3">
                             @if ($post->trashed())
-                                <span class="text-red-500 font-semibold">{{ __('Deleted') }}</span>
+                                <span class="text-red-500 font-semibold">
+                                    {{ __('Deleted') }}
+                                </span>
                             @else
-                                <span class="text-green-500 font-semibold">{{ __('Asset') }}</span>
+                                <span class="text-green-500 font-semibold">
+                                    {{ __('Asset') }}
+                                </span>
                             @endif
                         </td>
 
@@ -57,17 +61,20 @@
                                             {{ __('Restore') }}
                                         </button>
 
-                                        <button wire:click="forceDeletePost({{ $post->id }})" class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">
+                                        <button wire:click="forceDeletePost({{ $post->id }})"
+                                                class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">
                                             {{ __('Perm. Delete') }}
                                         </button>
                                     @else
-                                        <button wire:click="softDeletePost({{ $post->id }})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                                            {{ __('Delete') }}
-                                        </button>
-
-                                        <a href="{{ route('posts.edit', $post) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                                        <a href="{{ route('posts.edit', $post) }}"
+                                           class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             {{ __('Edit') }}
                                         </a>
+
+                                        <button wire:click="softDeletePost({{ $post->id }})"
+                                                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                            {{ __('Delete') }}
+                                        </button>
                                     @endif
                                 @else
                                     <span class="text-gray-500 italic">

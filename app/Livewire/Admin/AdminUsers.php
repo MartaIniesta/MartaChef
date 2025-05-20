@@ -12,7 +12,6 @@ class AdminUsers extends Component
 
     public $roles = [];
 
-    // Cada vez que se monta el componente, inicializamos los roles con los actuales de los usuarios de la primera página
     public function mount()
     {
         $users = User::withTrashed()->VisibleProfiles()->paginate(10);
@@ -21,7 +20,6 @@ class AdminUsers extends Component
         }
     }
 
-    // Método que se dispara al cambiar página para refrescar los roles actuales en la nueva página
     public function updatingPage()
     {
         $this->roles = [];
@@ -35,8 +33,6 @@ class AdminUsers extends Component
 
         $user = User::findOrFail($userId);
         $user->syncRoles($this->roles[$userId]);
-
-        session()->flash('status', "Rol actualizado para usuario ID {$userId}");
     }
 
     public function softDeleteUser($id)
@@ -64,7 +60,6 @@ class AdminUsers extends Component
     {
         $users = User::withTrashed()->VisibleProfiles()->paginate(10);
 
-        // Si hay usuarios nuevos en la página que no están en $roles, los añadimos
         foreach ($users as $user) {
             if (!isset($this->roles[$user->id])) {
                 $this->roles[$user->id] = $user->getRoleNames()->first() ?? 'user';

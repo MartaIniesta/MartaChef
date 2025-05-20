@@ -17,5 +17,12 @@
                 {{ __('Users') }}
             </a>
         </div>
+
+        <div class="hover:bg-[#B6D5E9] transition-all duration-300">
+            <a href="{{ route('admin.comments') }}" class="flex text-[17px] text-gray-800 hover:text-gray-600 font-semibold py-2 px-4">
+                <img src="{{ asset('storage/icons/comentarios.png') }}" class="h-6 w-6 mr-1">
+                {{ __('Comments') }}
+            </a>
+        </div>
     </nav>
 </aside>

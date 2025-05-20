@@ -35,6 +35,6 @@ class Comment extends Model
 
     public static function deleteOldComments()
     {
-        return self::where('created_at', '<', now()->subDays(3))->delete();
+        return self::where('created_at', '<', now()->subMonths(3))->delete();
     }
 }

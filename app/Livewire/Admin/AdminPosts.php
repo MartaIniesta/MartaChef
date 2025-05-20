@@ -38,7 +38,12 @@ class AdminPosts extends Component
     public function render()
     {
         return view('livewire.admin.admin-posts', [
-            'posts' => Post::withTrashed()->with('user')->paginate(10)
+            'posts' => Post::withTrashed()
+                ->with([
+                    'user' => function ($query) {
+                        $query->withTrashed();
+                    }
+                ])->paginate(10)
         ])->layout('layouts.app');
     }
 }
