@@ -6,7 +6,7 @@ use App\Models\Comment;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Comments extends Component
+class ModeratorComments extends Component
 {
     use WithPagination;
 
@@ -38,13 +38,20 @@ class Comments extends Component
 
     public function render()
     {
-        return view('livewire.moderator.comments', [
+        return view('livewire.moderator.moderator-comments', [
             'comments' => Comment::withTrashed()
-                ->with(['parent' => function ($query) {
-                    $query->withTrashed();
-                }, 'replies' => function ($query) {
-                    $query->withTrashed();
-                }])->paginate(10)
+                ->with([
+                    'user' => function ($query) {
+                        $query->withTrashed();
+                    },
+                    'parent' => function ($query) {
+                        $query->withTrashed();
+                    },
+                    'replies' => function ($query) {
+                        $query->withTrashed();
+                    }
+                ])
+                ->paginate(10)
         ])->layout('layouts.app');
     }
 }

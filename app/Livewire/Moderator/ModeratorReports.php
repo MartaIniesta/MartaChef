@@ -7,7 +7,7 @@ use App\Models\Report;
 use Artisan;
 use Livewire\WithPagination;
 
-class Reports extends Component
+class ModeratorReports extends Component
 {
     use WithPagination;
 
@@ -32,7 +32,7 @@ class Reports extends Component
 
     public function render()
     {
-        return view('livewire.moderator.reports', [
+        return view('livewire.moderator.moderator-reports', [
             'reports' => Report::paginate(10)
         ])->layout('layouts.app');
     }

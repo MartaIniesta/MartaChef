@@ -19,7 +19,7 @@
 
             <div class="text-right mb-4">
                 <button wire:click="deleteReviewedReports" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-                    {{ __('Delete Reviewed Reports') }}
+                    {{ __('Delete Reviewed ModeratorReports') }}
                 </button>
 
                 @if ($deleteMessage)

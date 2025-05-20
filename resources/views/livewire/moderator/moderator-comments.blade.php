@@ -43,7 +43,7 @@
                             {{ $comment->content }}
                         </td>
 
-                        <td class="border p-3">{{ $comment->user->name ?? 'Usuario desconocido' }}</td>
+                        <td class="border p-3">{{ $comment->user->name }}</td>
 
                         <td class="border p-3">
                             <a href="{{ route('posts.show', $comment->post_id) }}" class="text-blue-500 hover:underline">
@@ -64,7 +64,9 @@
                         </td>
 
                         <td class="border py-3 flex justify-center space-x-2">
-                            @if ($comment->parent && $comment->parent->trashed())
+                            @if ($comment->user && $comment->user->trashed())
+                                <span class="text-gray-500 italic">{{ __('Action unavailable (user deleted)') }}</span>
+                            @elseif ($comment->parent && $comment->parent->trashed())
                                 <span class="text-gray-500 italic">{{ __('Action unavailable (parent deleted)') }}</span>
                             @else
                                 @if ($comment->trashed())

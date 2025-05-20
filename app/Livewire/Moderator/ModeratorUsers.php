@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
 
-class Users extends Component
+class ModeratorUsers extends Component
 {
     use WithPagination;
 
@@ -33,7 +33,7 @@ class Users extends Component
 
     public function render()
     {
-        return view('livewire.moderator.users', [
+        return view('livewire.moderator.moderator-users', [
             'users' => User::withTrashed()->VisibleProfiles()->paginate(10),
         ])->layout('layouts.app');
     }

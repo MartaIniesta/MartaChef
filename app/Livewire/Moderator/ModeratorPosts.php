@@ -8,7 +8,7 @@ use Livewire\Component;
 use App\Models\Post;
 use Livewire\WithPagination;
 
-class Posts extends Component
+class ModeratorPosts extends Component
 {
     use WithPagination;
 
@@ -37,7 +37,7 @@ class Posts extends Component
 
     public function render()
     {
-        return view('livewire.moderator.posts', [
+        return view('livewire.moderator.moderator-posts', [
             'posts' => Post::withTrashed()->paginate(10)
         ])->layout('layouts.app');
     }
