@@ -3,12 +3,13 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
+            <x-nav.nav-manage-link/>
             <x-nav.nav-blog-link/>
             <x-nav.nav-recipes-link/>
         </div>
     </div>
 
-    <a href="{{ route('posts.recipes') }}" class="ml-14 text-[18px] text-gray-800 hover:text-gray-600 font-semibold">
+    <a href="{{ url()->previous() }}" class="ml-14 text-[18px] text-gray-800 hover:text-gray-600 font-semibold">
         < {{ __('Return') }}
     </a>
 

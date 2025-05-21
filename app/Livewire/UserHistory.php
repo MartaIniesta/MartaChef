@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\Moderator;
+namespace App\Livewire;
 
-use Livewire\Component;
+use App\Models\Comment;
+use App\Models\Post;
 use App\Models\Report;
 use App\Models\User;
-use App\Models\Post;
-use App\Models\Comment;
+use Livewire\Component;
 
 class UserHistory extends Component
 {
@@ -27,7 +27,7 @@ class UserHistory extends Component
 
     public function render()
     {
-        return view('livewire.moderator.user-history')
+        return view('livewire.user-history')
             ->layout('layouts.app');
     }
 }

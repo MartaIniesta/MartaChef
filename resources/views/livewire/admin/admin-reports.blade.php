@@ -8,7 +8,7 @@
     </div>
 
     <div class="flex flex-1 min-h-screen bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
-        <x-nav.moderate-browser/>
+        <x-nav.manage-browser/>
 
         <div class="flex-1 container mx-auto mb-2 ml-2 mr-2">
             <div class="w-48 mx-auto pt-6">
@@ -18,7 +18,8 @@
             </div>
 
             <div class="text-right mb-4">
-                <button wire:click="deleteReviewedReports" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                <button wire:click="deleteReviewedReports"
+                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
                     {{ __('Delete Reviewed Reports') }}
                 </button>
 

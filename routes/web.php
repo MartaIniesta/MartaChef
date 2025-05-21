@@ -1,7 +1,8 @@
 <?php
 
 use App\Livewire\FavoriteList;
-use App\Http\Controllers\{PdfController, PostController, ProfileController, UserController, BlogController};
+use App\Livewire\UserHistory;
+use App\Http\Controllers\{PdfController, PostController, ProfileController, UserController, BlogController, UserHistoryController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BlogController::class, 'index'])->name('blog');
@@ -32,7 +33,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     });
 
-    // Usuarios
     Route::post('/users/{user}/follow', [UserController::class, 'follow'])->name('users.follow');
     Route::post('/users/{user}/unfollow', [UserController::class, 'unfollow'])->name('users.unfollow');
 
@@ -42,6 +42,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/posts/{post}/pdf', [PdfController::class, 'downloadPDF'])->name('posts.pdf');
     Route::get('/favorites', FavoriteList::class)->name('favorites.index');
+
+    Route::get('/user-history/{userId}', UserHistory::class)->name('user-history');
+    Route::get('/user-history/{user}/pdf', [UserHistoryController::class, 'downloadUserHistoryPdf'])->name('user-history.pdf');
 });
 
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');

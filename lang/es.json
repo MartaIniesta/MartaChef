@@ -185,5 +185,7 @@
     "Delete old comments": "Eliminar comentarios antiguos",
     "Action unavailable": "Acción no disponible",
     "Old comments have been deleted.": "Los comentarios antiguos han sido eliminados.",
-    "There are no comments older than 3 months.": "No hay comentarios con más de 3 meses de antigüedad."
+    "There are no comments older than 3 months.": "No hay comentarios con más de 3 meses de antigüedad.",
+    "ID Comments": "ID Comentarios",
+    "ID Recipes": "ID Recetas"
 }

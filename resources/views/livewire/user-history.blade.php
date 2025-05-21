@@ -3,18 +3,20 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end items-center py-8 space-x-8">
+            <x-nav.nav-manage-link/>
+            <x-nav.nav-moderate-link/>
             <x-nav.nav-blog-link/>
         </div>
     </div>
 
-    <a href="{{ route('moderator.reports') }}" class="ml-14 text-[18px] text-gray-800 hover:text-gray-600 font-semibold">
+    <a href="{{ url()->previous() }}" class="ml-14 text-[18px] text-gray-800 hover:text-gray-600 font-semibold">
         < {{ __('Return') }}
     </a>
 
     <div class="mt-1 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="max-w-6xl mx-auto bg-white shadow-md rounded p-6 mt-4 mb-4 relative">
             <div class="absolute top-0 right-0 mt-2 mr-2">
-                <a href="{{ route('moderator.user-history.pdf', ['user' => $userId]) }}"
+                <a href="{{ route('user-history.pdf', ['user' => $userId]) }}"
                    class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold text-[17px]">
                     <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] w-14 h-14 rounded-full">
                         <img src="{{ asset('storage/icons/pdf.png') }}" class="h-10 w-10">
@@ -128,41 +130,43 @@
             @else
                 <table class="w-full border-collapse border border-gray-300 mt-3">
                     <thead>
-                        <tr class="bg-gray-200">
-                            <th class="border p-2">ID</th>
-                            <th class="border p-2">{{__('Comments')}}</th>
-                            <th class="border p-2">{{__('Post')}}</th>
-                            <th class="border p-2">{{__('State')}}</th>
-                            <th class="border p-2">{{__('Date')}}</th>
-                        </tr>
+                    <tr class="bg-gray-200">
+                        <th class="border p-2">{{__('ID Comments')}}</th>
+                        <th class="border p-2">{{__('Comments')}}</th>
+                        <th class="border p-2">{{__('ID Recipes')}}</th>
+                        <th class="border p-2">{{__('Recipes')}}</th>
+                        <th class="border p-2">{{__('State')}}</th>
+                        <th class="border p-2">{{__('Date')}}</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach ($comments as $comment)
-                            <tr class="text-center">
-                                <td class="border p-2">{{ $comment->id }}</td>
-                                <td class="border p-2">{{ $comment->content }}</td>
-                                <td class="border p-2">
-                                    <a href="{{ route('posts.show', $comment->post_id) }}"
-                                       class="text-blue-600 hover:underline hover:text-blue-800">
-                                        {{ $comment->post->id }}: {{ $comment->post->title }}
-                                    </a>
-                                </td>
-                                <td class="border p-2">
-                                    @if ($comment->trashed() || ($comment->parent && $comment->parent->trashed()))
-                                        <span class="text-red-500 font-semibold">
+                    @foreach ($comments as $comment)
+                        <tr class="text-center">
+                            <td class="border p-2">{{ $comment->id }}</td>
+                            <td class="border p-2">{{ $comment->content }}</td>
+                            <td class="border p-2">{{ $comment->post->id }}</td>
+                            <td class="border p-2">
+                                <a href="{{ route('posts.show', $comment->post_id) }}"
+                                   class="text-blue-600 hover:underline hover:text-blue-800">
+                                    {{ $comment->post->title }}
+                                </a>
+                            </td>
+                            <td class="border p-2">
+                                @if ($comment->trashed() || ($comment->parent && $comment->parent->trashed()))
+                                    <span class="text-red-500 font-semibold">
                                             {{__('Deleted')}}
                                         </span>
-                                            @else
-                                                <span class="text-green-500 font-semibold">
+                                @else
+                                    <span class="text-green-500 font-semibold">
                                             {{__('Asset')}}
                                         </span>
-                                    @endif
-                                </td>
-                                <td class="border p-2">
-                                    <x-date :date="$comment->created_at" />
-                                </td>
-                            </tr>
-                        @endforeach
+                                @endif
+                            </td>
+                            <td class="border p-2">
+                                <x-date :date="$comment->created_at" />
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             @endif

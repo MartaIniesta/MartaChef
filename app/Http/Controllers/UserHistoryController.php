@@ -1,21 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Moderator;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Comment;
-use App\Models\Post;
-use App\Models\Report;
-use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\{Comment, Post, Report, User};
 
-class ModeratorController extends Controller
+class UserHistoryController extends Controller
 {
-    public function index()
-    {
-        return view('moderator.moderator-dashboard');
-    }
-
     public function downloadUserHistoryPdf(User $user)
     {
         $reports = Report::where('reported_id', $user->id)->with('reporter')->get();
