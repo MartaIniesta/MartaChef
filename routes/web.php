@@ -2,7 +2,7 @@
 
 use App\Livewire\FavoriteList;
 use App\Livewire\UserHistory;
-use App\Http\Controllers\{PdfController, PostController, ProfileController, UserController, BlogController, UserHistoryController};
+use App\Http\Controllers\{PdfController, PostController, ProfileController, UserController, BlogController, UserHistoryPdfController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BlogController::class, 'index'])->name('blog');
@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/favorites', FavoriteList::class)->name('favorites.index');
 
     Route::get('/user-history/{userId}', UserHistory::class)->name('user-history');
-    Route::get('/user-history/{user}/pdf', [UserHistoryController::class, 'downloadUserHistoryPdf'])->name('user-history.pdf');
+    Route::get('/user-history/{user}/download', [UserHistoryPdfController::class, 'download'])->name('user-history.download');
 });
 
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');

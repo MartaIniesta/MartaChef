@@ -16,13 +16,31 @@
     <div class="mt-1 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="max-w-6xl mx-auto bg-white shadow-md rounded p-6 mt-4 mb-4 relative">
             <div class="absolute top-0 right-0 mt-2 mr-2">
-                <a href="{{ route('user-history.pdf', ['user' => $userId]) }}"
-                   class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold text-[17px]">
-                    <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] w-14 h-14 rounded-full">
-                        <img src="{{ asset('storage/icons/pdf.png') }}" class="h-10 w-10">
+                @php
+                    use Illuminate\Support\Facades\Storage;
+                    use Illuminate\Support\Str;
+
+                    $safeName = Str::slug($user->name);
+                    $pdfPath = 'pdfs/historial_' . $safeName . '.pdf';
+                    $pdfExists = Storage::disk('public')->exists($pdfPath);
+                @endphp
+
+                @if ($pdfExists)
+                    <a href="{{ route('user-history.download', $user) }}"
+                       class="flex flex-col items-center justify-center text-gray-800 hover:text-gray-600 font-semibold text-[17px]">
+                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] w-14 h-14 rounded-full">
+                            <img src="{{ asset('storage/icons/pdf.png') }}" class="h-10 w-10">
+                        </div>
+                        {{__('Download PDF')}}
+                    </a>
+                @else
+                    <div class="flex flex-col items-center justify-center text-gray-500 font-semibold text-[17px]">
+                        <div class="flex items-center justify-center bg-[#F8F8F8] hover:bg-[#B6D5E9] w-14 h-14 rounded-full">
+                            <img src="{{ asset('storage/icons/pdf.png') }}" class="h-10 w-10 opacity-50">
+                        </div>
+                        {{__('The history is still being generated...')}}
                     </div>
-                    {{__('Download PDF')}}
-                </a>
+                @endif
             </div>
 
             <div class="flex items-center space-x-6 mb-6">

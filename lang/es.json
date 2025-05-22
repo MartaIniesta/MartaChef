@@ -150,6 +150,7 @@
     "There are no shared posts from the people you follow.": "No hay posts compartidos de las personas que sigues.",
     "You dont have your own recipes.": "No tienes recetas propias.",
     "Download PDF": "Descargar PDF",
+    "Generate PDF": "Generar PDF",
     "Customer opinions": "Opiniones de clientes",
     "Log in to see the full recipe.": "Inicia sesión para ver la receta completa.",
     "This user has no published recipes.": "Este usuario no tiene recetas publicadas.",
@@ -187,5 +188,6 @@
     "Old comments have been deleted.": "Los comentarios antiguos han sido eliminados.",
     "There are no comments older than 3 months.": "No hay comentarios con más de 3 meses de antigüedad.",
     "ID Comments": "ID Comentarios",
-    "ID Recipes": "ID Recetas"
+    "ID Recipes": "ID Recetas",
+    "The history is still being generated...": "El historial aún se está generando..."
 }
