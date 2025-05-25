@@ -95,6 +95,8 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
+
         $categories = Category::all();
         $selectedCategories = $post->categories->pluck('id')->toArray();
 
@@ -103,6 +105,8 @@ class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $data = $request->validated();
 
         $data['image'] = $this->handleImageUpload($request, $post);
@@ -121,6 +125,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $post->delete();
 
         return to_route('blog')->with('status', 'Receta eliminada correctamente');

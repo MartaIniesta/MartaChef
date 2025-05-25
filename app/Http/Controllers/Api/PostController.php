@@ -13,11 +13,6 @@ class PostController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum')->except('index', 'show');
-    }
-
     /**
      * @group Publicación
      *

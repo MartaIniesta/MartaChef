@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\{UserFollowedEvent, UserUnfollowedEvent};
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -12,11 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     use AuthorizesRequests;
-
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
 
     /**
      * @group Usuarios
