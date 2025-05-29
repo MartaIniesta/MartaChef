@@ -73,17 +73,17 @@ class PostController extends Controller
      *   "error": "No autorizado"
      * }
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        if ($post->visibility === 'private' && Auth::id() !== $post->user_id) {
+        $post = $this->findPostOrFail($id);
+
+        $user = Auth::user();
+
+        if (!\Gate::forUser($user)->allows('view', $post)) {
             return response()->json(['error' => 'No autorizado'], 403);
         }
 
-        if ($post->visibility === 'shared' && !Post::visibilityShared(Auth::id())->find($post->id)) {
-            return response()->json(['error' => 'No autorizado'], 403);
-        }
-
-        return new PostResource($post->load(['categories', 'tags']));
+        return new PostResource($post);
     }
 
     /**
@@ -210,7 +210,10 @@ class PostController extends Controller
         $post->categories()->sync($request->categories ?? []);
         $post->tags()->sync($this->saveTags($request->tags));
 
-        return new PostResource($post->load(['categories', 'tags']));
+        return response()->json([
+            'message' => 'Post creado con éxito.',
+            'data' => new PostResource($post->load(['categories', 'tags']))
+        ]);
     }
 
     /**
@@ -262,9 +265,9 @@ class PostController extends Controller
         }
 
         return response()->json([
-            'message' => 'Post actualizado correctamente.',
-            'post' => new PostResource($post->load('categories', 'tags'))
-        ], 200);
+            'message' => 'Post actualizado con éxito.',
+            'data' => new PostResource($post->load(['categories', 'tags']))
+        ]);
     }
 
     /**
@@ -278,8 +281,10 @@ class PostController extends Controller
      *   "status": "Post eliminado correctamente"
      * }
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
+        $post = $this->findPostOrFail($id);
+
         $this->authorize('delete', $post);
 
         if ($post->image) {
@@ -292,7 +297,7 @@ class PostController extends Controller
 
         return response()->json([
             'status' => 'Post eliminado correctamente'
-        ], 200);
+        ]);
     }
 
     private function handleImageUpload($request, Post $post = null)
@@ -315,5 +320,16 @@ class PostController extends Controller
         return collect(explode(' ', trim($tagsString)))
             ->map(fn($tag) => Tag::firstOrCreate(['name' => $tag])->id)
             ->toArray();
+    }
+
+    private function findPostOrFail($id)
+    {
+        $post = Post::with(['categories', 'tags'])->find($id);
+
+        if (!$post) {
+            abort(response()->json(['error' => 'El post no existe.'], 404));
+        }
+
+        return $post;
     }
 }

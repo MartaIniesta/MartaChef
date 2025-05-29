@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\RatingController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\{AuthController, PostController, RatingController, UserController};
 use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'register'])->name('api.register');

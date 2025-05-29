@@ -28,7 +28,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('id', '!=', auth()->id())->get();
+        $users = User::visibleProfiles()->get();
 
         return UserResource::collection($users);
     }
@@ -47,6 +47,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->userIsVisible($user);
+
         return new UserResource($user);
     }
 
@@ -70,15 +72,17 @@ class UserController extends Controller
         $this->authorize('follow-users');
 
         if ($authUser->id === $user->id) {
-            return response()->json(['error' => 'You cannot follow yourself.'], 400);
+            return response()->json(['error' => 'No puedes seguirte a ti mismo.'], 400);
         }
+
+        $this->userIsVisible($user);
 
         if (!$authUser->isFollowing($user)) {
             $authUser->follow($user);
         }
 
         return response()->json([
-            'success' => "You are now following {$user->name}."
+            'success' => "Ahora estás siguiendo a {$user->name}."
         ]);
     }
 
@@ -98,12 +102,21 @@ class UserController extends Controller
 
         $this->authorize('unfollow-users');
 
+        $this->userIsVisible($user);
+
         if ($authUser->isFollowing($user)) {
             $authUser->unfollow($user);
         }
 
         return response()->json([
-            'success' => "You have unfollowed {$user->name}."
+            'success' => "Has dejado de seguir a {$user->name}."
         ]);
+    }
+
+    private function userIsVisible(User $user)
+    {
+        if (!User::visibleProfiles()->where('id', $user->id)->exists()) {
+            abort(response()->json(['error' => 'Usuario no visible o no existe.'], 404));
+        }
     }
 }
