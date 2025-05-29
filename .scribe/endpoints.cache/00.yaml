@@ -12,7 +12,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Registra un nuevo usuario en el sistema.'
+      title: 'Registra un nuevo usuario y devuelve un token de autentificación para el usuario.'
       description: ''
       authenticated: false
       custom: []
@@ -26,8 +26,8 @@ endpoints:
     bodyParameters:
       name:
         name: name
-        description: 'El nombre del usuario.'
-        required: false
+        description: 'Nombre del usuario.'
+        required: true
         example: Pepe
         type: string
         enumValues: []
@@ -36,8 +36,8 @@ endpoints:
         custom: []
       email:
         name: email
-        description: 'El correo electrónico del usuario.'
-        required: false
+        description: 'Correo electrónico.'
+        required: true
         example: pepe@example.com
         type: string
         enumValues: []
@@ -46,8 +46,8 @@ endpoints:
         custom: []
       password:
         name: password
-        description: 'La contraseña del usuario (mínimo 8 caracteres).'
-        required: false
+        description: 'Contraseña del usuario (mínimo 8 caracteres).'
+        required: true
         example: '12345678'
         type: string
         enumValues: []
@@ -57,7 +57,7 @@ endpoints:
       password_confirmation:
         name: password_confirmation
         description: 'Confirmar la contraseña del usuario.'
-        required: false
+        required: true
         example: '12345678'
         type: string
         enumValues: []
@@ -75,7 +75,7 @@ endpoints:
         status: 201
         content: |-
           {
-            "message": "User registered successfully.",
+            "message": "Usuario registrado correctamente.",
             "token": "your_generated_token_here"
           }
         headers: []
@@ -85,10 +85,13 @@ endpoints:
         status: 422
         content: |-
           {
-            "errors": {
-              "email": ["The email has already been taken."]
-            }
-          }
+              "message": "Se ha producido un error de validación.",
+              "errors": {
+                "name": ["El campo nombre es obligatorio."],
+                "email": ["El correo ya está registrado."],
+                "password": ["El campo contraseña es obligatorio.", "La confirmación no coincide."]
+              }
+           }
         headers: []
         description: ''
         custom: []
@@ -121,8 +124,8 @@ endpoints:
     bodyParameters:
       email:
         name: email
-        description: 'El correo electrónico del usuario.'
-        required: false
+        description: 'Correo electrónico.'
+        required: true
         example: pepe@example.com
         type: string
         enumValues: []
@@ -131,8 +134,8 @@ endpoints:
         custom: []
       password:
         name: password
-        description: 'La contraseña del usuario.'
-        required: false
+        description: 'Contraseña del usuario.'
+        required: true
         example: '12345678'
         type: string
         enumValues: []
@@ -160,6 +163,19 @@ endpoints:
           {
             "message": "Credenciales incorrectas"
           }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+             "message": "Se ha producido un error de validación.",
+             "errors": {
+               "email": ["El campo email es obligatorio."],
+               "password": ["El campo password es obligatorio."]
+             }
+           }
         headers: []
         description: ''
         custom: []

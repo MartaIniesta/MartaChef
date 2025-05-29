@@ -10,7 +10,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Obtiene una lista de todos los usuarios, excluyendo el usuario autenticado.'
+      title: 'Obtiene una lista de todos los usuarios existentes.'
       description: ''
       authenticated: false
       custom: []
@@ -72,19 +72,8 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
-      user:
-        name: user
-        description: 'Requiere el ID del usuario.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
     cleanUrlParameters:
       id: 1
-      user: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

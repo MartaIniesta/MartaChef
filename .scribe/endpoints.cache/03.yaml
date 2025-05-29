@@ -12,11 +12,12 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Permite al usuario autenticado seguir a otro usuario.'
+      title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -30,19 +31,8 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
-      user:
-        name: user
-        description: 'Requiere el ID del usuario a seguir.'
-        required: false
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
     cleanUrlParameters:
       user_id: 1
-      user: 2
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -53,7 +43,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "success": "You are now following John Doe."
+            "success": "Ahora estas siguiendo a Pepa."
           }
         headers: []
         description: ''
@@ -62,13 +52,16 @@ endpoints:
         status: 400
         content: |-
           {
-            "error": "You cannot follow yourself."
+            "error": "No puedes seguirte a ti mismo."
           }
         headers: []
         description: ''
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 6g43cv8PD1aE5beadkZfhV6
     controller: null
     method: null
     route: null
@@ -82,11 +75,12 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Permite al usuario autenticado dejar de seguir a otro usuario.'
+      title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -100,19 +94,8 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         custom: []
-      user:
-        name: user
-        description: 'Requiere el ID del usuario a dejar de seguir.'
-        required: false
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
     cleanUrlParameters:
       user_id: 1
-      user: 2
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -123,13 +106,16 @@ endpoints:
         status: 200
         content: |-
           {
-            "success": "You have unfollowed John Doe."
+            "success": "Has dejado de seguir a Pepa."
           }
         headers: []
         description: ''
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 6g43cv8PD1aE5beadkZfhV6
     controller: null
     method: null
     route: null

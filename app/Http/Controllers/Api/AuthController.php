@@ -13,23 +13,26 @@ class AuthController extends Controller
     /**
      * @group Autenticación
      *
-     * Registra un nuevo usuario en el sistema.
+     * Registra un nuevo usuario y devuelve un token de autentificación para el usuario.
      *
-     * @bodyParam name string El nombre del usuario. Example: Pepe
-     * @bodyParam email string El correo electrónico del usuario. Example: pepe@example.com
-     * @bodyParam password string La contraseña del usuario (mínimo 8 caracteres). Example: 12345678
-     * @bodyParam password_confirmation string Confirmar la contraseña del usuario. Example: 12345678
+     * @bodyParam name string required Nombre del usuario. Example: Pepe
+     * @bodyParam email string required Correo electrónico. Example: pepe@example.com
+     * @bodyParam password string required Contraseña del usuario (mínimo 8 caracteres). Example: 12345678
+     * @bodyParam password_confirmation string required Confirmar la contraseña del usuario. Example: 12345678
      *
      * @response 201 {
-     *   "message": "User registered successfully.",
+     *   "message": "Usuario registrado correctamente.",
      *   "token": "your_generated_token_here"
      * }
      *
      * @response 422 {
-     *   "errors": {
-     *     "email": ["The email has already been taken."]
-     *   }
-     * }
+     *     "message": "Se ha producido un error de validación.",
+     *     "errors": {
+     *       "name": ["El campo nombre es obligatorio."],
+     *       "email": ["El correo ya está registrado."],
+     *       "password": ["El campo contraseña es obligatorio.", "La confirmación no coincide."]
+     *     }
+     *  }
      */
     public function register(RegisterRequest $request)
     {
@@ -42,7 +45,7 @@ class AuthController extends Controller
         $token = $user->createToken('token_name')->plainTextToken;
 
         return response()->json([
-            'message' => 'User registered successfully.',
+            'message' => 'Usuario registrado correctamente.',
             'token'   => $token,
         ]);
     }
@@ -52,8 +55,8 @@ class AuthController extends Controller
      *
      * Inicia sesión y devuelve un token de autenticación para el usuario.
      *
-     * @bodyParam email string El correo electrónico del usuario. Example: pepe@example.com
-     * @bodyParam password string La contraseña del usuario. Example: 12345678
+     * @bodyParam email string required Correo electrónico. Example: pepe@example.com
+     * @bodyParam password string required Contraseña del usuario. Example: 12345678
      *
      * @response 200 {
      *   "access_token": "your_generated_token_here",
@@ -63,9 +66,22 @@ class AuthController extends Controller
      * @response 401 {
      *   "message": "Credenciales incorrectas"
      * }
+     *
+     * @response 422 {
+     *    "message": "Se ha producido un error de validación.",
+     *    "errors": {
+     *      "email": ["El campo email es obligatorio."],
+     *      "password": ["El campo password es obligatorio."]
+     *    }
+     *  }
      */
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {

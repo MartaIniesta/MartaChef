@@ -13,12 +13,55 @@ class RatingController extends Controller
 {
     use AuthorizesRequests;
 
+    /**
+     * @group Calificación
+     * @authenticated
+     *
+     * Obtiene todas las calificaciones existentes junto con los datos de usuario y post relacionados.
+     *
+     * @response 200 [
+     *   {
+     *     "id": 1,
+     *     "rating": 4,
+     *     "user": {
+     *       "id": 2,
+     *       "name": "Pepe"
+     *     },
+     *     "post": {
+     *       "id": 10,
+     *       "title": "Tarta de chocolate"
+     *     }
+     *   },
+     *   ...
+     * ]
+     */
     public function index()
     {
         $ratings = Rating::with(['user', 'post'])->get();
         return RatingResource::collection($ratings);
     }
 
+    /**
+     * @group Calificación
+     * @authenticated
+     *
+     * Obtiene todas las calificaciones de un post identificado por su ID.
+     *
+     * @response 200 [
+     *   {
+     *     "id": 1,
+     *     "rating": 5,
+     *     "user": {
+     *       "id": 3,
+     *       "name": "Pepe"
+     *     }
+     *   },
+     *   ...
+     * ]
+     * @response 404 {
+     *   "message": "No se encontraron calificaciones para esta publicación"
+     * }
+     */
     public function show($post_id)
     {
         $ratings = Rating::with('user')
@@ -32,6 +75,36 @@ class RatingController extends Controller
         return RatingResource::collection($ratings);
     }
 
+    /**
+     * @group Calificación
+     * @authenticated
+     *
+     * Crea una nueva calificación para un post específico por parte del usuario autenticado.
+     *
+     * @bodyParam post_id integer required ID del post a calificar. Example: 10
+     * @bodyParam rating integer required Valor de la calificación entre 1 y 5. Example: 4
+     *
+     * @response 201 {
+     *   "message": "Calificación guardada correctamente",
+     *   "data": {
+     *     "id": 7,
+     *     "rating": 4,
+     *     "user": {
+     *       "id": 1,
+     *       "name": "Pepe"
+     *     }
+     *   }
+     * }
+     * @response 409 {
+     *   "message": "Ya has calificado este post. Si deseas cambiar tu calificación, utiliza la ruta de actualización."
+     * }
+     * @response 422 {
+     *   "errors": {
+     *     "post_id": ["El campo post_id es obligatorio."],
+     *     "rating": ["El campo rating es obligatorio y debe ser un entero entre 1 y 5."]
+     *   }
+     * }
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -68,6 +141,34 @@ class RatingController extends Controller
         ]);
     }
 
+    /**
+     * @group Calificación
+     * @authenticated
+     *
+     * Actualiza la calificación del usuario autenticado para un post específico.
+     *
+     * @bodyParam rating integer required Nuevo valor de la calificación entre 1 y 5. Example: 5
+     *
+     * @response 200 {
+     *   "message": "Calificación actualizada",
+     *   "data": {
+     *     "id": 7,
+     *     "rating": 5,
+     *     "user": {
+     *       "id": 1,
+     *       "name": "Pepe"
+     *     }
+     *   }
+     * }
+     * @response 404 {
+     *   "message": "Calificación no encontrada"
+     * }
+     * @response 422 {
+     *   "errors": {
+     *     "rating": ["El campo rating es obligatorio y debe ser un entero entre 1 y 5."]
+     *   }
+     * }
+     */
     public function update(Request $request, $post_id)
     {
         $request->validate([
@@ -91,6 +192,19 @@ class RatingController extends Controller
         ]);
     }
 
+    /**
+     * @group Calificación
+     * @authenticated
+     *
+     * Elimina la calificación del usuario autenticado para un post específico.
+     *
+     * @response 200 {
+     *   "message": "Calificación eliminada"
+     * }
+     * @response 404 {
+     *   "message": "Calificación no encontrada"
+     * }
+     */
     public function destroy($post_id)
     {
         $rating = Rating::where('user_id', Auth::id())

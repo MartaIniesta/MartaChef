@@ -14,9 +14,9 @@ class PostController extends Controller
     use AuthorizesRequests;
 
     /**
-     * @group Publicación
+     * @group Posts
      *
-     * Obtiene una lista de posts públicos ordenados por ID.
+     * Devuelve una lista de Posts públicos ordenados por ID.
      *
      * @response 200 [
      *   {
@@ -47,30 +47,37 @@ class PostController extends Controller
     }
 
     /**
-     * @group Publicación
+     * @group Posts
+     * @authenticated
      *
-     * Muestra una publicación específica.
-     * Solo se podrá ver si el usuario es propietario o el post es publico.
+     * Muestra un Post específico.
      *
-     * @urlParam post integer Requiere el ID de la publicación. Example: 1
-     * @response 200 [
-     *    {
-     *      "id": 1,
-     *      "title": "Post Title",
-     *      "description": "Post Description",
-     *      "ingredients": "ingredient1, ingredients2",
-     *      "image": "image_url",
-     *      "visibility": "public",
-     *      "user": {
-     *           "id": 1,
-     *           "name": "Pepe"
-     *      },
-     *      "categories": [...],
-     *      "tags": [...]
-     *    },
+     * Solo se podrán ver los Posts públicos, los compartidos de usuarios seguidos,
+     * y los Posts privados o compartidos del propio usuario autenticado.
+     *
+     * @urlParam id integer required ID del post. Example: 1
+     *
+     * @response 200 {
+     *   "id": 1,
+     *   "title": "Post Title",
+     *   "description": "Post Description",
+     *   "ingredients": "ingredient1, ingredient2",
+     *   "image": "image_url",
+     *   "visibility": "public",
+     *   "user": {
+     *       "id": 1,
+     *       "name": "Pepe"
+     *   },
+     *   "categories": [...],
+     *   "tags": [...]
+     * }
      *
      * @response 403 {
      *   "error": "No autorizado"
+     * }
+     *
+     * @response 404 {
+     *   "error": "El post no existe."
      * }
      */
     public function show($id)
@@ -87,27 +94,29 @@ class PostController extends Controller
     }
 
     /**
-     * @group Publicación
+     * @group Posts
+     * @authenticated
      *
-     * Obtiene las publicaciones de un usuario autenticado, sin tener en cuenta su visibilidad.
+     * Devuelve todos los posts creados por el usuario autenticado, sin importar su visibilidad.
      *
      * @response 200 [
-     *     {
+     *   {
+     *     "id": 1,
+     *     "title": "Post Title",
+     *     "description": "Post Description",
+     *     "ingredients": "ingredient1, ingredient2",
+     *     "image": "image_url",
+     *     "visibility": "private",
+     *     "user": {
      *       "id": 1,
-     *       "title": "Post Title",
-     *       "description": "Post Description",
-     *       "ingredients": "ingredient1, ingredients2",
-     *       "image": "image_url",
-     *       "visibility": "private",
-     *       "user": {
-     *            "id": 1,
-     *            "name": "Pepe"
-     *       },
-     *       "categories": [...],
-     *       "tags": [...]
+     *       "name": "Pepe"
      *     },
+     *     "categories": [...],
+     *     "tags": [...]
+     *   },
      *   ...
      * ]
+     *
      * @response 401 {
      *   "error": "No autenticado"
      * }
@@ -128,27 +137,29 @@ class PostController extends Controller
     }
 
     /**
-     * @group Publicación
+     * @group Posts
+     * @authenticated
      *
-     * Obtiene las publicaciones compartidas de los usuarios seguidos.
+     * Devuelve los Posts con visibilidad "shared" de los usuarios que el usuario autenticado sigue.
      *
      * @response 200 [
-     *     {
+     *   {
+     *     "id": 1,
+     *     "title": "Post Title",
+     *     "description": "Post Description",
+     *     "ingredients": "ingredient1, ingredient2",
+     *     "image": "image_url",
+     *     "visibility": "shared",
+     *     "user": {
      *       "id": 1,
-     *       "title": "Post Title",
-     *       "description": "Post Description",
-     *       "ingredients": "ingredient1, ingredients2",
-     *       "image": "image_url",
-     *       "visibility": "shared",
-     *       "user": {
-     *            "id": 1,
-     *            "name": "Pepe"
-     *       },
-     *       "categories": [...],
-     *       "tags": [...]
+     *       "name": "Pepe"
      *     },
+     *     "categories": [...],
+     *     "tags": [...]
+     *   },
      *   ...
      * ]
+     *
      * @response 401 {
      *   "error": "No autenticado"
      * }
@@ -173,31 +184,30 @@ class PostController extends Controller
     }
 
     /**
-     * @group Publicación
+     * @group Posts
+     * @authenticated
      *
-     * Crea una nueva publicación para el usuario autenticado.
+     * Crea un nuevo Post del usuario autenticado.
      *
-     * @bodyParam title string El título de la publicación. Example: "Delicious Cake"
-     * @bodyParam description string La descripción de la publicación. Example: "This is a recipe for a delicious cake."
-     * @bodyParam ingredients string Los ingredientes necesarios. Example: "Flour, Eggs, Sugar"
-     * @bodyParam visibility string La visibilidad de la publicación. Example: "public"
-     * @bodyParam categories array Los IDs de las categorías asociadas a la publicación. Example: [1, 2]
-     * @bodyParam tags string Etiquetas separadas por espacio. Example: "dessert cake"
-     * @bodyParam image file La imagen asociada a la publicación.
+     * @bodyParam title string required Título del Post. Example: Tarta de chocolate
+     * @bodyParam description string required Descripción del Post. Example: Esta es una deliciosa tarta de chocolate.
+     * @bodyParam ingredients string required Ingredientes separados por coma. Example: Harina, Huevos, Azucar
+     * @bodyParam visibility string required Visibilidad del Post: public, private, o shared. Example: public
+     * @bodyParam categories array required IDs de las categorías asociadas (máximo 4). Example: [1, 2, 3, 4]
+     * @bodyParam tags string optional Etiquetas separadas por espacio. Example: #Tarta #Chocolate
+     * @bodyParam image file required Imagen asociada al Post.
      *
      * @response 201 {
-     *   "id": 1,
-     *   "title": "New Post",
-     *   "description": "Description of new post",
-     *   "ingredients": "ingredient1, ingredients2",
-     *   "visibility": "public",
-     *   "categories": [...],
-     *   "tags": [...],
-     *   "image": "image_url"
+     *   "message": "Post creado con éxito.",
+     *   "data": {
+     *     "id": 1,
+     *     "title": "Tarta de chocolate",
+     *     ...
+     *   }
      * }
      * @response 422 {
      *   "errors": {
-     *     "image": ["The image field is required."]
+     *     "image": ["La imagen es requerida."]
      *   }
      * }
      */
@@ -217,35 +227,31 @@ class PostController extends Controller
     }
 
     /**
-     * @group Publicación
+     * @group Posts
+     * @authenticated
      *
-     * Actualiza una publicación existente.
+     * Actualiza un Post existente del usuario autenticado.
      *
-     * @urlParam post integer Requiere el ID de la publicación. Example: 1
-     * @bodyParam title string El título de la publicación. Example: "Updated Post"
-     * @bodyParam description string La descripción actualizada. Example: "Updated description"
-     * @bodyParam ingredients string Los ingredientes actualizados. Example: "Updated ingredients"
-     * @bodyParam visibility string La visibilidad actualizada. Example: "private"
-     * @bodyParam categories array Los IDs de las categorías actualizadas. Example: [1, 3]
-     * @bodyParam tags string Etiquetas separadas por espacio. Example: "updated tag"
-     * @bodyParam image file La nueva imagen de la publicación.
+     * @bodyParam title string required Título actualizado. Example: Tarta actualizada
+     * @bodyParam description string required Descripción actualizada. Example: Una mejor version de la tarta de chocolate.
+     * @bodyParam ingredients string required Ingredientes actualizados. Example: Azucar, Mantequilla, Harina
+     * @bodyParam visibility string required Visibilidad: public, private, o shared. Example: private
+     * @bodyParam categories array required IDs de las nuevas categorías. Example: [1, 2]
+     * @bodyParam tags string optional Nuevas etiquetas separadas por espacio. Example: #Actualizada #Deliciosa
+     * @bodyParam image file optional Nueva imagen (requerida si no hay imagen previa).
      *
      * @response 200 {
-     *   "message": "Post actualizado correctamente.",
-     *   "post": {
+     *   "message": "Post actualizado con éxito.",
+     *   "data": {
      *     "id": 1,
-     *     "title": "Updated Post",
-     *     "description": "Updated description",
-     *     "ingredients": "ingredient1, ingredients2",
-     *     "visibility": "private",
-     *     "categories": [...],
-     *     "tags": [...],
-     *     "image": "new_image_url"
+     *     "title": "Tarta actualizada",
+     *     ...
      *   }
      * }
      * @response 422 {
      *   "errors": {
-     *     "image": ["The image field is required."]
+     *     "title": ["El campo título es obligatorio."],
+     *     "categories": ["Debe seleccionar entre 1 y 4 categorías."]
      *   }
      * }
      */
@@ -271,14 +277,19 @@ class PostController extends Controller
     }
 
     /**
-     * @group Publicación
+     * @group Posts
+     * @authenticated
      *
-     * Elimina una publicación.
-     *
-     * @urlParam post integer Requiere el ID de la publicación a eliminar. Example: 1
+     * Elimina un Post existente del usuario autenticado.
      *
      * @response 200 {
      *   "status": "Post eliminado correctamente"
+     * }
+     * @response 403 {
+     *   "error": "No autorizado"
+     * }
+     * @response 404 {
+     *   "error": "El post no existe."
      * }
      */
     public function destroy($id)

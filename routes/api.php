@@ -8,9 +8,9 @@ Route::post('login', [AuthController::class, 'login'])->name('api.login');
 
 Route::prefix('posts')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('api.posts.index');
-    Route::get('/{post}', [PostController::class, 'show'])->name('api.posts.show');
 
     Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/{post}', [PostController::class, 'show'])->name('api.posts.show');
         Route::post('/', [PostController::class, 'store'])->name('api.posts.store');
         Route::put('/{post}', [PostController::class, 'update'])->name('api.posts.update');
         Route::delete('/{post}', [PostController::class, 'destroy'])->name('api.posts.destroy');

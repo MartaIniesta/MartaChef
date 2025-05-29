@@ -15,7 +15,7 @@ class UserController extends Controller
     /**
      * @group Usuarios
      *
-     * Obtiene una lista de todos los usuarios, excluyendo el usuario autenticado.
+     * Obtiene una lista de todos los usuarios existentes.
      *
      * @response 200 [
      *   {
@@ -38,7 +38,6 @@ class UserController extends Controller
      *
      * Muestra los detalles de un usuario específico.
      *
-     * @urlParam user integer Requiere el ID del usuario. Example: 1
      * @response 200 {
      *   "id": 1,
      *   "name": "Pepe",
@@ -54,15 +53,15 @@ class UserController extends Controller
 
     /**
      * @group Seguimiento
+     * @authenticated
      *
      * Permite al usuario autenticado seguir a otro usuario.
      *
-     * @urlParam user integer Requiere el ID del usuario a seguir. Example: 2
      * @response 200 {
-     *   "success": "You are now following John Doe."
+     *   "success": "Ahora estas siguiendo a Pepa."
      * }
      * @response 400 {
-     *   "error": "You cannot follow yourself."
+     *   "error": "No puedes seguirte a ti mismo."
      * }
      */
     public function follow(User $user)
@@ -88,12 +87,12 @@ class UserController extends Controller
 
     /**
      * @group Seguimiento
+     * @authenticated
      *
      * Permite al usuario autenticado dejar de seguir a otro usuario.
      *
-     * @urlParam user integer Requiere el ID del usuario a dejar de seguir. Example: 2
      * @response 200 {
-     *   "success": "You have unfollowed John Doe."
+     *   "success": "Has dejado de seguir a Pepa."
      * }
      */
     public function unfollow(User $user)

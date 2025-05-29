@@ -1,4 +1,4 @@
-name: Publicación
+name: Posts
 description: ''
 endpoints:
   -
@@ -6,11 +6,11 @@ endpoints:
       - GET
     uri: api/posts
     metadata:
-      groupName: Publicación
+      groupName: Posts
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Obtiene una lista de posts públicos ordenados por ID.'
+      title: 'Devuelve una lista de Posts públicos ordenados por ID.'
       description: ''
       authenticated: false
       custom: []
@@ -59,34 +59,23 @@ endpoints:
       - GET
     uri: 'api/posts/{id}'
     metadata:
-      groupName: Publicación
+      groupName: Posts
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: |-
-        Muestra una publicación específica.
-        Solo se podrá ver si el usuario es propietario o el post es publico.
+      title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
         name: id
-        description: 'The ID of the post.'
+        description: 'ID del post.'
         required: true
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      post:
-        name: post
-        description: 'Requiere el ID de la publicación.'
-        required: false
         example: 1
         type: integer
         enumValues: []
@@ -94,8 +83,7 @@ endpoints:
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 2
-      post: 1
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -105,21 +93,20 @@ endpoints:
       -
         status: 200
         content: |-
-          [
-             {
-               "id": 1,
-               "title": "Post Title",
-               "description": "Post Description",
-               "ingredients": "ingredient1, ingredients2",
-               "image": "image_url",
-               "visibility": "public",
-               "user": {
-                    "id": 1,
-                    "name": "Pepe"
-               },
-               "categories": [...],
-               "tags": [...]
-             },
+          {
+            "id": 1,
+            "title": "Post Title",
+            "description": "Post Description",
+            "ingredients": "ingredient1, ingredient2",
+            "image": "image_url",
+            "visibility": "public",
+            "user": {
+                "id": 1,
+                "name": "Pepe"
+            },
+            "categories": [...],
+            "tags": [...]
+          }
         headers: []
         description: ''
         custom: []
@@ -132,8 +119,20 @@ endpoints:
         headers: []
         description: ''
         custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "error": "El post no existe."
+          }
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 6g43cv8PD1aE5beadkZfhV6
     controller: null
     method: null
     route: null
@@ -143,15 +142,16 @@ endpoints:
       - POST
     uri: api/posts
     metadata:
-      groupName: Publicación
+      groupName: Posts
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Crea una nueva publicación para el usuario autenticado.'
+      title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: multipart/form-data
       Accept: application/json
     urlParameters: []
@@ -161,9 +161,9 @@ endpoints:
     bodyParameters:
       title:
         name: title
-        description: 'El título de la publicación.'
-        required: false
-        example: '"Delicious Cake"'
+        description: 'Título del Post.'
+        required: true
+        example: 'Tarta de chocolate'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -171,9 +171,9 @@ endpoints:
         custom: []
       description:
         name: description
-        description: 'La descripción de la publicación.'
-        required: false
-        example: '"This is a recipe for a delicious cake."'
+        description: 'Descripción del Post.'
+        required: true
+        example: 'Esta es una deliciosa tarta de chocolate.'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -181,9 +181,9 @@ endpoints:
         custom: []
       ingredients:
         name: ingredients
-        description: 'Los ingredientes necesarios.'
-        required: false
-        example: '"Flour, Eggs, Sugar"'
+        description: 'Ingredientes separados por coma.'
+        required: true
+        example: 'Harina, Huevos, Azucar'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -191,9 +191,9 @@ endpoints:
         custom: []
       visibility:
         name: visibility
-        description: 'La visibilidad de la publicación.'
-        required: false
-        example: '"public"'
+        description: 'Visibilidad del Post: public, private, o shared.'
+        required: true
+        example: public
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -201,8 +201,163 @@ endpoints:
         custom: []
       categories:
         name: categories
-        description: 'Los IDs de las categorías asociadas a la publicación.'
+        description: 'IDs de las categorías asociadas (máximo 4).'
+        required: true
+        example:
+          - 1
+          - 2
+          - 3
+          - 4
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      tags:
+        name: tags
+        description: 'optional Etiquetas separadas por espacio.'
         required: false
+        example: '#Tarta #Chocolate'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        custom: []
+      image:
+        name: image
+        description: 'Imagen asociada al Post.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      title: 'Tarta de chocolate'
+      description: 'Esta es una deliciosa tarta de chocolate.'
+      ingredients: 'Harina, Huevos, Azucar'
+      visibility: public
+      categories:
+        - 1
+        - 2
+        - 3
+        - 4
+      tags: '#Tarta #Chocolate'
+    fileParameters:
+      image: null
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+            "message": "Post creado con éxito.",
+            "data": {
+              "id": 1,
+              "title": "Tarta de chocolate",
+              ...
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+            "errors": {
+              "image": ["La imagen es requerida."]
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/posts/{id}'
+    metadata:
+      groupName: Posts
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 5
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: 'Título actualizado.'
+        required: true
+        example: 'Tarta actualizada'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: 'Descripción actualizada.'
+        required: true
+        example: 'Una mejor version de la tarta de chocolate.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      ingredients:
+        name: ingredients
+        description: 'Ingredientes actualizados.'
+        required: true
+        example: 'Azucar, Mantequilla, Harina'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      visibility:
+        name: visibility
+        description: 'Visibilidad: public, private, o shared.'
+        required: true
+        example: private
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      categories:
+        name: categories
+        description: 'IDs de las nuevas categorías.'
+        required: true
         example:
           - 1
           - 2
@@ -213,9 +368,9 @@ endpoints:
         custom: []
       tags:
         name: tags
-        description: 'Etiquetas separadas por espacio.'
+        description: 'optional Nuevas etiquetas separadas por espacio.'
         required: false
-        example: '"dessert cake"'
+        example: '#Actualizada #Deliciosa'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -223,7 +378,7 @@ endpoints:
         custom: []
       image:
         name: image
-        description: 'La imagen asociada a la publicación.'
+        description: 'optional Nueva imagen (requerida si no hay imagen previa).'
         required: false
         example: null
         type: file
@@ -232,174 +387,14 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: '"Delicious Cake"'
-      description: '"This is a recipe for a delicious cake."'
-      ingredients: '"Flour, Eggs, Sugar"'
-      visibility: '"public"'
+      title: 'Tarta actualizada'
+      description: 'Una mejor version de la tarta de chocolate.'
+      ingredients: 'Azucar, Mantequilla, Harina'
+      visibility: private
       categories:
         - 1
         - 2
-      tags: '"dessert cake"'
-    fileParameters:
-      image: null
-    responses:
-      -
-        status: 201
-        content: |-
-          {
-            "id": 1,
-            "title": "New Post",
-            "description": "Description of new post",
-            "ingredients": "ingredient1, ingredients2",
-            "visibility": "public",
-            "categories": [...],
-            "tags": [...],
-            "image": "image_url"
-          }
-        headers: []
-        description: ''
-        custom: []
-      -
-        status: 422
-        content: |-
-          {
-            "errors": {
-              "image": ["The image field is required."]
-            }
-          }
-        headers: []
-        description: ''
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - PUT
-    uri: 'api/posts/{id}'
-    metadata:
-      groupName: Publicación
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Actualiza una publicación existente.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: multipart/form-data
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the post.'
-        required: true
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      post:
-        name: post
-        description: 'Requiere el ID de la publicación.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-    cleanUrlParameters:
-      id: 2
-      post: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      title:
-        name: title
-        description: 'El título de la publicación.'
-        required: false
-        example: '"Updated Post"'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-      description:
-        name: description
-        description: 'La descripción actualizada.'
-        required: false
-        example: '"Updated description"'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-      ingredients:
-        name: ingredients
-        description: 'Los ingredientes actualizados.'
-        required: false
-        example: '"Updated ingredients"'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-      visibility:
-        name: visibility
-        description: 'La visibilidad actualizada.'
-        required: false
-        example: '"private"'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-      categories:
-        name: categories
-        description: 'Los IDs de las categorías actualizadas.'
-        required: false
-        example:
-          - 1
-          - 3
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-      tags:
-        name: tags
-        description: 'Etiquetas separadas por espacio.'
-        required: false
-        example: '"updated tag"'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        custom: []
-      image:
-        name: image
-        description: 'La nueva imagen de la publicación.'
-        required: false
-        example: null
-        type: file
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-    cleanBodyParameters:
-      title: '"Updated Post"'
-      description: '"Updated description"'
-      ingredients: '"Updated ingredients"'
-      visibility: '"private"'
-      categories:
-        - 1
-        - 3
-      tags: '"updated tag"'
+      tags: '#Actualizada #Deliciosa'
     fileParameters:
       image: null
     responses:
@@ -407,16 +402,11 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Post actualizado correctamente.",
-            "post": {
+            "message": "Post actualizado con éxito.",
+            "data": {
               "id": 1,
-              "title": "Updated Post",
-              "description": "Updated description",
-              "ingredients": "ingredient1, ingredients2",
-              "visibility": "private",
-              "categories": [...],
-              "tags": [...],
-              "image": "new_image_url"
+              "title": "Tarta actualizada",
+              ...
             }
           }
         headers: []
@@ -427,14 +417,18 @@ endpoints:
         content: |-
           {
             "errors": {
-              "image": ["The image field is required."]
+              "title": ["El campo título es obligatorio."],
+              "categories": ["Debe seleccionar entre 1 y 4 categorías."]
             }
           }
         headers: []
         description: ''
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 6g43cv8PD1aE5beadkZfhV6
     controller: null
     method: null
     route: null
@@ -444,15 +438,16 @@ endpoints:
       - DELETE
     uri: 'api/posts/{id}'
     metadata:
-      groupName: Publicación
+      groupName: Posts
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Elimina una publicación.'
+      title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -460,25 +455,14 @@ endpoints:
         name: id
         description: 'The ID of the post.'
         required: true
-        example: 2
+        example: 5
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
-      post:
-        name: post
-        description: 'Requiere el ID de la publicación a eliminar.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
     cleanUrlParameters:
-      id: 2
-      post: 1
+      id: 5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -494,8 +478,29 @@ endpoints:
         headers: []
         description: ''
         custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "No autorizado"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+            "error": "El post no existe."
+          }
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 6g43cv8PD1aE5beadkZfhV6
     controller: null
     method: null
     route: null
@@ -505,15 +510,16 @@ endpoints:
       - GET
     uri: api/myPosts
     metadata:
-      groupName: Publicación
+      groupName: Posts
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Obtiene las publicaciones de un usuario autenticado, sin tener en cuenta su visibilidad.'
+      title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -528,20 +534,20 @@ endpoints:
         status: 200
         content: |-
           [
-              {
+            {
+              "id": 1,
+              "title": "Post Title",
+              "description": "Post Description",
+              "ingredients": "ingredient1, ingredient2",
+              "image": "image_url",
+              "visibility": "private",
+              "user": {
                 "id": 1,
-                "title": "Post Title",
-                "description": "Post Description",
-                "ingredients": "ingredient1, ingredients2",
-                "image": "image_url",
-                "visibility": "private",
-                "user": {
-                     "id": 1,
-                     "name": "Pepe"
-                },
-                "categories": [...],
-                "tags": [...]
+                "name": "Pepe"
               },
+              "categories": [...],
+              "tags": [...]
+            },
             ...
           ]
         headers: []
@@ -557,7 +563,10 @@ endpoints:
         description: ''
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 6g43cv8PD1aE5beadkZfhV6
     controller: null
     method: null
     route: null
@@ -567,15 +576,16 @@ endpoints:
       - GET
     uri: api/sharedPosts
     metadata:
-      groupName: Publicación
+      groupName: Posts
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Obtiene las publicaciones compartidas de los usuarios seguidos.'
+      title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -590,20 +600,20 @@ endpoints:
         status: 200
         content: |-
           [
-              {
+            {
+              "id": 1,
+              "title": "Post Title",
+              "description": "Post Description",
+              "ingredients": "ingredient1, ingredient2",
+              "image": "image_url",
+              "visibility": "shared",
+              "user": {
                 "id": 1,
-                "title": "Post Title",
-                "description": "Post Description",
-                "ingredients": "ingredient1, ingredients2",
-                "image": "image_url",
-                "visibility": "shared",
-                "user": {
-                     "id": 1,
-                     "name": "Pepe"
-                },
-                "categories": [...],
-                "tags": [...]
+                "name": "Pepe"
               },
+              "categories": [...],
+              "tags": [...]
+            },
             ...
           ]
         headers: []
@@ -619,7 +629,10 @@ endpoints:
         description: ''
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 6g43cv8PD1aE5beadkZfhV6
     controller: null
     method: null
     route: null
