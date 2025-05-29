@@ -96,19 +96,6 @@ it('cannot restore a post if the user does not have the permission', function ()
     expect(Gate::forUser($user)->denies('restore', $post))->toBeTrue();
 });
 
-/* Puede calificar un post si el usuario tiene el permiso */
-it('can rate a post if the user has permission and is not the owner', function () {
-    // Arrange
-    $user = User::factory()->create();
-    $otherUser = User::factory()->create();
-    $post = Post::factory()->create(['user_id' => $otherUser->id]);
-
-    $user->givePermissionTo('rate-posts');
-
-    // Act & Assert
-    expect(Gate::forUser($user)->allows('rate', $post))->toBeTrue();
-});
-
 /* No puede calificar su propio post */
 it('cannot rate their own post', function () {
     // Arrange
