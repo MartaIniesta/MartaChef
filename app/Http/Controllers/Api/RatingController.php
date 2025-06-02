@@ -138,7 +138,7 @@ class RatingController extends Controller
         return response()->json([
             'message' => 'Calificación guardada correctamente',
             'data' => new RatingResource($rating),
-        ]);
+        ], 201);
     }
 
     /**

@@ -2,11 +2,13 @@
 
 use App\Models\Post;
 use App\Models\User;
+use App\Policies\PostPolicy;
 use Illuminate\Support\Facades\Gate;
 use Database\Seeders\RolesSeeder;
 
 beforeEach(function () {
     $this->seed(RolesSeeder::class);
+    $this->policy = new PostPolicy();
 });
 
 it('can view any post', function () {
@@ -71,6 +73,29 @@ it('can update a post if the user has permission or is the owner', function () {
         ->and(Gate::forUser($otherUser)->denies('update', $post))->toBeTrue();
 });
 
+/* No puede actualizar si el usuario tiene permiso pero no es el propietario */
+it('cannot update if the user has permission but is not the owner', function () {
+    $user = User::factory()->create();
+    $otherUser = User::factory()->create();
+    $post = Post::factory()->create(['user_id' => $otherUser->id]);
+
+    $user->givePermissionTo('edit-posts');
+
+    expect(Gate::forUser($user)->denies('update', $post))->toBeTrue();
+});
+
+/* Permite al administrador actualizar cualquier publicación */
+it('allows admin to update any post', function () {
+    $admin = Mockery::mock(User::class)->makePartial();
+    $admin->id = 1;
+    $admin->shouldReceive('hasRole')->with('admin')->andReturnTrue();
+
+    $post = new Post();
+    $post->user_id = 2;
+
+    expect($this->policy->update($admin, $post))->toBeTrue();
+});
+
 /* Puede eliminar una publicación si el usuario tiene permiso o es el propietario */
 it('can delete a post if user has permission or is the owner', function () {
     // Arrange
@@ -85,6 +110,20 @@ it('can delete a post if user has permission or is the owner', function () {
         ->and(Gate::forUser($otherUser)->denies('delete', $post))->toBeTrue();
 });
 
+/* Permite al administrador o moderador eliminar cualquier publicación */
+it('allows admin or moderator to delete any post', function () {
+    $post = Post::factory()->create();
+
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+
+    $moderator = User::factory()->create();
+    $moderator->assignRole('moderator');
+
+    expect($this->policy->delete($admin, $post))->toBeTrue()
+        ->and($this->policy->delete($moderator, $post))->toBeTrue();
+});
+
 /* No se puede restaurar una publicación si el usuario no tiene el permiso */
 it('cannot restore a post if the user does not have the permission', function () {
     // Arrange
@@ -94,6 +133,24 @@ it('cannot restore a post if the user does not have the permission', function ()
 
     // Act & Assert
     expect(Gate::forUser($user)->denies('restore', $post))->toBeTrue();
+});
+
+/* Permite al usuario forzar la eliminación de una publicación si tiene permiso */
+it('allows user to force delete a post if they have permission', function () {
+    $user = User::factory()->create();
+    $post = Post::factory()->create();
+
+    $user->givePermissionTo('force-delete-posts');
+
+    expect(Gate::forUser($user)->allows('forceDelete', $post))->toBeTrue();
+});
+
+/* El usuario no puede forzar la eliminación de una publicación si no tiene permiso */
+it('the user cannot force delete a post if they do not have permission', function () {
+    $user = User::factory()->create();
+    $post = Post::factory()->create();
+
+    expect(Gate::forUser($user)->denies('forceDelete', $post))->toBeTrue();
 });
 
 /* No puede calificar su propio post */

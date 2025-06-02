@@ -4,9 +4,9 @@ use App\Models\PdfDownload;
 use App\Models\Post;
 use App\Models\User;
 
+/* Muestra una lista de usuarios que han descargado archivos PDF */
 it('displays a list of users who have downloaded PDFs', function () {
     $user = User::factory()->create();
-
     $post = Post::factory()->create();
 
     PdfDownload::create([
@@ -22,6 +22,7 @@ it('displays a list of users who have downloaded PDFs', function () {
     expect($output)->toContain("Usuario {$user->name} ha descargado el pdf 'Example PDF'.");
 });
 
+/* Muestra un mensaje cuando no se han descargado archivos PDF */
 it('displays a message when no PDFs have been downloaded', function () {
     PdfDownload::truncate();
 

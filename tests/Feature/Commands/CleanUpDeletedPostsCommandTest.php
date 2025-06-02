@@ -2,6 +2,7 @@
 
 use App\Models\Post;
 
+/* Elimina permanentemente todas las publicaciones eliminadas temporalmente */
 it('deletes permanently all soft deleted posts', function () {
     $post1 = Post::factory()->create();
     $post2 = Post::factory()->create();
@@ -20,17 +21,18 @@ it('deletes permanently all soft deleted posts', function () {
         ->and(Post::find($post2->id))->toBeNull();
 });
 
-it('reports no deleted posts when none exist', function () {
+/* Muestra un mensaje cuando no hay publicaciones eliminadas temporalmente */
+it('shows message when there are no soft-deleted posts', function () {
     Post::onlyTrashed()->delete();
 
     $exitCode = Artisan::call('posts:cleanup-deleted');
-
     $output = Artisan::output();
 
     expect($exitCode)->toEqual(0)
         ->and($output)->toContain("No se encontraron recetas eliminadas para eliminarlas permanentemente.");
 });
 
+/* No elimina publicaciones que no hayan sido eliminadas temporalmente */
 it('does not delete posts that are not soft deleted', function () {
     $post = Post::factory()->create();
 
