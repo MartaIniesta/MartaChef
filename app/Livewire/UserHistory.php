@@ -20,6 +20,7 @@ class UserHistory extends Component
     {
         $this->userId = $userId;
         $this->user = User::findOrFail($userId);
+
         $this->reports = Report::where('reported_id', $userId)->get();
         $this->posts = Post::withTrashed()->where('user_id', $userId)->get();
         $this->comments = Comment::withTrashed()->with('post')->where('user_id', $userId)->get();
@@ -31,25 +32,31 @@ class UserHistory extends Component
     {
         $safeName = Str::slug($this->user->name);
         $pdfPath = "pdfs/historial_{$safeName}.pdf";
-        $hashPath = "pdfs/historial_{$safeName}_hash.txt";
 
-        $data = [
-            'user' => $this->user,
-            'reports' => $this->reports,
-            'posts' => $this->posts,
-            'comments' => $this->comments,
-        ];
-
-        $newHash = hash('sha256', json_encode($data));
-
-        if (Storage::disk('public')->exists($pdfPath) && Storage::disk('public')->exists($hashPath)) {
-            $oldHash = Storage::disk('public')->get($hashPath);
-            if ($oldHash === $newHash) {
-                return;
-            }
+        if (!Storage::disk('public')->exists($pdfPath)) {
+            GenerateUserHistoryPdfJob::dispatch($this->user->id);
+            return;
         }
 
-        GenerateUserHistoryPdfJob::dispatch($this->user->id);
+        $pdfLastModified = Storage::disk('public')->lastModified($pdfPath);
+
+        $lastDataUpdate = $this->getLastDataUpdate();
+
+        if ($lastDataUpdate > $pdfLastModified) {
+            GenerateUserHistoryPdfJob::dispatch($this->user->id);
+        }
+    }
+
+    private function getLastDataUpdate()
+    {
+        $timestamps = collect([
+            strtotime($this->user->updated_at),
+            Report::where('reported_id', $this->userId)->max('updated_at'),
+            Post::withTrashed()->where('user_id', $this->userId)->max('updated_at'),
+            Comment::withTrashed()->where('user_id', $this->userId)->max('updated_at'),
+        ])->map(fn($date) => $date ? strtotime($date) : 0);
+
+        return $timestamps->max();
     }
 
     public function render()

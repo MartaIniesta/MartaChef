@@ -18,6 +18,6 @@ class UserHistoryPdfController extends Controller
             abort(404, 'PDF no disponible todavía.');
         }
 
-        return response()->download(storage_path("app/public/{$pdfPath}"), $filename);
+        return Storage::disk('public')->download($pdfPath, $filename);
     }
 }
