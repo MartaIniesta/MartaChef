@@ -40,6 +40,13 @@ class Post extends Model
         return $this->hasMany(Rating::class);
     }
 
+    public function favoritedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorites')
+            ->withPivot('note')
+            ->withTimestamps();
+    }
+
     public function scopeVisibilityPublic($query)
     {
         return $query->where('visibility', 'public');
@@ -56,10 +63,5 @@ class Post extends Model
             ->whereHas('user.followers', function ($q) use ($userId) {
                 $q->where('follower_id', $userId);
             });
-    }
-
-    public function favoritedByUsers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'favorites');
     }
 }

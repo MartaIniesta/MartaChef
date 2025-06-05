@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 class DeleteReviewedReportsCommand extends Command
 {
     protected $signature = 'delete:reviewed-reports';
-
     protected $description = 'Eliminar todos los reportes que han sido revisados';
 
     public function handle(): void

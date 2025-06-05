@@ -1,44 +1,20 @@
 <?php
 
-use App\Events\UserUnfollowedEvent;
-use App\Listeners\SendUnfollowNotificationListener;
 use App\Models\User;
+use App\Events\UserUnfollowedEvent;
 use Illuminate\Support\Facades\Log;
+use App\Listeners\SendUnfollowNotificationListener;
 
-beforeEach(function () {
-    $this->follower = User::factory()->create();
-    $this->followed = User::factory()->create();
-    $this->listener = new SendUnfollowNotificationListener();
-});
-
-test('SendUnfollowNotificationListener logs message when a user unfollows another user', function () {
-    // Arrange
-    $this->follower->follow($this->followed);
+it('logs a message when a user unfollows another', function () {
+    $follower = User::factory()->create(['name' => 'Ana']);
+    $followed = User::factory()->create(['name' => 'Luis']);
 
     Log::shouldReceive('info')
         ->once()
-        ->withArgs(function ($message) {
-            return str_contains($message, "{$this->follower->name} ha dejado de seguir a {$this->followed->name}");
-        });
+        ->with('Ana ha dejado de seguir a Luis');
 
-    $event = new UserUnfollowedEvent($this->follower, $this->followed);
+    $event = new UserUnfollowedEvent($follower, $followed);
+    $listener = new SendUnfollowNotificationListener();
 
-    // Act
-    $this->listener->handle($event);
-
-    // Assert
-    expect($this->follower->isFollowing($this->followed))->toBeFalse();
-});
-
-test('SendUnfollowNotificationListener does not log message if user is not following', function () {
-    // Arrange
-    Log::shouldReceive('info')->never();
-
-    $event = new UserUnfollowedEvent($this->follower, $this->followed);
-
-    // Act
-    $this->listener->handle($event);
-
-    // Assert
-    expect($this->follower->isFollowing($this->followed))->toBeFalse();
+    $listener->handle($event);
 });

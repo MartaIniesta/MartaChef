@@ -69,9 +69,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->following()->where('followed_id', $user->id)->exists();
     }
 
-    public function favorites(): HasMany
+    public function favoritePosts(): BelongsToMany
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(Post::class, 'favorites')
+            ->withPivot('note')
+            ->withTimestamps();
     }
 
     public function scopeVisibleProfiles(Builder $query)

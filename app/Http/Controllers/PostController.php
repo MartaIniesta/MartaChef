@@ -65,6 +65,7 @@ class PostController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Post::class);
         $categories = Category::all();
 
         return view('posts.create', ['post' => new Post(), 'categories' => $categories]);
@@ -72,6 +73,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
+        $this->authorize('create', Post::class);
         $data = $request->validated();
 
         $data['image'] = $this->handleImageUpload($request);
@@ -126,7 +128,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-
         $post->delete();
 
         return to_route('blog')->with('status', 'Receta eliminada correctamente');

@@ -8,32 +8,30 @@ Route::post('login', [AuthController::class, 'login'])->name('api.login');
 
 Route::prefix('posts')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('api.posts.index');
-
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/{post}', [PostController::class, 'show'])->name('api.posts.show');
-        Route::post('/', [PostController::class, 'store'])->name('api.posts.store');
-        Route::put('/{post}', [PostController::class, 'update'])->name('api.posts.update');
-        Route::delete('/{post}', [PostController::class, 'destroy'])->name('api.posts.destroy');
-    });
-});
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/myPosts', [PostController::class, 'myPosts'])->name('api.myPosts');
-    Route::get('/sharedPosts', [PostController::class, 'sharedPosts'])->name('api.sharedPosts');
 });
 
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('api.users.index');
     Route::get('{user}', [UserController::class, 'show'])->name('api.users.show');
+});
 
-    Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('posts')->group(function () {
+        Route::get('/{post}', [PostController::class, 'show'])->name('api.posts.show');
+        Route::post('/', [PostController::class, 'store'])->name('api.posts.store');
+        Route::put('/{post}', [PostController::class, 'update'])->name('api.posts.update');
+        Route::delete('/{post}', [PostController::class, 'destroy'])->name('api.posts.destroy');
+    });
+
+    Route::get('/myPosts', [PostController::class, 'myPosts'])->name('api.myPosts');
+    Route::get('/sharedPosts', [PostController::class, 'sharedPosts'])->name('api.sharedPosts');
+
+    Route::prefix('users')->group(function () {
         Route::post('{user}/follow', [UserController::class, 'follow'])->name('api.users.follow');
         Route::post('{user}/unfollow', [UserController::class, 'unfollow'])->name('api.users.unfollow');
     });
-});
 
-Route::prefix('ratings')->group(function () {
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('ratings')->group(function () {
         Route::get('/', [RatingController::class, 'index'])->name('api.ratings.index');
         Route::get('/post/{post_id}', [RatingController::class, 'show'])->name('api.ratings.show');
         Route::post('/', [RatingController::class, 'store'])->name('api.ratings.store');

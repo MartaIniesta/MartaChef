@@ -32,7 +32,10 @@ class UserController extends Controller
 
         $this->authorize('follow', $user);
 
-        event(new UserFollowedEvent($authUser, $user));
+        if (!$authUser->isFollowing($user)) {
+            $authUser->follow($user);
+            event(new UserFollowedEvent($authUser, $user));
+        }
 
         return back()->with('success', "You are now following {$user->name}.");
     }
@@ -43,9 +46,11 @@ class UserController extends Controller
 
         $this->authorize('unfollow', $user);
 
-        event(new UserUnfollowedEvent($authUser, $user));
+        if ($authUser->isFollowing($user)) {
+            $authUser->unfollow($user);
+            event(new UserUnfollowedEvent($authUser, $user));
+        }
 
         return back()->with('success', "You have unfollowed {$user->name}.");
     }
-
 }

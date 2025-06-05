@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Database\Seeders\RolesSeeder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use function Pest\Laravel\actingAs;
@@ -10,11 +11,13 @@ uses(LazilyRefreshDatabase::class);
 
 beforeEach(function () {
     Storage::fake('public');
+    $this->seed(RolesSeeder::class);
 });
 
 /* Descarga el historial del usuario en PDF si existe */
 it('downloads the user history PDF if it exists', function () {
     $user = User::factory()->create(['name' => 'John Doe']);
+    $user->assignRole('admin');
     actingAs($user);
 
     $safeName = Str::slug($user->name);
@@ -32,6 +35,7 @@ it('downloads the user history PDF if it exists', function () {
 /* Devuelve 404 si el PDF no existe */
 it('returns 404 if the PDF does not exist', function () {
     $user = User::factory()->create(['name' => 'Jane Smith']);
+    $user->assignRole('admin');
     actingAs($user);
 
     $safeName = Str::slug($user->name);

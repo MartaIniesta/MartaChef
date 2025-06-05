@@ -2,8 +2,7 @@
 
 namespace App\Livewire\Moderator;
 
-use App\Mail\PostDeletedMail;
-use Illuminate\Support\Facades\Mail;
+use App\Events\PostDeletedEvent;
 use Livewire\Component;
 use App\Models\Post;
 use Livewire\WithPagination;
@@ -16,9 +15,7 @@ class ModeratorPosts extends Component
     {
         $post = Post::findOrFail($id);
 
-        if ($post->user) {
-            Mail::to($post->user->email)->send(new PostDeletedMail($post));
-        }
+        event(new PostDeletedEvent($post));
 
         $post->delete();
     }

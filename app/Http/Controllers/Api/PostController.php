@@ -86,9 +86,7 @@ class PostController extends Controller
 
         $user = Auth::user();
 
-        if (!\Gate::forUser($user)->allows('view', $post)) {
-            return response()->json(['error' => 'No autorizado'], 403);
-        }
+        $this->authorize('view', $post);
 
         return new PostResource($post);
     }
@@ -123,11 +121,12 @@ class PostController extends Controller
      */
     public function myPosts()
     {
-        if (!Auth::check()) {
+        $user = Auth::user();
+        if (!$user) {
             return response()->json(['error' => 'No autenticado'], 401);
         }
 
-        $userPosts = Auth::user()->posts()
+        $userPosts = $user->posts()
             ->whereIn('visibility', ['public', 'private', 'shared'])
             ->orderBy('id', 'asc')
             ->with(['categories', 'tags'])
@@ -167,7 +166,6 @@ class PostController extends Controller
     public function sharedPosts()
     {
         $user = Auth::user();
-
         if (!$user) {
             return response()->json(['error' => 'No autenticado'], 401);
         }
@@ -213,6 +211,8 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $this->authorize('create', Post::class);
+
         $data = $request->validated();
         $data['image'] = $this->handleImageUpload($request);
 
@@ -257,6 +257,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $data = $request->validated();
 
         $data['image'] = $this->handleImageUpload($request, $post);

@@ -3,16 +3,14 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteList extends Component
 {
     public $favorites;
     public $note;
-    public $favoriteId;
-    public $isEditing = false;
-    public $isCreating = false;
+    public $creatingNoteForPostId = null;
+    public $editingNoteForPostId = null;
 
     public function mount()
     {
@@ -21,86 +19,70 @@ class FavoriteList extends Component
 
     public function loadFavorites()
     {
-        $this->favorites = Favorite::where('user_id', Auth::id())->get();
+        $this->favorites = Auth::user()->favoritePosts()->with(['user'])->withPivot('note')->get();
     }
 
-    public function startCreating($favoriteId)
+    public function startCreating($postId)
     {
-        $this->favoriteId = $favoriteId;
+        $this->creatingNoteForPostId = $postId;
+        $this->editingNoteForPostId = null;
         $this->note = '';
-        $this->isCreating = true;
-        $this->isEditing = false;
     }
 
     public function createNote()
     {
-        if (empty($this->note)) {
-            session()->flash('error', 'La nota no puede estar vacía.');
-            return;
-        }
+        $this->validate([
+            'note' => 'required|string|min:5|max:255',
+        ]);
 
-        $favorite = Favorite::find($this->favoriteId);
+        Auth::user()->favoritePosts()->updateExistingPivot($this->creatingNoteForPostId, [
+            'note' => $this->note
+        ]);
 
-        if ($favorite && $favorite->user_id == Auth::id()) {
-            $favorite->note = $this->note;
-            $favorite->save();
-
-            $this->loadFavorites();
-            $this->isCreating = false;
-            $this->resetFields();
-        }
+        $this->resetInteraction();
     }
 
-    public function editNote($favoriteId)
+    public function editNote($postId)
     {
-        $favorite = Favorite::find($favoriteId);
+        $favorite = Auth::user()->favoritePosts()->where('post_id', $postId)->first();
 
-        if ($favorite && $favorite->user_id == Auth::id()) {
-            $this->favoriteId = $favorite->id;
-            $this->note = $favorite->note ?? '';
-            $this->isEditing = true;
-            $this->isCreating = false;
+        if ($favorite) {
+            $this->editingNoteForPostId = $postId;
+            $this->creatingNoteForPostId = null;
+            $this->note = $favorite->pivot->note ?? '';
         }
     }
 
     public function updateNote()
     {
-        $favorite = Favorite::find($this->favoriteId);
+        $this->validate([
+            'note' => 'required|string|min:5|max:255',
+        ]);
 
-        if ($favorite && $favorite->user_id == Auth::id()) {
-            $favorite->note = $this->note;
-            $favorite->save();
+        Auth::user()->favoritePosts()->updateExistingPivot($this->editingNoteForPostId, [
+            'note' => $this->note
+        ]);
 
-            $this->loadFavorites();
-            $this->isEditing = false;
-            $this->favoriteId = null;
-            $this->resetFields();
-        }
+        $this->resetInteraction();
     }
 
-    public function deleteNote($favoriteId)
+    public function deleteNote($postId)
     {
-        $favorite = Favorite::find($favoriteId);
-
-        if ($favorite && $favorite->user_id == Auth::id()) {
-            $favorite->note = null;
-            $favorite->save();
-
-            $this->loadFavorites();
-        }
+        Auth::user()->favoritePosts()->updateExistingPivot($postId, ['note' => null]);
+        $this->loadFavorites();
     }
 
     public function cancelEdit()
     {
-        $this->isEditing = false;
-        $this->isCreating = false;
-        $this->resetFields();
+        $this->resetInteraction();
     }
 
-    public function resetFields()
+    private function resetInteraction()
     {
         $this->note = '';
-        $this->favoriteId = null;
+        $this->creatingNoteForPostId = null;
+        $this->editingNoteForPostId = null;
+        $this->loadFavorites();
     }
 
     public function render()

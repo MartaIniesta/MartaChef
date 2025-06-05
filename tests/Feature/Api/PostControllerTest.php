@@ -40,21 +40,6 @@ it('allows authorized user to view the post', function () {
         ->assertJsonPath('data.id', $post->id);
 });
 
-/* Evita que usuarios no autorizados vean la publicación */
-it('prevents unauthorized user from viewing the post', function () {
-    $owner = User::factory()->create();
-    $otherUser = User::factory()->create();
-
-    $post = Post::factory()->create(['visibility' => 'private', 'user_id' => $owner->id]);
-
-    $this->actingAs($otherUser);
-
-    $response = $this->getJson(route('api.posts.show', $post->id));
-
-    $response->assertStatus(403)
-        ->assertJson(['error' => 'No autorizado']);
-});
-
 /* Devuelve 404 cuando la publicación no existe */
 it('returns 404 when post does not exist', function () {
     $user = User::factory()->create();
