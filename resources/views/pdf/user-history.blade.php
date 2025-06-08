@@ -186,10 +186,10 @@
                 <tbody>
                 @foreach ($reports as $report)
                     <tr>
-                        <td>{{ $report->reporter->name }}</td>
-                        <td>{{ $report->reason }}</td>
-                        <td>{{ ucfirst($report->status) }}</td>
-                        <td>{{ $report->created_at->format('d/m/Y') }}</td>
+                        <td>{{ $report->name }}</td>
+                        <td>{{ $report->pivot->reason }}</td>
+                        <td>{{ ucfirst($report->pivot->status) }}</td>
+                        <td>{{ $report->pivot->created_at->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach
                 </tbody>

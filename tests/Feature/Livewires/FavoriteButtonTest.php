@@ -14,13 +14,11 @@ it('shows correct initial favorite state', function () {
     $post = Post::factory()->create();
 
     actingAs($user);
+
     Livewire::test(FavoriteButton::class, ['postId' => $post->id])
         ->assertSet('isFavorite', false);
 
-    Favorite::create([
-        'user_id' => $user->id,
-        'post_id' => $post->id,
-    ]);
+    $user->favoritePosts()->attach($post->id);
 
     Livewire::test(FavoriteButton::class, ['postId' => $post->id])
         ->assertSet('isFavorite', true);

@@ -2,11 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Models\{Comment, Post, Report, User};
+use App\Models\{Comment, Post, User};
 use Livewire\Component;
 use App\Jobs\GenerateUserHistoryPdfJob;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class UserHistory extends Component
 {
@@ -21,7 +22,8 @@ class UserHistory extends Component
         $this->userId = $userId;
         $this->user = User::findOrFail($userId);
 
-        $this->reports = Report::where('reported_id', $userId)->get();
+        $this->reports = $this->user->reporters()->withPivot('reason', 'status', 'created_at', 'updated_at')->get();
+
         $this->posts = Post::withTrashed()->where('user_id', $userId)->get();
         $this->comments = Comment::withTrashed()->with('post')->where('user_id', $userId)->get();
 
@@ -49,14 +51,14 @@ class UserHistory extends Component
 
     private function getLastDataUpdate()
     {
-        $timestamps = collect([
+        $dates = collect([
             strtotime($this->user->updated_at),
-            Report::where('reported_id', $this->userId)->max('updated_at'),
-            Post::withTrashed()->where('user_id', $this->userId)->max('updated_at'),
-            Comment::withTrashed()->where('user_id', $this->userId)->max('updated_at'),
-        ])->map(fn($date) => $date ? strtotime($date) : 0);
+            strtotime(DB::table('reports')->where('reported_id', $this->userId)->max('updated_at') ?? 0),
+            strtotime(Post::withTrashed()->where('user_id', $this->userId)->max('updated_at') ?? 0),
+            strtotime(Comment::withTrashed()->where('user_id', $this->userId)->max('updated_at') ?? 0),
+        ]);
 
-        return $timestamps->max();
+        return $dates->max();
     }
 
     public function render()

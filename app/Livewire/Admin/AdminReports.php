@@ -3,8 +3,8 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\Report;
-use Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 use Livewire\WithPagination;
 
 class AdminReports extends Component
@@ -15,13 +15,16 @@ class AdminReports extends Component
 
     public function markAsReviewed($reportId)
     {
-        $report = Report::findOrFail($reportId);
-        $report->update(['status' => 'reviewed']);
+        DB::table('reports')
+            ->where('id', $reportId)
+            ->update(['status' => 'reviewed']);
     }
 
     public function deleteReport($reportId)
     {
-        Report::findOrFail($reportId)->delete();
+        DB::table('reports')
+            ->where('id', $reportId)
+            ->delete();
     }
 
     public function deleteReviewedReports()
@@ -32,8 +35,18 @@ class AdminReports extends Component
 
     public function render()
     {
+        $reports = DB::table('reports')
+            ->join('users as reporter', 'reports.reporter_id', '=', 'reporter.id')
+            ->join('users as reported', 'reports.reported_id', '=', 'reported.id')
+            ->select(
+                'reports.*',
+                'reporter.name as reporter_name',
+                'reported.name as reported_name'
+            )
+            ->paginate(10);
+
         return view('livewire.admin.admin-reports', [
-            'reports' => Report::paginate(10)
+            'reports' => $reports,
         ])->layout('layouts.app');
     }
 }

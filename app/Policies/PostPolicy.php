@@ -64,7 +64,7 @@ class PostPolicy
             && $user->id !== $post->user_id
             && (
                 $post->visibility === 'public' ||
-                ($post->visibility === 'shared' && $user->following->contains($post->user_id))
+                ($post->visibility === 'shared' && $user->following()->where('followed_id', $post->user_id)->exists())
             );
     }
 }

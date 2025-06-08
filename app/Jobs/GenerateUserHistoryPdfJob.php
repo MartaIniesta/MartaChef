@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\{User, Report, Post, Comment};
+use App\Models\{User, Post, Comment};
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,7 +32,8 @@ class GenerateUserHistoryPdfJob implements ShouldQueue
             Storage::disk('public')->delete($pdfPath);
         }
 
-        $reports = Report::where('reported_id', $user->id)->with('reporter')->get();
+        $reports = $user->reporters()->withPivot('reason', 'status', 'created_at', 'updated_at')->get();
+
         $posts = Post::withTrashed()->where('user_id', $user->id)->get();
         $comments = Comment::withTrashed()->where('user_id', $user->id)->get();
 
@@ -40,7 +41,7 @@ class GenerateUserHistoryPdfJob implements ShouldQueue
             'user' => $user,
             'reports' => $reports,
             'posts' => $posts,
-            'comments' => $comments
+            'comments' => $comments,
         ];
 
         $pdf = Pdf::loadView('pdf.user-history', $data);

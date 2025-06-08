@@ -33,6 +33,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class);
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function followers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'followers', 'followed_id', 'follower_id');
@@ -69,6 +74,11 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public function favoritePosts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'favorites')
@@ -103,5 +113,29 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->whereHas('roles', function ($q) {
             $q->where('name', 'user');
         });
+    }
+
+    public function reportedUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'reports',
+            'reporter_id',
+            'reported_id'
+        )
+            ->withPivot('reason', 'status')
+            ->withTimestamps();
+    }
+
+    public function reporters(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'reports',
+            'reported_id',
+            'reporter_id'
+        )
+            ->withPivot('reason', 'status')
+            ->withTimestamps();
     }
 }

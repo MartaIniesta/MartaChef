@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PostController;
 use App\Models\{Post, User};
 use Database\Seeders\{CategorySeeder, RolesSeeder};
 use Illuminate\Support\Facades\Storage;
@@ -250,4 +251,25 @@ it('destroys a post', function () {
     ]);
 
     Storage::disk('public')->assertMissing('images/post.jpg');
+});
+
+it('returns 401 unauthenticated by middleware', function () {
+    $response = $this->getJson('/api/myPosts');
+
+    $response->assertStatus(401);
+    $response->assertJson([
+        'message' => 'Unauthenticated.',
+    ]);
+});
+
+it('returns null if no image file is provided and no post is passed', function () {
+    $controller = new PostController();
+
+    $request = Request::create('/', 'POST');
+
+    $result = (new ReflectionClass($controller))
+        ->getMethod('handleImageUpload')
+        ->invokeArgs($controller, [$request]);
+
+    expect($result)->toBeNull();
 });

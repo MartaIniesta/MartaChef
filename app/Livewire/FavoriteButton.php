@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteButton extends Component
@@ -14,22 +13,21 @@ class FavoriteButton extends Component
     public function mount($postId)
     {
         $this->postId = $postId;
-        $this->isFavorite = Favorite::where('user_id', Auth::id())
-            ->where('post_id', $this->postId)->exists();
+        $this->isFavorite = Auth::user()
+            ->favoritePosts()
+            ->where('post_id', $this->postId)
+            ->exists();
     }
 
     public function toggleFavorite()
     {
+        $user = Auth::user();
+
         if ($this->isFavorite) {
-            Favorite::where('user_id', Auth::id())
-                ->where('post_id', $this->postId)
-                ->delete();
+            $user->favoritePosts()->detach($this->postId);
             $this->isFavorite = false;
         } else {
-            Favorite::create([
-                'user_id' => Auth::id(),
-                'post_id' => $this->postId
-            ]);
+            $user->favoritePosts()->attach($this->postId);
             $this->isFavorite = true;
         }
     }

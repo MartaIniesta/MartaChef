@@ -1,15 +1,15 @@
 <?php
 
-use App\Models\Report;
-use Symfony\Component\Console\Output\BufferedOutput;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 beforeEach(function () {
     Log::spy();
+    DB::table('reports')->truncate();
 });
 
-/* Muestra un mensaje si no hay informes revisados */
 it('shows message if there are no reviewed reports', function () {
     $output = new BufferedOutput();
 
@@ -19,20 +19,57 @@ it('shows message if there are no reviewed reports', function () {
     expect($content)->toContain('No hay reportes revisados para eliminar.');
 });
 
-/* Elimina los informes revisados y registra cada eliminación */
 it('deletes reviewed reports and logs each deletion', function () {
-    $reviewed1 = Report::factory()->create(['status' => 'reviewed']);
-    $reviewed2 = Report::factory()->create(['status' => 'reviewed']);
-    $notReviewed = Report::factory()->create(['status' => 'pending']);
+    $reporterId = DB::table('users')->insertGetId([
+        'name' => 'Reporter',
+        'email' => 'reporter@example.com',
+        'password' => bcrypt('secret'),
+    ]);
 
-    $exitCode = Artisan::call('delete:reviewed-reports');
-    $output = Artisan::output();
+    $reportedId = DB::table('users')->insertGetId([
+        'name' => 'Reported',
+        'email' => 'reported@example.com',
+        'password' => bcrypt('secret'),
+    ]);
 
-    expect($exitCode)->toEqual(0)
-        ->and($output)->toContain("Se han eliminado 2 reportes revisados.")
-        ->and(Report::where('status', 'reviewed')->count())->toEqual(0)
-        ->and(Report::count())->toEqual(1);
+    $reviewed1 = DB::table('reports')->insertGetId([
+        'status' => 'reviewed',
+        'reporter_id' => $reporterId,
+        'reported_id' => $reportedId,
+        'reason' => 'spam',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
 
-    Log::shouldHaveReceived('info')->with("Reporte con ID {$reviewed1->id} eliminado.")->once();
-    Log::shouldHaveReceived('info')->with("Reporte con ID {$reviewed2->id} eliminado.")->once();
+    $reviewed2 = DB::table('reports')->insertGetId([
+        'status' => 'reviewed',
+        'reporter_id' => $reporterId,
+        'reported_id' => $reportedId,
+        'reason' => 'abuse',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    $pending = DB::table('reports')->insertGetId([
+        'status' => 'pending',
+        'reporter_id' => $reporterId,
+        'reported_id' => $reportedId,
+        'reason' => 'language',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    Log::spy();
+
+    $output = new BufferedOutput();
+    Artisan::call('delete:reviewed-reports', [], $output);
+    $content = $output->fetch();
+
+    expect($content)->toContain('Se han eliminado 2 reportes revisados.');
+
+    $remaining = DB::table('reports')->pluck('id')->all();
+    expect($remaining)->toBe([$pending]);
+
+    Log::shouldHaveReceived('info')->with("Reporte con ID {$reviewed1} eliminado.")->once();
+    Log::shouldHaveReceived('info')->with("Reporte con ID {$reviewed2} eliminado.")->once();
 });

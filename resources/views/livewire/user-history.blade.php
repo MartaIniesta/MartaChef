@@ -79,11 +79,11 @@
                     <tbody>
                     @foreach ($reports as $report)
                         <tr class="text-center">
-                            <td class="border p-2">{{ $report->reporter->name }}</td>
-                            <td class="border p-2 break-words max-w-xs">{{ $report->reason }}</td>
-                            <td class="border p-2">{{ ucfirst($report->status) }}</td>
+                            <td class="border p-2">{{ $report->name }}</td>
+                            <td class="border p-2 break-words max-w-xs">{{ $report->pivot->reason }}</td>
+                            <td class="border p-2">{{ ucfirst($report->pivot->status) }}</td>
                             <td class="border p-2">
-                                <x-date :date="$report->created_at" />
+                                <x-date :date="$report->pivot->created_at" />
                             </td>
                         </tr>
                     @endforeach

@@ -15,37 +15,29 @@ it('loads only the favorites of the authenticated user', function () {
     $post1 = Post::factory()->create();
     $post2 = Post::factory()->create();
 
-    $fav1 = Favorite::factory()->create([
-        'user_id' => $user->id,
-        'post_id' => $post1->id,
-        'note' => 'Mi nota',
-    ]);
-
-    $fav2 = Favorite::factory()->create([
-        'user_id' => $otherUser->id,
-        'post_id' => $post2->id,
-        'note' => 'No debería cargarse',
-    ]);
+    $user->favoritePosts()->attach($post1->id, ['note' => 'Mi nota']);
+    $otherUser->favoritePosts()->attach($post2->id, ['note' => 'No debería cargarse']);
 
     actingAs($user);
 
     Livewire::test(FavoriteList::class)
-        ->assertViewHas('favorites', fn ($favorites) =>
-            $favorites->count() === 1 &&
-            $favorites->first()->id === $fav1->id
-        );
+        ->assertViewHas('favorites', function ($favorites) use ($post1) {
+            return $favorites->count() === 1 && $favorites->first()->id === $post1->id;
+        });
 });
 
 /* Puede empezar a crear una nueva nota */
 it('can start creating a new note', function () {
     $user = User::factory()->create();
-    $favorite = Favorite::factory()->create(['user_id' => $user->id]);
+    $post = Post::factory()->create();
+
+    $user->favoritePosts()->attach($post->id, ['note' => null]);
 
     actingAs($user);
 
     Livewire::test(FavoriteList::class)
-        ->call('startCreating', $favorite->id)
-        ->assertSet('creatingNoteForPostId', $favorite->id)
+        ->call('startCreating', $post->id)
+        ->assertSet('creatingNoteForPostId', $post->id)
         ->assertSet('note', '')
         ->assertSet('editingNoteForPostId', null);
 });
@@ -53,22 +45,22 @@ it('can start creating a new note', function () {
 /* Puede crear una nota */
 it('can create a note', function () {
     $user = User::factory()->create();
-    $favorite = Favorite::factory()->create([
-        'user_id' => $user->id,
-        'note' => null,
-    ]);
+    $post = Post::factory()->create();
+
+    $user->favoritePosts()->attach($post->id, ['note' => null]);
 
     actingAs($user);
 
     Livewire::test(FavoriteList::class)
-        ->set('creatingNoteForPostId', $favorite->id)
+        ->set('creatingNoteForPostId', $post->id)
         ->set('note', 'Nueva nota')
         ->call('createNote')
         ->assertSet('creatingNoteForPostId', null)
         ->assertSet('note', '');
 
     $this->assertDatabaseHas('favorites', [
-        'id' => $favorite->id,
+        'user_id' => $user->id,
+        'post_id' => $post->id,
         'note' => 'Nueva nota',
     ]);
 });
@@ -76,20 +68,23 @@ it('can create a note', function () {
 /* No crea una nota si está vacía */
 it('does not create a note if empty', function () {
     $user = User::factory()->create();
-    $favorite = Favorite::factory()->create([
-        'user_id' => $user->id,
-        'note' => null,
-    ]);
+    $post = Post::factory()->create();
+
+    $user->favoritePosts()->attach($post->id, ['note' => null]);
 
     actingAs($user);
 
     Livewire::test(FavoriteList::class)
-        ->set('creatingNoteForPostId', $favorite->id)
+        ->set('creatingNoteForPostId', $post->id)
         ->set('note', '')
         ->call('createNote')
         ->assertHasErrors(['note' => 'required']);
 
-    expect(Favorite::find($favorite->id)->note)->toBeNull();
+    $this->assertDatabaseHas('favorites', [
+        'user_id' => $user->id,
+        'post_id' => $post->id,
+        'note' => null,
+    ]);
 });
 
 /* Puede editar una nota existente */
@@ -135,18 +130,18 @@ it('can update a note', function () {
 /* Puede borrar una nota */
 it('can delete a note', function () {
     $user = User::factory()->create();
-    $favorite = Favorite::factory()->create([
-        'user_id' => $user->id,
-        'note' => 'Nota a borrar',
-    ]);
+    $post = Post::factory()->create();
+
+    $user->favoritePosts()->attach($post->id, ['note' => 'Nota a borrar']);
 
     actingAs($user);
 
     Livewire::test(FavoriteList::class)
-        ->call('deleteNote', $favorite->id);
+        ->call('deleteNote', $post->id);
 
-    assertDatabaseHas('favorites', [
-        'id' => $favorite->id,
+    $this->assertDatabaseHas('favorites', [
+        'user_id' => $user->id,
+        'post_id' => $post->id,
         'note' => null,
     ]);
 });

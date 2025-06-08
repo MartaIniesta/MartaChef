@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Report;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,11 +41,18 @@ class ReportUser extends Component
     {
         $this->validate();
 
-        Report::create([
-            'reporter_id' => Auth::id(),
-            'reported_id' => $this->user->id,
+        $authUser = Auth::user();
+
+        if ($authUser->id === $this->user->id) {
+            session()->flash('error', 'No puedes reportarte a ti mismo.');
+            return;
+        }
+
+        $authUser->reportedUsers()->attach($this->user->id, [
             'reason' => $this->reason,
             'status' => 'pending',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         session()->flash('message', 'Reporte enviado correctamente.');
