@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRatingRequest;
 use App\Http\Resources\RatingResource;
-use App\Models\{Post, Rating};
+use App\Models\Rating;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -105,18 +106,8 @@ class RatingController extends Controller
      *   }
      * }
      */
-    public function store(Request $request)
+    public function store(StoreRatingRequest $request)
     {
-        $request->validate([
-            'post_id' => 'required|exists:posts,id',
-            'rating' => 'required|integer|min:1|max:5',
-        ]);
-
-        $post = Post::findOrFail($request->post_id);
-        Auth::user()->loadMissing('following');
-
-        $this->authorize('rate', $post);
-
         $existingRating = Rating::where('user_id', Auth::id())
             ->where('post_id', $request->post_id)
             ->first();

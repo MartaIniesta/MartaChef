@@ -24,7 +24,6 @@
             <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-lg shadow-lg">
                 @csrf
 
-                {{-- Buscador de categorías --}}
                 <div class="mb-4">
                     <x-label for="categories">
                         {{ __('Categories') }}:
@@ -37,7 +36,6 @@
                     />
                 </div>
 
-                {{-- Selector de categorías --}}
                 <div class="mb-6">
                     <select name="categories[]" id="categories" multiple class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                         @foreach ($categories as $category)
@@ -48,19 +46,15 @@
                     </select>
                 </div>
 
-                <!-- Botón de añadir categoría -->
                 <div class="mb-4">
                     <button type="button" id="add-category-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         {{ __('Add Category') }}
                     </button>
                 </div>
 
-                <!-- Categorías seleccionadas -->
                 <div id="selected-categories" class="mb-6">
-                    <!-- Las categorías seleccionadas se irán añadiendo aquí -->
                 </div>
 
-                {{-- Título --}}
                 <div class="mb-4">
                     <x-label for="title">
                         {{ __('Title') }}:
@@ -68,7 +62,6 @@
                     <x-input name="title" required />
                 </div>
 
-                {{-- Descripción --}}
                 <div class="mb-4">
                     <x-label for="description">
                         {{ __('Description') }}:
@@ -76,7 +69,6 @@
                     <textarea name="description" id="description" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">{{ old('description') }}</textarea>
                 </div>
 
-                {{-- Ingredientes --}}
                 <div class="mb-4">
                     <x-label for="ingredients">
                         {{ __('Ingredients') }}:
@@ -88,7 +80,6 @@
                     />
                 </div>
 
-                {{-- Etiquetas --}}
                 <div class="mb-4">
                     <x-label for="tags">
                         {{ __('Tags') }}:
@@ -100,7 +91,6 @@
                     />
                 </div>
 
-                {{-- Visibilidad --}}
                 <div class="mb-4">
                     <x-label for="visibility">
                         {{ __('Visibility') }}:
@@ -112,7 +102,6 @@
                     </select>
                 </div>
 
-                {{-- Imagen --}}
                 <div class="mb-4">
                     <x-label for="image">
                         {{ __('Image') }}:
@@ -128,7 +117,6 @@
                     <input type="file" name="image" id="image" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 
-                {{-- Aceptación de términos y condiciones --}}
                 <x-checkbox-with-text
                     name="terms"
                     :required="true"

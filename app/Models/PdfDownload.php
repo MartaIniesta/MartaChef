@@ -7,11 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PdfDownload extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'post_id',
-        'pdf_name',
-    ];
+    protected $fillable = ['user_id', 'post_id', 'pdf_name'];
 
     public function user(): BelongsTo
     {

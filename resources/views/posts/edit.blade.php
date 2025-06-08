@@ -25,7 +25,6 @@
                 @csrf
                 @method('PUT')
 
-                {{-- Buscador de categorías --}}
                 <div class="mb-4">
                     <label for="categories" class="block text-gray-700 font-medium">
                         {{__('Categories')}}:
@@ -33,7 +32,6 @@
                     <input type="text" id="category-search" placeholder="Buscar categoría..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 
-                {{-- Selector de categorías --}}
                 <div class="mb-6">
                     <label for="categories" class="block text-gray-700 font-medium">
                         {{__('Categories')}}:
@@ -47,7 +45,6 @@
                     </select>
                 </div>
 
-                {{-- Botón de añadir categoría --}}
                 <div class="mb-4">
                     <button type="button" id="add-category-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         {{__('Add Category')}}
@@ -56,10 +53,8 @@
 
                 <div id="selected-categories" class="mb-6"
                      data-categories="{{ json_encode($selectedCategories ?? []) }}">
-                    <!-- Las categorías seleccionadas se irán añadiendo aquí -->
                 </div>
 
-                {{-- Título --}}
                 <div class="mb-4">
                     <label for="title" class="block text-gray-700 font-medium">
                         {{__('Title')}}:
@@ -67,7 +62,6 @@
                     <input type="text" name="title" id="title" value="{{ old('title', $post->title ?? '') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 
-                {{-- Descripción --}}
                 <div class="mb-4">
                     <label for="description" class="block text-gray-700 font-medium">
                         {{__('Description')}}:
@@ -75,7 +69,6 @@
                     <textarea name="description" id="description" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">{{ old('description', $post->description ?? '') }}</textarea>
                 </div>
 
-                {{-- Ingredientes --}}
                 <div class="mb-4">
                     <label for="ingredients" class="block text-gray-700 font-medium">
                         {{__('Ingredients')}}:
@@ -90,7 +83,6 @@
                     >
                 </div>
 
-                {{-- Etiquetas --}}
                 <div class="mb-4">
                     <label for="tags" class="block text-gray-700 font-medium">
                         {{__('Tags')}}:
@@ -100,7 +92,6 @@
                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 
-                {{-- Visibilidad --}}
                 <div class="mb-4">
                     <label for="visibility" class="block text-gray-700 font-medium">
                         {{__('Visibility')}}:
@@ -118,13 +109,11 @@
                     </select>
                 </div>
 
-                {{-- Imagen --}}
                 <div class="mb-4">
                     <label for="image" class="block text-gray-700 font-medium">
                         {{__('Image')}}:
                     </label>
 
-                    <!-- Contenedor de la vista previa -->
                     <div id="imagePreview" class="flex justify-center">
                         @if(isset($post) && $post->image)
                             <div class="mb-2 flex justify-center">
@@ -138,7 +127,6 @@
                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 
-                {{-- Mostrar errores --}}
                 <x-global-errors/>
 
                 <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Actualizar Receta</button>
@@ -146,7 +134,6 @@
         </div>
     </div>
 
-    {{-- Scripts específicos para esta vista --}}
     @push('scripts')
         <script src="{{ asset('js/category-select-edit.js') }}" defer></script>
         <script src="{{ asset('js/category-search.js') }}" defer></script>

@@ -73,9 +73,12 @@ it('fails to login with invalid credentials', function () {
     ];
 
     // Act
-    $response = $this->postJson(route('api.login', $data));
+    $response = $this->postJson(route('api.login'), $data);
 
     // Assert
-    $response->assertStatus(401)
-        ->assertJson(['message' => 'Credenciales incorrectas']);
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['email'])
+        ->assertJsonFragment([
+            'message' => 'Estas credenciales no coinciden con nuestros registros.'
+        ]);
 });

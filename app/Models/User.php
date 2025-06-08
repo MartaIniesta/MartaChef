@@ -43,13 +43,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followed_id');
     }
 
-    public function scopeIsFollowing($query, User $user)
-    {
-        return $query->whereHas('following', function ($q) use ($user) {
-            $q->where('followed_id', $user->id);
-        });
-    }
-
     public function follow(User $user): void
     {
         if ($this->id !== $user->id && !$this->isFollowing($user)) {
@@ -67,6 +60,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isFollowing(User $user): bool
     {
         return $this->following()->where('followed_id', $user->id)->exists();
+    }
+
+    public function scopeIsFollowing($query, User $user)
+    {
+        return $query->whereHas('following', function ($q) use ($user) {
+            $q->where('followed_id', $user->id);
+        });
     }
 
     public function favoritePosts(): BelongsToMany

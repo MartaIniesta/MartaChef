@@ -89,4 +89,22 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            Livewire.on('notify', event => {
+                Swal.fire({
+                    toast: true,
+                    position: 'top',
+                    icon: event.type || 'success',
+                    title: event.message || 'Usuario actualizado',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    background: '#f0fdf4',
+                    color: '#166534',
+                });
+            });
+        </script>
+    @endpush
 </div>

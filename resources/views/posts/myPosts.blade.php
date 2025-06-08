@@ -5,7 +5,6 @@
         <div class="flex justify-end items-center py-8 space-x-8">
             <x-nav.nav-manage-link/>
             <x-nav.nav-blog-link/>
-            <x-nav.nav-users-link/>
             <x-nav.nav-recipes-link/>
             <x-nav.nav-favorites-link/>
             <x-nav.nav-shared-recipes-link/>

@@ -12,14 +12,6 @@ class AdminUsers extends Component
 
     public $roles = [];
 
-    public function mount()
-    {
-        $users = User::withTrashed()->VisibleProfiles()->paginate(10);
-        foreach ($users as $user) {
-            $this->roles[$user->id] = $user->getRoleNames()->first() ?? 'user';
-        }
-    }
-
     public function updatingPage()
     {
         $this->roles = [];
@@ -32,7 +24,14 @@ class AdminUsers extends Component
         ]);
 
         $user = User::findOrFail($userId);
-        $user->syncRoles($this->roles[$userId]);
+        $newRole = $this->roles[$userId];
+
+        $user->syncRoles($newRole);
+
+        $this->dispatch('notify', [
+            'type' => 'success',
+            'message' => "El usuario {$user->name} ahora tiene el rol de {$newRole}.",
+        ]);
     }
 
     public function softDeleteUser($id)

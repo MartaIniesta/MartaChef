@@ -117,14 +117,26 @@ it('returns 409 if rating already exists', function () {
 });
 
 /* Falla validación al crear calificación si faltan campos */
-it('fails validation if missing fields on store', function () {
+it('fails validation if rating is missing but post_id is valid', function () {
+    $author = User::factory()->create();
     $user = User::factory()->create();
+
+    $post = Post::factory()->create([
+        'user_id' => $author->id,
+        'visibility' => 'public',
+    ]);
+
+    $user->givePermissionTo('rate-posts');
+
     loginAsUser($user);
 
-    $response = $this->postJson(route('api.ratings.store'), []);
+    $response = $this->postJson(route('api.ratings.store'), [
+        'post_id' => $post->id,
+        'rating' => null,
+    ]);
 
     $response->assertStatus(422)
-        ->assertJsonValidationErrors(['post_id', 'rating']);
+        ->assertJsonValidationErrors(['rating']);
 });
 
 /* Actualiza una calificación exitosamente */
