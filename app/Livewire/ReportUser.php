@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Rules\NoBadWords;
 
 class ReportUser extends Component
 {
@@ -12,9 +13,12 @@ class ReportUser extends Component
     public $reason;
     public $isOpen = false;
 
-    protected $rules = [
-        'reason' => 'required|min:10|max:500',
-    ];
+    public function rules()
+    {
+        return [
+            'reason' => ['required', 'min:10', 'max:500', new NoBadWords],
+        ];
+    }
 
     protected $messages = [
         'reason.required' => 'Es obligatorio añadir una razón para el reporte.',

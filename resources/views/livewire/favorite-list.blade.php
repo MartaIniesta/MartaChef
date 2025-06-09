@@ -1,13 +1,15 @@
 <div>
     <x-first-navigation-bar />
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-end items-center py-8 space-x-8">
-            <x-nav.nav-manage-link/>
-            <x-nav.nav-blog-link/>
-            <x-nav.nav-recipes-link/>
-            <x-nav.nav-my-recipes-link/>
-            <x-nav.nav-shared-recipes-link/>
+    <div class="bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-end items-center py-8 space-x-8">
+                <x-nav.nav-manage-link/>
+                <x-nav.nav-blog-link/>
+                <x-nav.nav-recipes-link/>
+                <x-nav.nav-my-recipes-link/>
+                <x-nav.nav-shared-recipes-link/>
+            </div>
         </div>
     </div>
 
@@ -26,7 +28,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto mb-4">
                 @foreach($favorites as $favorite)
                     <div class="relative border border-gray-300 p-4 text-center rounded-lg shadow-md bg-white">
-                        <!-- Aquí va todo tu código para mostrar cada favorito -->
                         <div class="flex justify-start -mt-2">
                             @if($creatingNoteForPostId === $favorite->id)
                                 <form wire:submit.prevent="createNote" class="mt-4 w-full">

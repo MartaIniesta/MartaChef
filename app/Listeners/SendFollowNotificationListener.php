@@ -3,12 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\UserFollowedEvent;
-use Illuminate\Support\Facades\Log;
+use App\Notifications\UserFollowedNotification;
 
-class SendFollowNotificationListener
+class  SendFollowNotificationListener
 {
     public function handle(UserFollowedEvent $event)
     {
-        Log::info("{$event->follower->name} ha seguido a {$event->followed->name}");
+        $event->followed->notify(new UserFollowedNotification($event->follower));
     }
 }

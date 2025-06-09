@@ -1,21 +1,25 @@
 <x-app-layout>
     <x-first-navigation-bar />
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-end items-center py-8 space-x-8">
-            <x-nav.nav-manage-link/>
-            <x-nav.nav-moderate-link/>
-            <x-nav.nav-blog-link/>
-            <x-nav.nav-recipes-link/>
-            <x-nav.nav-my-recipes-link/>
-            <x-nav.nav-favorites-link/>
-            <x-nav.nav-shared-recipes-link/>
+    <div class="bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-end items-center py-8 space-x-8">
+                <x-nav.nav-manage-link/>
+                <x-nav.nav-moderate-link/>
+                <x-nav.nav-blog-link/>
+                <x-nav.nav-recipes-link/>
+                <x-nav.nav-my-recipes-link/>
+                <x-nav.nav-favorites-link/>
+                <x-nav.nav-shared-recipes-link/>
+            </div>
         </div>
     </div>
 
-    <a href="{{ url()->previous() }}" class="ml-14 text-[18px] text-gray-800 hover:text-gray-600 font-semibold">
-        < {{ __('Return') }}
-    </a>
+    <div class="bg-white">
+        <a href="{{ url()->previous() }}" class="ml-14 text-[18px] text-gray-800 hover:text-gray-600 font-semibold">
+            < {{ __('Return') }}
+        </a>
+    </div>
 
     <div class="mt-1 bg-[#FBFBFB] border-t-4 border-dotted border-[#B6D5E9]">
         <div class="max-w-4xl mx-auto px-4 py-8">

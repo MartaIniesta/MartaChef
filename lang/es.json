@@ -190,5 +190,10 @@
     "ID Comments": "ID Comentarios",
     "ID Recipes": "ID Recetas",
     "The history is still being generated...": "El historial aún se está generando...",
-    "You don't have any recipes saved in your favorites yet.": "Aún no tienes recetas guardadas en favoritos."
+    "You don't have any recipes saved in your favorites yet.": "Aún no tienes recetas guardadas en favoritos.",
+    "NOTIFICATIONS": "NOTIFICACIONES",
+    "You don't have notifications.": "No tienes notificaciones.",
+    "PROFILE": "PERFIL",
+    "CONFIGURATION": "CONFIGURACIÓN",
+    "INFORMATION": "INFORMACIÓN"
 }

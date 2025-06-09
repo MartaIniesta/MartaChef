@@ -3,7 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\PostCreatedEvent;
-use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use App\Notifications\PostCreatedNotification;
 
 class SendPostNotificationListener
 {
@@ -12,6 +13,10 @@ class SendPostNotificationListener
         $post = $event->post;
         $author = $post->user;
 
-        Log::info("Usuario {$author->name} ha creado un nuevo post '{$post->title}'. ¡Gracias por compartirlo!");
+        $usersToNotify = User::where('id', '!=', $author->id)->get();
+
+        foreach ($usersToNotify as $user) {
+            $user->notify(new PostCreatedNotification($post));
+        }
     }
 }

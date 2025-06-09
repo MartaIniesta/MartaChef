@@ -1,19 +1,31 @@
 <?php
 
-use App\Models\User;
 use App\Events\UserFollowedEvent;
-use Illuminate\Support\Facades\Log;
 use App\Listeners\SendFollowNotificationListener;
+use App\Models\User;
+use App\Notifications\UserFollowedNotification;
+use Illuminate\Support\Facades\Notification;
 
-it('logs a message when a user follows another', function () {
-    $follower = User::factory()->create(['name' => 'Carlos']);
-    $followed = User::factory()->create(['name' => 'María']);
+beforeEach(function () {
+    Notification::fake();
 
-    Log::shouldReceive('info')
-        ->once()
-        ->with('Carlos ha seguido a María');
+    $this->follower = User::factory()->create();
+    $this->followed = User::factory()->create();
 
-    $event = new UserFollowedEvent($follower, $followed);
-    $listener = new SendFollowNotificationListener();
-    $listener->handle($event);
+    $this->listener = new SendFollowNotificationListener();
+});
+
+it('sends a notification to the followed user when the event is handled', function () {
+    $event = new UserFollowedEvent($this->follower, $this->followed);
+
+    $this->listener->handle($event);
+
+    Notification::assertSentTo(
+        $this->followed,
+        UserFollowedNotification::class,
+        function ($notification, $channels) {
+            expect($notification->follower->id)->toBe($this->follower->id);
+            return true;
+        }
+    );
 });

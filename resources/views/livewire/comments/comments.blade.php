@@ -9,13 +9,13 @@
 
     <div class="mt-4">
         @if($comments->count() < \App\Models\Comment::where('post_id', $postId)->whereNull('parent_id')->whereDoesntHave('parent', fn($q) => $q->onlyTrashed())->count())
-            <button wire:click="loadMoreComments">
+            <button wire:click="loadMoreComments" class="bg-blue-200 p-2 rounded-lg">
                 {{ __('Load more comments') }}
             </button>
         @endif
 
         @if($commentsToShow > 4)
-            <button wire:click="loadLessComments">
+            <button wire:click="loadLessComments" class="bg-blue-200 p-2 rounded-lg">
                 {{ __('Load fewer comments') }}
             </button>
         @endif

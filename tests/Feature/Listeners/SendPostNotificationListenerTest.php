@@ -4,28 +4,32 @@ use App\Events\PostCreatedEvent;
 use App\Listeners\SendPostNotificationListener;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
+use App\Notifications\PostCreatedNotification;
+use Illuminate\Support\Facades\Notification;
 
-test('SendPostNotificationListener logs a message for the author', function () {
-    // Arrange
-    $author = User::factory()->create();
+beforeEach(function () {
+    Notification::fake();
 
-    $post = Post::factory()->create([
-        'user_id' => $author->id,
-        'title' => 'Post de prueba',
-    ]);
+    $this->author = User::factory()->create();
+    $this->otherUsers = User::factory()->count(3)->create();
 
-    $listener = new SendPostNotificationListener();
+    $this->post = Post::factory()->for($this->author, 'user')->create();
 
-    Log::spy();
+    $this->listener = new SendPostNotificationListener();
+});
 
-    $event = new PostCreatedEvent($post);
+it('sends a notification to all users except the author when a post is created', function () {
+    $event = new PostCreatedEvent($this->post);
 
-    // Act
-    $listener->handle($event);
+    $this->listener->handle($event);
 
-    // Assert
-    Log::shouldHaveReceived('info')
-        ->with("Usuario {$author->name} ha creado un nuevo post '{$post->title}'. ¡Gracias por compartirlo!")
-        ->once();
+    Notification::assertNotSentTo($this->author, PostCreatedNotification::class);
+
+    foreach ($this->otherUsers as $user) {
+        Notification::assertSentTo(
+            $user,
+            PostCreatedNotification::class,
+            fn ($notification) => $notification->getPost()->id === $this->post->id
+        );
+    }
 });

@@ -30,32 +30,44 @@
                 @endguest
 
                 @auth
-                    <x-dropdown align="right" width="48" closeOnItemClick="true">
-                        <x-slot name="trigger">
-                            <button class="focus:outline-none">
-                                <img
-                                    src="{{ Auth::user()->profile_image ? asset('storage/public' . Auth::user()->profile_image) : asset('default-images/default-profile.png') }}"
-                                    alt="{{ Auth::user()->name }}"
-                                    class="h-12 w-12 mt-1.5"
-                                >
-                            </button>
-                        </x-slot>
+                    <div class="flex items-center space-x-6">
+                        <a href="{{ route('notifications.index') }}" class="relative inline-block">
+                            <img src="{{ asset('storage/icons/notificacion.png') }}" class="h-6 w-6 mt-2" alt="Notificación">
 
-                        <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')" class="rounded-t-md">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-                            <hr class="border-gray-300 mx-2">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <x-dropdown-link :href="route('logout')"
-                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                 class="rounded-b-md">
-                                    {{ __('Log Out') }}
+                            @if ($unreadCount = auth()->user()->unreadNotifications()->count())
+                                <span class="absolute bg-red-600 text-white text-center rounded-full h-4 w-4 text-xs" style="top: 30px; left: 14px;">
+                                    {{ $unreadCount }}
+                                </span>
+                            @endif
+                        </a>
+
+                        <x-dropdown align="right" width="48" closeOnItemClick="true">
+                            <x-slot name="trigger">
+                                <button class="focus:outline-none">
+                                    <img
+                                        src="{{ Auth::user()->profile_image ? asset('storage/public' . Auth::user()->profile_image) : asset('default-images/default-profile.png') }}"
+                                        alt="{{ Auth::user()->name }}"
+                                        class="h-12 w-12 mt-1.5"
+                                    >
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('profile.edit')" class="rounded-t-md">
+                                    {{ __('Profile') }}
                                 </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
+                                <hr class="border-gray-300 mx-2">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-dropdown-link :href="route('logout')"
+                                                     onclick="event.preventDefault(); this.closest('form').submit();"
+                                                     class="rounded-b-md">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
                 @endauth
             </div>
         </div>

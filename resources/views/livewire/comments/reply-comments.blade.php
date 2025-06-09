@@ -5,13 +5,13 @@
 
     <div class="mt-2">
         @if($comment->replies->count() > ($this->repliesToShow[$comment->id] ?? 1))
-            <button wire:click="loadMoreReplies({{ $comment->id }})">
+            <button wire:click="loadMoreReplies({{ $comment->id }})" class="bg-blue-200 p-2 rounded-lg">
                 {{ __('Load more comments') }}
             </button>
         @endif
 
         @if(isset($this->repliesToShow[$comment->id]) && $this->repliesToShow[$comment->id] > 1)
-            <button wire:click="loadLessReplies({{ $comment->id }})">
+            <button wire:click="loadLessReplies({{ $comment->id }})" class="bg-blue-200 p-2 rounded-lg">
                 {{ __('Load fewer comments') }}
             </button>
         @endif

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Rules\NoBadWords;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use App\Models\Comment;
@@ -21,18 +22,6 @@ class Comments extends Component
     public $commentsToShow = 4;
     public $repliesToShow = [];
 
-    protected $rules = [
-        'content' => 'required|max:300',
-        'replyContent' => 'required|max:300',
-        'editingContent' => 'required|max:300',
-    ];
-
-    protected $messages = [
-        'content.required' => 'Debes escribir algo para comentar.',
-        'replyContent.required' => 'Debes escribir algo para responder.',
-        'editingContent.required' => 'El contenido es obligatorio al actualizar.',
-    ];
-
     public function mount($postId)
     {
         $this->postId = $postId;
@@ -41,7 +30,11 @@ class Comments extends Component
     public function addComment()
     {
         $this->resetValidation();
-        $this->validateOnly('content');
+        $this->validate([
+            'content' => ['required', 'min:4', 'max:300', new NoBadWords],
+        ], [
+            'content.required' => 'Debes escribir algo para comentar.',
+        ]);
 
         $this->authorize('create', Comment::class);
 
@@ -62,7 +55,11 @@ class Comments extends Component
     public function addReply()
     {
         $this->resetValidation();
-        $this->validateOnly('replyContent');
+        $this->validate([
+            'replyContent' => ['required', 'min:4', 'max:300', new NoBadWords],
+        ], [
+            'replyContent.required' => 'Debes escribir algo para responder.',
+        ]);
 
         $this->authorize('create', Comment::class);
 
@@ -85,10 +82,13 @@ class Comments extends Component
     public function updateComment()
     {
         $this->resetValidation();
-        $this->validateOnly('editingContent');
+        $this->validate([
+            'editingContent' => ['required', 'min:4', 'max:300', new NoBadWords],
+        ], [
+            'editingContent.required' => 'El contenido es obligatorio al actualizar.',
+        ]);
 
         $comment = Comment::findOrFail($this->editingCommentId);
-
         $this->authorize('update', $comment);
 
         $comment->update(['content' => $this->editingContent]);
@@ -174,3 +174,5 @@ class Comments extends Component
         ]);
     }
 }
+
+

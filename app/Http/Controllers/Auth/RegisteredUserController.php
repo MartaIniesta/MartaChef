@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendWelcomeMailJob;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -41,13 +42,13 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->sendEmailVerificationNotification();
         $user->assignRole('user');
 
+        SendWelcomeMailJob::dispatch($user);
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('verification.notice', absolute: false));
+        return redirect()->route('blog');
     }
 }
